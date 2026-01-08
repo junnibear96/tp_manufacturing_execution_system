@@ -12,6 +12,8 @@
   --radius: 16px;
   --radius-sm: 12px;
   --max: 1040px;
+  /* Optional: if you add /assets/hero.jpg, set this to url('hero.jpg') */
+  --landing-hero-image: none;
 }
 
 * { box-sizing: border-box; }
@@ -31,8 +33,176 @@ body {
     var(--bg);
 }
 
+/* Landing intro (original design; image optional) */
+.landing {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100lvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 24px;
+  letter-spacing: -0.03em;
+  background:
+    linear-gradient(180deg, rgba(11, 14, 20, 0.30), rgba(11, 14, 20, 0.85)),
+    var(--landing-hero-image),
+    radial-gradient(900px 500px at 80% 25%, rgba(167, 139, 250, 0.10), transparent 55%),
+    radial-gradient(1100px 600px at 15% 10%, rgba(125, 211, 252, 0.10), transparent 55%),
+    var(--bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 700px at 50% 40%, rgba(0, 0, 0, 0.20), transparent 60%);
+  pointer-events: none;
+}
+
+.landing-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 18px 24px;
+}
+
+.landing-top-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing-logo {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 20px;
+}
+
+.landing-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.landing-action {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.86);
+  opacity: 0.9;
+}
+
+.landing-sep {
+  color: rgba(255, 255, 255, 0.60);
+}
+
+.landing-menu {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: not-allowed;
+}
+
+.landing-menu .bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.86);
+  margin: 3px 0;
+  border-radius: 2px;
+}
+
+.landing-center {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max);
+  margin: 0 auto;
+  text-align: center;
+  padding: 92px 0 0;
+}
+
+.landing-center h1 {
+  font-size: 44px;
+  letter-spacing: -0.4px;
+  margin: 0;
+}
+
+.landing-sub {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+}
+
+.landing-chips {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.landing-keywords {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.landing-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  z-index: 1;
+  padding: 0 24px;
+}
+
+.brand-strip {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 12px;
+}
+
+.brand-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.brand-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.50);
+}
+
+@media (max-width: 880px) {
+  .landing-center { padding-top: 78px; }
+  .landing-center h1 { font-size: 34px; }
+  .brand-strip { overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .brand-strip::-webkit-scrollbar { display: none; }
+}
+
 a { color: inherit; text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+/* Chips are often used as links; keep them clean on hover */
+a.chip:hover {
+  text-decoration: none;
+}
 
 .container {
   max-width: var(--max);
@@ -255,6 +425,27 @@ p {
 
 .btn:active {
   transform: translateY(1px);
+}
+
+/* Accordion (details/summary) polish for company/intro pages */
+details.card > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details.card > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.card > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+details.card[open] {
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .codeblock {

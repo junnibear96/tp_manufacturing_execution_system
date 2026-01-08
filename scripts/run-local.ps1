@@ -31,5 +31,6 @@ if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
 
 Write-Host 'Building & running via Maven Wrapper...'
 
-# Run embedded server from WAR (requires non-provided Tomcat deps)
-.\mvnw.cmd -q -DskipTests spring-boot:run
+# Run embedded server from WAR.
+# Use a non-8080 port by default to avoid conflicts with external Tomcat.
+cmd /c "call .\\mvnw.cmd -DskipTests spring-boot:run -Dspring-boot.run.arguments=--server.port=8090"

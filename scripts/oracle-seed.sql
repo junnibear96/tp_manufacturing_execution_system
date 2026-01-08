@@ -82,4 +82,39 @@ values ('미디어', '보도자료', 'media-press', '주요 업데이트와 릴�
 insert into tp_company_section(category, title, anchor, body, sort_order)
 values ('채용', '채용 안내', 'careers', '문제를 끝까지 파고들고, 팀과 함께 개선을 만들어가는 개발 문화를 지향합니다. (포트폴리오용 예시 텍스트)', 10);
 
+-- ===== Internal web system seeds (minimal) =====
+-- Group companies
+insert into tp_group_company(company_code, company_name, description, active_yn)
+values ('TP-HQ', 'TP 본사', '내부 시스템 데모용 기본 회사', 'Y');
+
+insert into tp_group_company(company_code, company_name, description, active_yn)
+values ('TP-PLANT1', 'TP 1공장', '생산 계획/실적 데이터의 기준 사업장(예시)', 'Y');
+
+-- Notices (created_by is nullable)
+insert into tp_notice(title, body, created_by)
+values ('[공지] 내부 시스템 MVP 오픈', '로그인/권한 + 그룹사/공지/게시판(조회)까지 연결했습니다.\n다음 단계: 생산 계획/실적/통계 화면을 추가합니다.', null);
+
+-- Board posts (created_by is nullable)
+insert into tp_board_post(title, body, created_by)
+values ('첫 글', '게시판은 list/view MVP로 시작합니다.\n(요구사항: 공지 create는 admin만)', null);
+
+-- Production MVP seed
+insert into tp_process(process_code, process_name)
+values ('CUT', '절단');
+
+insert into tp_process(process_code, process_name)
+values ('ASM', '조립');
+
+insert into tp_equipment(equipment_code, equipment_name, process_id, active_yn)
+select 'EQ-CUT-01', '절단기 1호', p.process_id, 'Y' from tp_process p where p.process_code = 'CUT';
+
+insert into tp_equipment(equipment_code, equipment_name, process_id, active_yn)
+select 'EQ-ASM-01', '조립기 1호', p.process_id, 'Y' from tp_process p where p.process_code = 'ASM';
+
+insert into tp_prod_plan(plan_date, item_code, qty_plan, created_by)
+values (trunc(sysdate), 'ITEM-001', 120, null);
+
+insert into tp_prod_result(work_date, item_code, qty_good, qty_ng, equipment_id, created_by)
+select trunc(sysdate), 'ITEM-001', 110, 3, e.equipment_id, null from tp_equipment e where e.equipment_code = 'EQ-ASM-01';
+
 commit;

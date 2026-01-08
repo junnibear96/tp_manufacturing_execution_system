@@ -4,6 +4,12 @@ server:
   # servlet:
   #   context-path: /TP
 
+  tomcat:
+    # Some Oracle JDBC/security jars contain manifest Class-Path entries like
+    # oracle.osdt/osdt_core.jar which don't exist in Maven repo layouts.
+    # Skipping TLD scanning for those avoids noisy startup errors.
+    additional-tld-skip-patterns: osdt_core.jar,osdt_cert.jar,oraclepki.jar,ojdbc*.jar
+
 spring:
   datasource:
     url: ${TP_ORACLE_URL:jdbc:oracle:thin:@//localhost:1521/XEPDB1}
@@ -30,3 +36,4 @@ logging:
   level:
     root: INFO
     org.springframework.jdbc.core: INFO
+
