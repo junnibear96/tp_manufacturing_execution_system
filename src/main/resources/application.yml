@@ -1,0 +1,32 @@
+server:
+  # When deployed as WAR, the context-path is controlled by the container (we set finalName=TP).
+  # When running locally (spring-boot:run), you can uncomment context-path if desired.
+  # servlet:
+  #   context-path: /TP
+
+spring:
+  datasource:
+    url: ${TP_ORACLE_URL:jdbc:oracle:thin:@//localhost:1521/XEPDB1}
+    username: ${TP_ORACLE_USER:system}
+    password: ${TP_ORACLE_PASS:}
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      initialization-fail-timeout: -1
+
+  sql:
+    init:
+      mode: never
+
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+  jdbc:
+    template:
+      fetch-size: 200
+
+logging:
+  level:
+    root: INFO
+    org.springframework.jdbc.core: INFO
