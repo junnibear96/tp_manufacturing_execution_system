@@ -45,3 +45,38 @@ scripts/*oracle*env*
 # ===== Temporary =====
 *.tmp
 *.bak
+*.swp
+*~
+
+# ===== Spring Boot =====
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# ===== Testing/Recording artifacts =====
+*.webp
+screenshots/
+recordings/
+
+# ===== Node/NPM (if used) =====
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# ===== Database =====
+*.db
+*.sqlite
+*.sqlite3
