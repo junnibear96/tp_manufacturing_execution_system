@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/mvc")
+@RequestMapping("/app")
 public class PageController {
 
   private final PortfolioPageService portfolioPageService;
@@ -28,16 +28,26 @@ public class PageController {
     model.addAttribute("now", data.getNow().toString());
     model.addAttribute("skills", data.getSkills());
     model.addAttribute("projects", data.getProjects());
-    return "portfolio";
+    return "app/portfolio";
   }
 
   @GetMapping("/company")
-  public String company(Model model) {
+  public String companyIntro(Model model) {
+    CompanyPageData data = companyPageService.getPageData();
+
+    model.addAttribute("now", data.getNow().toString());
+    model.addAttribute("keywords", data.getKeywords());
+    model.addAttribute("menuGroupCount", data.getMenuGroups() == null ? 0 : data.getMenuGroups().size());
+    return "app/company-intro";
+  }
+
+  @GetMapping("/company/sections")
+  public String companySections(Model model) {
     CompanyPageData data = companyPageService.getPageData();
 
     model.addAttribute("now", data.getNow().toString());
     model.addAttribute("keywords", data.getKeywords());
     model.addAttribute("menuGroups", data.getMenuGroups());
-    return "company";
+    return "app/company-sections";
   }
 }

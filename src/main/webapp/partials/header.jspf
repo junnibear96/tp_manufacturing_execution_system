@@ -10,8 +10,8 @@
     <nav class="nav" aria-label="페이지 이동">
       <a href="index.jsp" data-nav="page">포트폴리오</a>
       <a href="company.jsp" data-nav="page">회사 소개</a>
-      <a href="${pageContext.request.contextPath}/mvc/portfolio">MVC 포트폴리오</a>
-      <a href="${pageContext.request.contextPath}/mvc/company">MVC 회사 소개</a>
+      <a href="${pageContext.request.contextPath}/app/portfolio">MVC 포트폴리오</a>
+      <a href="${pageContext.request.contextPath}/app/company">MVC 회사 소개</a>
       <a href="#about" data-nav="anchor">소개</a>
       <a href="#work" data-nav="anchor">업무</a>
       <a href="#profile" data-nav="anchor">인재상</a>

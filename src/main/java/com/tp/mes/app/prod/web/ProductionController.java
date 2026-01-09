@@ -3,7 +3,7 @@ package com.tp.mes.app.prod.web;
 import com.tp.mes.app.auth.model.AuthUser;
 import com.tp.mes.app.prod.service.ProductionService;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

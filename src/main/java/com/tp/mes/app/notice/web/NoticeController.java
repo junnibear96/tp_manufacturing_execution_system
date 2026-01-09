@@ -4,7 +4,7 @@ import com.tp.mes.app.auth.model.AuthUser;
 import com.tp.mes.app.notice.model.Notice;
 import com.tp.mes.app.notice.service.NoticeService;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

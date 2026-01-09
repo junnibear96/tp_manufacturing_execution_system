@@ -2,9 +2,9 @@ package com.tp.mes.app.auth.web;
 
 import com.tp.mes.app.auth.model.AuthUser;
 import com.tp.mes.app.auth.service.AuthService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class AuthInterceptor implements HandlerInterceptor {
@@ -22,7 +22,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     if (path.equals("/")
         || path.startsWith("/assets/")
         || path.startsWith("/api/")
-        || path.startsWith("/mvc/")
         || path.equals("/app/login")
         || path.equals("/index.jsp")
         || path.equals("/company.jsp")) {

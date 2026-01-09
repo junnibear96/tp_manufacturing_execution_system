@@ -85,4 +85,154 @@
       done(false);
     }
   });
+
+  // Mobile hamburger / all-menu drawer.
+  (function initNavDrawer() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var drawer = document.getElementById('appNav');
+    var overlay = document.querySelector('[data-nav-overlay]');
+    var closeBtn = document.querySelector('[data-nav-close]');
+
+    if (!toggle || !drawer || !overlay) return;
+
+    var lastFocus = null;
+
+    function getFocusable(container) {
+      var nodes = container.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+
+      return Array.prototype.filter.call(nodes, function (el) {
+        // Only include elements that are actually visible.
+        return !!(el && el.getClientRects && el.getClientRects().length);
+      });
+    }
+
+    function setTabbablesEnabled(enabled) {
+      var all = drawer.querySelectorAll('a, button, input, select, textarea, [tabindex]');
+      all.forEach(function (el) {
+        if (!(el instanceof Element)) return;
+
+        if (enabled) {
+          if (!el.hasAttribute('data-nav-prev-tabindex')) return;
+          var prev = el.getAttribute('data-nav-prev-tabindex');
+          el.removeAttribute('data-nav-prev-tabindex');
+          if (prev === '') el.removeAttribute('tabindex');
+          else el.setAttribute('tabindex', prev);
+          return;
+        }
+
+        // Disabled: store current tabindex and set to -1.
+        if (el.getAttribute('data-nav-prev-tabindex') != null) return;
+        var current = el.getAttribute('tabindex');
+        el.setAttribute('data-nav-prev-tabindex', current == null ? '' : current);
+        el.setAttribute('tabindex', '-1');
+      });
+    }
+
+    function isOpen() {
+      return document.body.classList.contains('nav-open');
+    }
+
+    function setExpanded(open) {
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+      drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    }
+
+    function open() {
+      if (isOpen()) return;
+      lastFocus = document.activeElement;
+      document.body.classList.add('nav-open');
+      setTabbablesEnabled(true);
+      setExpanded(true);
+      // Focus first link for keyboard users.
+      setTimeout(function () {
+        var first = drawer.querySelector('[data-nav-close], a, button, [tabindex]:not([tabindex="-1"])');
+        if (first && first.focus) first.focus();
+      }, 0);
+    }
+
+    function close() {
+      if (!isOpen()) return;
+      document.body.classList.remove('nav-open');
+      setExpanded(false);
+      setTabbablesEnabled(false);
+      if (lastFocus && lastFocus.focus) {
+        try { lastFocus.focus(); } catch (_e) { /* no-op */ }
+      } else {
+        toggle.focus();
+      }
+      lastFocus = null;
+    }
+
+    function toggleMenu() {
+      if (isOpen()) close();
+      else open();
+    }
+
+    // Ensure hidden state is not tabbable.
+    setTabbablesEnabled(false);
+    setExpanded(false);
+
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      toggleMenu();
+    });
+
+    overlay.addEventListener('click', function () {
+      close();
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        close();
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (!isOpen()) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        var focusables = getFocusable(drawer);
+        if (!focusables.length) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        var active = document.activeElement;
+
+        if (e.shiftKey) {
+          if (active === first || !drawer.contains(active)) {
+            e.preventDefault();
+            last.focus();
+          }
+          return;
+        }
+
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // Close drawer when navigating.
+    drawer.addEventListener('click', function (e) {
+      var target = e.target;
+      if (!(target instanceof Element)) return;
+      var a = target.closest('a');
+      if (a) close();
+    });
+
+    // If switching to desktop, ensure drawer is closed.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 880) close();
+    });
+  })();
 })();

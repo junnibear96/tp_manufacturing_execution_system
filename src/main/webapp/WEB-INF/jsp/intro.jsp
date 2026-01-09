@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -13,7 +13,7 @@
 
   <header class="landing-top" role="banner">
     <div class="landing-top-inner">
-      <a class="landing-logo" href="${pageContext.request.contextPath}/" aria-label="TP Home">TP</a>
+      <a class="landing-logo" href="${pageContext.request.contextPath}/app/home" aria-label="TP Home">TP</a>
       <nav class="landing-actions" aria-label="Language and menu">
         <a class="landing-action" href="#" aria-disabled="true">KOR</a>
         <span class="landing-sep" aria-hidden="true">·</span>
@@ -36,8 +36,8 @@
       <p class="small" style="margin-top:18px;">서버 시간: ${now}</p>
 
       <div class="landing-chips" role="list" aria-label="Quick links">
-        <a class="chip" role="listitem" href="${pageContext.request.contextPath}/mvc/company">회사 소개</a>
-        <a class="chip" role="listitem" href="${pageContext.request.contextPath}/mvc/portfolio">포트폴리오</a>
+        <a class="chip" role="listitem" href="${pageContext.request.contextPath}/app/company">회사 소개</a>
+        <a class="chip" role="listitem" href="${pageContext.request.contextPath}/app/portfolio">포트폴리오</a>
         <a class="chip" role="listitem" href="${pageContext.request.contextPath}/api/health">Health</a>
       </div>
 

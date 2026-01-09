@@ -17,14 +17,14 @@ JSP로 만든 TP 포트폴리오(단일 페이지) 템플릿입니다.
 
 ### 사전 준비물
 
-- JDK 17 설치 (Windows 기준: `java` 명령이 PATH에서 실행되어야 함)
+- JDK 21 설치 (Windows 기준: `java` 명령이 PATH에서 실행되어야 함)
 - (권장) Tomcat 9.x
 
-#### Windows에서 JDK 17 빠른 설치(권장: Microsoft Build of OpenJDK)
+#### Windows에서 JDK 21 빠른 설치(권장: Microsoft Build of OpenJDK)
 
-- 설치: `winget install -e --id Microsoft.OpenJDK.17`
+- 설치: `winget install -e --id Microsoft.OpenJDK.21`
 - 설치 후 `java -version`이 안 되면(새 터미널에서도 안 되면)
-	- `./scripts/setup-openjdk17.ps1` 실행해서 `JAVA_HOME`/PATH를 잡을 수 있습니다.
+	- `./scripts/setup-openjdk21.ps1` 실행해서 `JAVA_HOME`/PATH를 잡을 수 있습니다.
 
 ## Step by step (Oracle DB 기준)
 
@@ -35,8 +35,8 @@ JSP로 만든 TP 포트폴리오(단일 페이지) 템플릿입니다.
 
 2) Spring MVC 화면 확인 (Controller → Model → JSP)
 
-- `/TP/mvc/portfolio`
-- `/TP/mvc/company`
+- `/TP/app/portfolio`
+- `/TP/app/company`
 
 3) API 확인 (Oracle DB 필요)
 
@@ -78,7 +78,7 @@ JDK만 설치되어 있으면 Tomcat 설치 없이도 실행 가능합니다.
 
 접속:
 
-- `http://localhost:8080/mvc/portfolio`
+- `http://localhost:8080/app/portfolio`
 - `http://localhost:8080/api/health`
 
 빌드 산출물:
@@ -103,7 +103,8 @@ Oracle이 없거나 접속이 안 되더라도 앱은 기동되며, `/api/health
 
 ## MVC 데이터(Oracle에서 읽기)
 
-MVC 화면(`/mvc/portfolio`, `/mvc/company`)은 Oracle 테이블에서 데이터를 읽습니다.
+포트폴리오/회사소개 화면(`/app/portfolio`, `/app/company`)은 Oracle 테이블에서 데이터를 읽습니다.
+기존 경로(`/mvc/portfolio`, `/mvc/company`)는 `/app/*`로 리다이렉트됩니다.
 
 처음 세팅 시에는 아래 SQL을 Oracle에 실행하세요.
 

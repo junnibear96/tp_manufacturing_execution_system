@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -29,7 +29,7 @@
           <ul class="list">
             <li><a href="${pageContext.request.contextPath}/app/companies">그룹사 정보 관리</a></li>
             <li><a href="${pageContext.request.contextPath}/app/notices">공지사항</a> / <a href="${pageContext.request.contextPath}/app/board">게시판</a></li>
-            <li>생산 계획 / 실적 / 설비 / 통계</li>
+            <li><a href="${pageContext.request.contextPath}/app/production">생산(계획/실적/설비/통계)</a></li>
             <li>관리자 화면(/admin/*)</li>
           </ul>
           <p class="small">그룹사/공지/게시판은 현재 동작하는 MVP입니다.</p>

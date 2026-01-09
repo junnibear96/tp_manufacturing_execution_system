@@ -21,21 +21,21 @@ function Add-ToPath([string]$binPath) {
   Write-Host "Added to PATH ($Scope): $binPath"
 }
 
-Write-Host "Searching for Microsoft OpenJDK 17..."
+Write-Host "Searching for Microsoft OpenJDK 21..."
 
 $jdkCandidates = @()
 $msDir = 'C:\Program Files\Microsoft'
 if (Test-Path $msDir) {
   $jdkCandidates += Get-ChildItem $msDir -Directory -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -match '^jdk-17' } |
+    Where-Object { $_.Name -match '^jdk-21' } |
     Select-Object -ExpandProperty FullName
 }
 
 if (-not $jdkCandidates -or $jdkCandidates.Count -eq 0) {
-  throw "Microsoft OpenJDK 17 not found under '$msDir'. If you haven't installed it yet, run: winget install -e --id Microsoft.OpenJDK.17"
+  throw "Microsoft OpenJDK 21 not found under '$msDir'. If you haven't installed it yet, run: winget install -e --id Microsoft.OpenJDK.21"
 }
 
-# Pick the newest (lexicographically usually works for jdk-17.0.x names)
+# Pick the newest (lexicographically usually works for jdk-21.0.x names)
 $jdkHome = ($jdkCandidates | Sort-Object -Descending | Select-Object -First 1)
 $bin = Join-Path $jdkHome 'bin'
 

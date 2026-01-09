@@ -226,6 +226,13 @@ a.chip:hover {
   gap: 16px;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -250,6 +257,137 @@ a.chip:hover {
   gap: 14px;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.nav form {
+  display: inline;
+}
+
+.nav-drawer-header {
+  display: none;
+}
+
+.nav-close {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.90);
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.nav-close:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.nav-toggle {
+  display: none;
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.nav-toggle .bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.86);
+  margin: 3px 0;
+  border-radius: 2px;
+}
+
+.nav-overlay {
+  display: none;
+}
+
+@media (max-width: 880px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(86vw, 340px);
+    padding: 14px 16px 16px;
+    background: rgba(11, 14, 20, 0.92);
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    transform: translateX(102%);
+    transition: transform 180ms ease;
+    z-index: 30;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    padding: 6px 0 12px;
+    background: rgba(11, 14, 20, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1;
+  }
+
+  .nav-drawer-title {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .nav a {
+    width: 100%;
+  }
+
+  .nav form {
+    display: block;
+    margin-top: 6px;
+  }
+
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 20;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  body.nav-open .nav {
+    transform: translateX(0);
+  }
+
+  body.nav-open .nav-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .nav a {

@@ -3,7 +3,7 @@ package com.tp.mes.app.auth.web;
 import com.tp.mes.app.auth.model.AuthUser;
 import com.tp.mes.app.auth.service.AuthService;
 import java.time.Instant;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
