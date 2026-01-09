@@ -97,6 +97,47 @@
 
     var lastFocus = null;
 
+    // Tabs inside the drawer (mobile-only via CSS).
+    (function initNavTabs() {
+      var tabs = drawer.querySelectorAll('[data-nav-tab-button]');
+      if (!tabs || !tabs.length) return;
+
+      function setActiveTab(key, focusTab) {
+        if (!key) key = 'main';
+        drawer.setAttribute('data-nav-tab', key);
+        tabs.forEach(function (btn) {
+          var k = btn.getAttribute('data-nav-tab-button');
+          var selected = k === key;
+          btn.setAttribute('aria-selected', selected ? 'true' : 'false');
+          btn.setAttribute('tabindex', selected ? '0' : '-1');
+          if (selected && focusTab && btn.focus) btn.focus();
+        });
+      }
+
+      // Initialize from markup/default.
+      setActiveTab(drawer.getAttribute('data-nav-tab') || 'main', false);
+
+      tabs.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          setActiveTab(btn.getAttribute('data-nav-tab-button'), true);
+        });
+
+        btn.addEventListener('keydown', function (e) {
+          // Arrow-key navigation between tabs.
+          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+          e.preventDefault();
+          var list = Array.prototype.slice.call(tabs);
+          var idx = list.indexOf(btn);
+          if (idx < 0) return;
+          var dir = e.key === 'ArrowRight' ? 1 : -1;
+          var next = (idx + dir + list.length) % list.length;
+          var nextBtn = list[next];
+          setActiveTab(nextBtn.getAttribute('data-nav-tab-button'), true);
+        });
+      });
+    })();
+
     function getFocusable(container) {
       var nodes = container.querySelectorAll(
         'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'

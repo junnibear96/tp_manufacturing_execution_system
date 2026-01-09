@@ -1,5 +1,6 @@
 param(
-  [string]$EnvFile = (Join-Path (Get-Location) '.env')
+  [string]$EnvFile = (Join-Path (Get-Location) '.env'),
+  [int]$Port = 8090
 )
 
 $ErrorActionPreference = 'Stop'
@@ -28,10 +29,24 @@ function Get-JavaMajorVersionFromOutput([string]$firstLine) {
   return $major
 }
 
+function Get-JavaVersionFirstLine([string]$javaExe) {
+  if (-not $javaExe) { return $null }
+
+  # `java -version` writes to stderr; in PowerShell 7+ this can become a terminating
+  # NativeCommandError when $ErrorActionPreference='Stop'. Running via cmd.exe and
+  # merging streams avoids that.
+  $exe = $javaExe
+  if ($exe -match '\s') {
+    $exe = '"' + $exe + '"'
+  }
+
+  return [string]((cmd /c "$exe -version 2>&1" | Select-Object -First 1))
+}
+
 function Get-CurrentJavaMajorVersion {
   $cmd = Get-Command java -ErrorAction SilentlyContinue
   if (-not $cmd) { return $null }
-  $firstLine = (& java -version 2>&1 | Select-Object -First 1)
+  $firstLine = Get-JavaVersionFirstLine 'java'
   return Get-JavaMajorVersionFromOutput $firstLine
 }
 
@@ -55,23 +70,50 @@ function Use-MicrosoftOpenJdk21 {
   Write-Host "JAVA_HOME=$env:JAVA_HOME"
 }
 
+function Prepend-JavaHomeBinToPath {
+  if (-not $env:JAVA_HOME) { return }
+  $bin = Join-Path $env:JAVA_HOME 'bin'
+  if (-not (Test-Path $bin)) { return }
+  $prefix = $bin + ';'
+  if ($env:Path -like ($prefix + '*')) { return }
+  $env:Path = $prefix + $env:Path
+}
+
 # Ensure Java 21 is used in this session.
 $javaHomeBin = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME 'bin' } else { $null }
 $javaHomeJava = if ($javaHomeBin) { Join-Path $javaHomeBin 'java.exe' } else { $null }
 $javaHomeMajor = $null
 if ($javaHomeJava -and (Test-Path $javaHomeJava)) {
-  $firstLine = (& $javaHomeJava -version 2>&1 | Select-Object -First 1)
+  $firstLine = Get-JavaVersionFirstLine $javaHomeJava
   $javaHomeMajor = Get-JavaMajorVersionFromOutput $firstLine
 }
 
 $currentMajor = Get-CurrentJavaMajorVersion
 
-if ($javaHomeMajor -ne 21 -and $currentMajor -ne 21) {
+if ($javaHomeMajor -eq 21) {
+  # JAVA_HOME already points to 21; ensure PATH resolves `java` from JAVA_HOME first.
+  Prepend-JavaHomeBinToPath
+} elseif ($currentMajor -ne 21) {
   Use-MicrosoftOpenJdk21
 }
 
 Write-Host 'Building & running via Maven Wrapper...'
 
-# Run embedded server from WAR.
-# Use a non-8080 port by default to avoid conflicts with external Tomcat.
-cmd /c "call .\\mvnw.cmd -DskipTests spring-boot:run -Dspring-boot.run.arguments=--server.port=8090"
+# Fail fast if port is in use.
+$portPid = (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty OwningProcess)
+if ($portPid) {
+  $p = Get-Process -Id $portPid -ErrorAction SilentlyContinue
+  $name = if ($p) { $p.ProcessName } else { 'unknown' }
+  throw "Port $Port is already in use (PID=$portPid, Process=$name). Stop it or run with -Port 8091 (or another free port)."
+}
+
+# Build the executable WAR, then run it with Java.
+& .\mvnw.cmd -DskipTests package
+
+$warPath = Join-Path $root 'target\TP.war'
+if (-not (Test-Path $warPath)) {
+  throw "WAR not found at '$warPath'. Build may have failed."
+}
+
+Write-Host "Starting app: http://localhost:$Port/"
+& java -jar $warPath "--server.port=$Port"

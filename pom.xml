@@ -13,8 +13,11 @@
   <description>TP portfolio + mini API (Spring + Oracle) packaged as a WAR.</description>
 
   <properties>
-    <java.version>21</java.version>
-    <spring-boot.version>3.5.9</spring-boot.version>
+    <java.version>17</java.version>
+    <spring-boot.version>3.4.1</spring-boot.version>
+    <!-- Override Spring Boot's managed Tomcat (10.1.x line) to pick up security fixes. -->
+    <tomcat.version>10.1.50</tomcat.version>
+    <jakarta.jstl.version>3.0.1</jakarta.jstl.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -71,7 +74,7 @@
     <dependency>
       <groupId>org.glassfish.web</groupId>
       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-      <version>3.0.1</version>
+      <version>${jakarta.jstl.version}</version>
     </dependency>
 
     <dependency>
@@ -89,7 +92,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <release>${java.version}</release>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>

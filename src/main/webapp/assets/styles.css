@@ -263,6 +263,32 @@ a.chip:hover {
   display: inline;
 }
 
+.nav-tabs {
+  display: none;
+}
+
+.nav-tab {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.82);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.nav-tab[aria-selected="true"] {
+  background: rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.nav-panel {
+  /* On desktop, behave like direct children so the existing nav layout stays unchanged. */
+  display: contents;
+}
+
 .nav-drawer-header {
   display: none;
 }
@@ -358,6 +384,27 @@ a.chip:hover {
 
   .nav a {
     width: 100%;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 0 6px;
+  }
+
+  .nav-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+
+  .nav[data-nav-tab="main"] .nav-panel[data-nav-panel="main"],
+  .nav[data-nav-tab="mes"] .nav-panel[data-nav-panel="mes"],
+  .nav[data-nav-tab="info"] .nav-panel[data-nav-panel="info"],
+  .nav[data-nav-tab="admin"] .nav-panel[data-nav-panel="admin"] {
+    display: flex;
   }
 
   .nav form {
