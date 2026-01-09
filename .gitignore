@@ -1,0 +1,47 @@
+# ===== Build outputs =====
+/target/
+**/target/
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== Local tools (DO NOT COMMIT) =====
+tools/
+
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/
+
+# ===== Local secrets (DO NOT COMMIT) =====
+.env
+.env.*
+*.local
+*.local.*
+
+# Local scripts that may contain credentials
+scripts/*secret*
+scripts/*oracle*env*
+
+# ===== Maven wrapper =====
+# Keep wrapper jar committed so clones can build consistently.
+
+# ===== Temporary =====
+*.tmp
+*.bak

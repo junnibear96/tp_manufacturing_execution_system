@@ -1,0 +1,117 @@
+package com.tp.mes.app.prod.web;
+
+import com.tp.mes.app.auth.model.AuthUser;
+import com.tp.mes.app.prod.service.ProductionService;
+import java.util.stream.Collectors;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class ProductionController {
+
+  private final ProductionService service;
+
+  public ProductionController(ProductionService service) {
+    this.service = service;
+  }
+
+  @GetMapping("/app/production")
+  public String home() {
+    return "app/production/home";
+  }
+
+  @GetMapping("/app/production/processes")
+  public String processes(Model model) {
+    model.addAttribute("processes", service.listProcesses());
+    return "app/production/processes";
+  }
+
+  @GetMapping("/app/production/equipment")
+  public String equipment(Model model) {
+    model.addAttribute("equipment", service.listEquipment());
+    return "app/production/equipment";
+  }
+
+  @GetMapping("/app/production/plans")
+  public String plans(Model model) {
+    model.addAttribute("plans", service.listPlans());
+    return "app/production/plans";
+  }
+
+  @GetMapping("/app/production/results")
+  public String results(Model model) {
+    model.addAttribute("results", service.listResults());
+    return "app/production/results";
+  }
+
+  @GetMapping("/app/production/stats")
+  public String stats(Model model) {
+    model.addAttribute("daily", service.dailyStatsLast14Days());
+    model.addAttribute("monthly", service.monthlyStatsThisYear());
+    return "app/production/stats";
+  }
+
+  @GetMapping("/admin/production/plans/new")
+  public String newPlanForm(Model model) {
+    model.addAttribute("planDate", "");
+    model.addAttribute("itemCode", "");
+    model.addAttribute("qtyPlan", "0");
+    return "admin/production-plan-form";
+  }
+
+  @PostMapping("/admin/production/plans/new")
+  public String createPlan(
+      @RequestParam("planDate") String planDate,
+      @RequestParam("itemCode") String itemCode,
+      @RequestParam("qtyPlan") String qtyPlan,
+      HttpSession session
+  ) {
+    AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
+    Long createdBy = user == null ? null : user.getUserId();
+    service.createPlan(planDate, itemCode, qtyPlan, createdBy);
+    return "redirect:/app/production/plans";
+  }
+
+  @PostMapping("/admin/production/plans/delete")
+  public String deletePlan(@RequestParam("planId") long planId) {
+    service.deletePlan(planId);
+    return "redirect:/app/production/plans";
+  }
+
+  @GetMapping("/admin/production/results/new")
+  public String newResultForm(Model model) {
+    model.addAttribute("workDate", "");
+    model.addAttribute("itemCode", "");
+    model.addAttribute("qtyGood", "0");
+    model.addAttribute("qtyNg", "0");
+    model.addAttribute("equipmentList", service.listEquipment().stream()
+        .filter(e -> "Y".equalsIgnoreCase(e.getActiveYn()))
+        .collect(Collectors.toList()));
+    return "admin/production-result-form";
+  }
+
+  @PostMapping("/admin/production/results/new")
+  public String createResult(
+      @RequestParam("workDate") String workDate,
+      @RequestParam("itemCode") String itemCode,
+      @RequestParam("qtyGood") String qtyGood,
+      @RequestParam("qtyNg") String qtyNg,
+      @RequestParam(value = "equipmentId", required = false) Long equipmentId,
+      HttpSession session
+  ) {
+    AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
+    Long createdBy = user == null ? null : user.getUserId();
+    service.createResult(workDate, itemCode, qtyGood, qtyNg, equipmentId, createdBy);
+    return "redirect:/app/production/results";
+  }
+
+  @PostMapping("/admin/production/results/delete")
+  public String deleteResult(@RequestParam("resultId") long resultId) {
+    service.deleteResult(resultId);
+    return "redirect:/app/production/results";
+  }
+}
