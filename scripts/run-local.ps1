@@ -107,13 +107,6 @@ if ($portPid) {
   throw "Port $Port is already in use (PID=$portPid, Process=$name). Stop it or run with -Port 8091 (or another free port)."
 }
 
-# Build the executable WAR, then run it with Java.
-& .\mvnw.cmd -DskipTests package
-
-$warPath = Join-Path $root 'target\TP.war'
-if (-not (Test-Path $warPath)) {
-  throw "WAR not found at '$warPath'. Build may have failed."
-}
-
-Write-Host "Starting app: http://localhost:$Port/"
-& java -jar $warPath "--server.port=$Port"
+# Run with spring-boot:run (faster for dev, doesn't require executable WAR repackaging)
+Write-Host "Starting app: http://localhost:$Port/ (Environment variables loaded)"
+& .\mvnw.cmd -DskipTests spring-boot:run "-Dspring-boot.run.arguments=--server.port=$Port"

@@ -19,6 +19,6 @@ public class HomeController {
   public String home(Model model) {
     model.addAttribute("now", Instant.now().toString());
     model.addAttribute("keywords", companyPageService.getPageData().getKeywords());
-    return "intro";
+    return "redirect:/index.jsp";
   }
 }
