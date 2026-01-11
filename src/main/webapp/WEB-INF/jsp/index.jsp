@@ -63,7 +63,7 @@
 
                 <div class="pin02">
                     <div class="sec03">
-                        <a href="/app/portfolio">
+                        <a href="/login">
                             <div class="main-tit">
                                 <h3>글로벌 사업장<i>↗</i></h3>
                             </div>
