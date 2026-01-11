@@ -263,12 +263,35 @@
       }
     });
 
-    // Close drawer when navigating.
+    // Handle clicks in drawer: toggle submenu or navigate
     drawer.addEventListener('click', function (e) {
       var target = e.target;
       if (!(target instanceof Element)) return;
+
       var a = target.closest('a');
-      if (a) close();
+      if (!a) return;
+
+      // If it's a menu-toggle link, toggle the submenu instead of navigating
+      if (a.classList.contains('menu-toggle')) {
+        e.preventDefault();
+        a.classList.toggle('active');
+
+        var parentLi = a.parentElement;
+        if (parentLi) {
+          var submenu = parentLi.querySelector('.submenu');
+          if (submenu) {
+            // Toggle submenu visibility
+            if (submenu.style.display === 'block') {
+              submenu.style.display = 'none';
+            } else {
+              submenu.style.display = 'block';
+            }
+          }
+        }
+      } else {
+        // Regular link - close drawer and navigate
+        close();
+      }
     });
 
     // If switching to desktop, ensure drawer is closed.

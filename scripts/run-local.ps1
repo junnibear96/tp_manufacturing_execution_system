@@ -57,9 +57,9 @@ function Use-MicrosoftOpenJdk21 {
   }
 
   $jdk = Get-ChildItem $msDir -Directory -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -match '^jdk-21' } |
-    Sort-Object Name -Descending |
-    Select-Object -First 1
+  Where-Object { $_.Name -match '^jdk-21' } |
+  Sort-Object Name -Descending |
+  Select-Object -First 1
 
   if (-not $jdk) {
     throw "Microsoft OpenJDK 21 not found under '$msDir'. Install it with: winget install -e --id Microsoft.OpenJDK.21"
@@ -93,18 +93,22 @@ $currentMajor = Get-CurrentJavaMajorVersion
 if ($javaHomeMajor -eq 21) {
   # JAVA_HOME already points to 21; ensure PATH resolves `java` from JAVA_HOME first.
   Prepend-JavaHomeBinToPath
-} elseif ($currentMajor -ne 21) {
+}
+elseif ($currentMajor -ne 21) {
   Use-MicrosoftOpenJdk21
 }
 
 Write-Host 'Building & running via Maven Wrapper...'
 
-# Fail fast if port is in use.
+# Auto-stop existing process if port is in use.
 $portPid = (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty OwningProcess)
 if ($portPid) {
   $p = Get-Process -Id $portPid -ErrorAction SilentlyContinue
   $name = if ($p) { $p.ProcessName } else { 'unknown' }
-  throw "Port $Port is already in use (PID=$portPid, Process=$name). Stop it or run with -Port 8091 (or another free port)."
+  Write-Host "Port $Port is already in use (PID=$portPid, Process=$name). Stopping it..." -ForegroundColor Yellow
+  Stop-Process -Id $portPid -Force -ErrorAction SilentlyContinue
+  Start-Sleep -Seconds 2
+  Write-Host "Process stopped. Continuing..." -ForegroundColor Green
 }
 
 # Run with spring-boot:run (faster for dev, doesn't require executable WAR repackaging)

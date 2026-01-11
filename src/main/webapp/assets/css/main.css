@@ -300,6 +300,7 @@
 
     .index .sec04 .sec-box ul {
         flex-direction: column;
+        align-items: center;
     }
 }
 

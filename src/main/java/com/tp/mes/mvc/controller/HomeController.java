@@ -19,6 +19,13 @@ public class HomeController {
   public String home(Model model) {
     model.addAttribute("now", Instant.now().toString());
     model.addAttribute("keywords", companyPageService.getPageData().getKeywords());
-    return "redirect:/index.jsp";
+    return "index";
+  }
+
+  @GetMapping("/cover-letter")
+  public String coverLetter(Model model) {
+    model.addAttribute("name", "최준석");
+    model.addAttribute("title", "Backend Developer");
+    return "cover-letter";
   }
 }

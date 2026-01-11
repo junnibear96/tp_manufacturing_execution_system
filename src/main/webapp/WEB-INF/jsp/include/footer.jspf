@@ -1,0 +1,120 @@
+<%@ page pageEncoding="UTF-8" %>
+                <section class="sec-footer">
+                    <div class="inner">
+                        <div class="ft-btm">
+                            <div class="ft-logo"><a href="/"></a></div>
+                            <div class="ft-info">
+                                <p>서울특별시 구로구 디지털로31길12 (구로동, TP타워) <br>
+                                    COPYRIGHT © 1972-<%= java.time.Year.now().getValue() %> TP Inc. ALL RIGHTS RESERVED.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+
+        <script>
+            // Initialize Swiper when DOM is ready
+            $(document).ready(function () {
+                var timelineSwiper = new Swiper('.swiper-container--timeline', {
+                    direction: 'vertical',
+                    loop: false,
+                    speed: 1600,
+                    pagination: {
+                        el: '.swiper-pagination--timeline',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                            var labels = ['TP', 'TP Nadia/EO', 'TP Living', 'TP F&B', 'TP Square'];
+                            return '<span class="' + className + '">' + labels[index] + '</span>';
+                        },
+                    },
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    },
+                    on: {
+                        slideChange: function () {
+                            var progress = ((this.activeIndex + 1) / this.slides.length) * 100;
+                            $('.swiper-timeline-progress span').css('height', progress + '%');
+                        }
+                    }
+                });
+
+                // Initialize AOS
+                if (typeof AOS !== 'undefined') {
+                    AOS.init({
+                        duration: 1200,
+                        once: false
+                    });
+                }
+
+                // Hamburger Menu Toggle (Mobile Only)
+                $('#hamburger').on('click', function () {
+                    $(this).toggleClass('active');
+                    $('.hd-menu').toggleClass('active');
+                });
+
+                // Submenu Toggle (Mobile Only)
+                if ($(window).width() <= 960) {
+                    $('.menu-toggle').on('click', function (e) {
+                        e.preventDefault();
+                        const $this = $(this);
+                        const $submenu = $this.next('.submenu');
+
+                        // Toggle current submenu
+                        $this.toggleClass('active');
+                        $submenu.toggleClass('active');
+
+                        // Close other submenus (accordion style)
+                        $('.menu-toggle').not($this).removeClass('active');
+                        $('.submenu').not($submenu).removeClass('active');
+                    });
+
+                    // Close menu when clicking on a submenu link
+                    $('.submenu a').on('click', function () {
+                        $('#hamburger').removeClass('active');
+                        $('.hd-menu').removeClass('active');
+                        $('.menu-toggle').removeClass('active');
+                        $('.submenu').removeClass('active');
+                    });
+                }
+
+                // Close menu when clicking outside
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('#header').length) {
+                        $('#hamburger').removeClass('active');
+                        $('.hd-menu').removeClass('active');
+                    }
+                });
+
+                // Re-bind on window resize
+                $(window).on('resize', function () {
+                    if ($(window).width() > 960) {
+                        $('#hamburger').removeClass('active');
+                        $('.hd-menu').removeClass('active');
+                        $('.menu-toggle').removeClass('active');
+                        $('.submenu').removeClass('active');
+                    }
+                });
+
+                // Hide pagination when scrolling down (like tp-inc.com)
+                $(window).on('scroll', function () {
+                    const scrollTop = $(window).scrollTop();
+                    const heroHeight = $('.swiper-container-wrapper--timeline').height();
+
+                    if (scrollTop > heroHeight * 0.3) {
+                        // Hide pagination when scrolled 30% past hero
+                        $('.swiper-timeline').fadeOut(300);
+                        $('.swiper-pagination--timeline').fadeOut(300);
+                    } else {
+                        // Show pagination when at top
+                        $('.swiper-timeline').fadeIn(300);
+                        $('.swiper-pagination--timeline').fadeIn(300);
+                    }
+                });
+            });
+        </script>
+    </body>
+
+    </html>
