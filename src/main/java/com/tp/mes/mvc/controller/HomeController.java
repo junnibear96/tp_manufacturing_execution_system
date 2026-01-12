@@ -1,6 +1,7 @@
 package com.tp.mes.mvc.controller;
 
 import com.tp.mes.mvc.service.CompanyPageService;
+import jakarta.servlet.http.HttpSession;
 import java.time.Instant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,15 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public String home(Model model) {
+  public String home(Model model, HttpSession session) {
+    // Check if user is logged in
+    String loggedInUser = (String) session.getAttribute("loggedInUser");
+    if (loggedInUser != null) {
+      // User is logged in, redirect to dashboard
+      return "redirect:/dashboard";
+    }
+
+    // User is not logged in, show index page
     model.addAttribute("now", Instant.now().toString());
     model.addAttribute("keywords", companyPageService.getPageData().getKeywords());
     return "index";

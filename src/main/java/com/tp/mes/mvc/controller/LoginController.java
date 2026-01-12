@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
- * Login Controller for Spring Security
+ * Login Controller - Simple session-based authentication
+ * TODO: Integrate with HRM system in future
  */
 @Controller
 public class LoginController {
@@ -43,15 +45,21 @@ public class LoginController {
             HttpSession session,
             Model model) {
 
-        // Simple credential check (in production, use UserDetailsService)
+        // Simple credential check (hardcoded for now)
         if ("admin".equals(username) && "admin123".equals(password)) {
             session.setAttribute("loggedInUser", username);
+            session.setAttribute("userName", "관리자");
+            session.setAttribute("userRoles", List.of("ROLE_ADMIN", "ROLE_USER"));
             return "redirect:/dashboard";
         } else if ("prod001".equals(username) && "prod123".equals(password)) {
             session.setAttribute("loggedInUser", username);
+            session.setAttribute("userName", "생산관리자");
+            session.setAttribute("userRoles", List.of("ROLE_PRODUCTION", "ROLE_MANAGER", "ROLE_USER"));
             return "redirect:/dashboard";
         } else if ("worker001".equals(username) && "work123".equals(password)) {
             session.setAttribute("loggedInUser", username);
+            session.setAttribute("userName", "작업자");
+            session.setAttribute("userRoles", List.of("ROLE_WORKER", "ROLE_USER"));
             return "redirect:/dashboard";
         }
 
@@ -61,10 +69,27 @@ public class LoginController {
     }
 
     /**
+     * Logout
+     */
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login?logout";
+    }
+
+    /**
      * Dashboard - main page after login
      */
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("loggedInUser");
+        String userName = (String) session.getAttribute("userName");
+        @SuppressWarnings("unchecked")
+        List<String> roles = (List<String>) session.getAttribute("userRoles");
+
+        model.addAttribute("userName", userName != null ? userName : username);
+        model.addAttribute("userRoles", roles);
+
         return "dashboard";
     }
 
