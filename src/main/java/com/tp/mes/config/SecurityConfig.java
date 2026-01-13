@@ -22,45 +22,59 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                // Disable CSRF for simplicity
-                .csrf(csrf -> csrf.disable())
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                // Allow public resources and login page
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/assets/**", "/WEB-INF/**", "/error").permitAll()
+                                                .requestMatchers("/", "/login", "/cover-letter", "/api/**").permitAll()
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .loginProcessingUrl("/login")
+                                                .defaultSuccessUrl("/dashboard", true)
+                                                .failureHandler((request, response, exception) -> {
+                                                        System.out.println("Login Failed: " + exception.getMessage());
+                                                        exception.printStackTrace(); // For debugging in console
+                                                        response.sendRedirect("/login?error");
+                                                })
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/login?logout")
+                                                .permitAll());
 
-                // Allow all requests without authentication
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll());
+                return http.build();
+        }
 
-        return http.build();
-    }
+        @Bean
+        public UserDetailsService userDetailsService() {
+                // Demo users (in production, use database authentication)
+                UserDetails admin = User.builder()
+                                .username("admin")
+                                .password(passwordEncoder().encode("admin123"))
+                                .roles("ADMIN", "USER")
+                                .build();
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // Demo users (in production, use database authentication)
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin123"))
-                .roles("ADMIN", "USER")
-                .build();
+                UserDetails productionManager = User.builder()
+                                .username("prod001")
+                                .password(passwordEncoder().encode("prod123"))
+                                .roles("PRODUCTION", "USER")
+                                .build();
 
-        UserDetails productionManager = User.builder()
-                .username("prod001")
-                .password(passwordEncoder().encode("prod123"))
-                .roles("PRODUCTION", "USER")
-                .build();
+                UserDetails worker = User.builder()
+                                .username("worker001")
+                                .password(passwordEncoder().encode("work123"))
+                                .roles("USER")
+                                .build();
 
-        UserDetails worker = User.builder()
-                .username("worker001")
-                .password(passwordEncoder().encode("work123"))
-                .roles("USER")
-                .build();
+                return new InMemoryUserDetailsManager(admin, productionManager, worker);
+        }
 
-        return new InMemoryUserDetailsManager(admin, productionManager, worker);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 }

@@ -37,4 +37,6 @@ logging:
   level:
     root: INFO
     org.springframework.jdbc.core: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.web: DEBUG
 
