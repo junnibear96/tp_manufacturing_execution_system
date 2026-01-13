@@ -1,21 +1,28 @@
 package com.tp.mes.app.hr.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 사원 목록 조회용 DTO (조인 결과 포함)
  */
-public record EmployeeListItem(
-        String empId,
-        String empName,
-        String email,
-        String phone,
-        String hireDate, // 문자열로 간단히 표현
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class EmployeeListItem {
+        private String empId;
+        private String empName;
+        private String email;
+        private String phone;
+        private String hireDate; // 문자열로 간단히 표현
 
         // 조인된 정보
-        String departmentId,
-        String deptName,
-        String positionId,
-        String positionName,
+        private String departmentId;
+        private String deptName;
+        private String positionId;
+        private String positionName;
 
-        String status,
-        String jobType) {
+        private String status;
+        private String jobType;
 }

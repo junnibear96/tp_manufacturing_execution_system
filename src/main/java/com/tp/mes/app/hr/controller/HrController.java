@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 인사관리 컨트롤러
  * TEMPORARILY DISABLED - HRM system being reimplemented
  */
-// @Controller
+@Controller
 @RequestMapping("/hr")
 public class HrController {
 
@@ -168,23 +168,23 @@ public class HrController {
                 empName,
                 email,
                 phone,
-                existing.hireDate(),
-                existing.birthDate(),
-                existing.gender(),
+                existing.getHireDate(),
+                existing.getBirthDate(),
+                existing.getGender(),
                 departmentId,
                 positionId,
                 jobType,
-                existing.managerEmpId(),
+                existing.getManagerEmpId(),
                 status,
-                existing.leaveStartDate(),
-                existing.leaveEndDate(),
-                existing.terminationDate(),
-                existing.terminationReason(),
+                existing.getLeaveStartDate(),
+                existing.getLeaveEndDate(),
+                existing.getTerminationDate(),
+                existing.getTerminationReason(),
                 shiftType,
-                existing.factoryId(),
-                existing.productionLineId(),
+                existing.getFactoryId(),
+                existing.getProductionLineId(),
                 skillLevel,
-                existing.createdAt(),
+                existing.getCreatedAt(),
                 null // updatedAt은 DB에서 자동 갱신
         );
 
@@ -210,3 +210,4 @@ public class HrController {
         return "redirect:/hr/employees/" + empId;
     }
 }
+

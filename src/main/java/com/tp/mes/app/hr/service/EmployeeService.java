@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 인사관리 서비스
  * TEMPORARILY DISABLED - HRM system being reimplemented
  */
-// @Service
+@Service
 public class EmployeeService {
 
     private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
@@ -81,21 +81,21 @@ public class EmployeeService {
 
     @Transactional
     public void createEmployee(Employee employee) {
-        log.info("Creating new employee: {}", employee.empId());
+        log.info("Creating new employee: {}", employee.getEmpId());
 
         // 1. 사원 등록
         employeeRepository.insert(employee);
 
         // 2. Role 자동 매핑
         List<String> roles = roleAutoAssignService.assignRoles(
-                employee.departmentId(),
-                employee.positionId());
+                employee.getDepartmentId(),
+                employee.getPositionId());
 
-        log.info("Auto-assigned roles for {}: {}", employee.empId(), roles);
+        log.info("Auto-assigned roles for {}: {}", employee.getEmpId(), roles);
 
         // 3. employee_roles 테이블에 INSERT
         for (String role : roles) {
-            employeeRoleRepository.insert(employee.empId(), role, "SYSTEM");
+            employeeRoleRepository.insert(employee.getEmpId(), role, "SYSTEM");
         }
     }
 
@@ -103,23 +103,23 @@ public class EmployeeService {
 
     @Transactional
     public void updateEmployee(Employee employee) {
-        log.info("Updating employee: {}", employee.empId());
+        log.info("Updating employee: {}", employee.getEmpId());
 
         // 1. 사원 정보 수정
         employeeRepository.update(employee);
 
         // 2. 부서/직급이 변경되었으면 Role 재계산
         // (실제로는 변경 감지가 필요하지만, 여기서는 항상 재계산)
-        employeeRoleRepository.deleteAllByEmpId(employee.empId());
+        employeeRoleRepository.deleteAllByEmpId(employee.getEmpId());
 
         List<String> roles = roleAutoAssignService.assignRoles(
-                employee.departmentId(),
-                employee.positionId());
+                employee.getDepartmentId(),
+                employee.getPositionId());
 
-        log.info("Re-assigned roles for {}: {}", employee.empId(), roles);
+        log.info("Re-assigned roles for {}: {}", employee.getEmpId(), roles);
 
         for (String role : roles) {
-            employeeRoleRepository.insert(employee.empId(), role, "SYSTEM");
+            employeeRoleRepository.insert(employee.getEmpId(), role, "SYSTEM");
         }
     }
 
@@ -143,3 +143,4 @@ public class EmployeeService {
         return employeeRepository.countByDepartment(departmentId);
     }
 }
+

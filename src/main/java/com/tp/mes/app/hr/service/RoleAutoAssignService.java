@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * - 모든 사용자 → ROLE_USER (기본)
  * TEMPORARILY DISABLED - HRM system being reimplemented
  */
-// @Service
+@Service
 public class RoleAutoAssignService {
 
     private final PositionRepository positionRepository;
@@ -39,7 +39,7 @@ public class RoleAutoAssignService {
 
         // 직급 정보 조회
         Position position = positionRepository.findById(positionId).orElse(null);
-        int level = (position != null) ? position.level() : 0;
+        int level = (position != null) ? position.getLevel() : 0;
 
         // 부서별 자동 할당
         if ("IT001".equals(departmentId)) {
