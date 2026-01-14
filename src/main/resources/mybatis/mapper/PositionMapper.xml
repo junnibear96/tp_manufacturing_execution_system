@@ -18,7 +18,7 @@
     <select id="findAll" resultMap="PositionResultMap">
         SELECT position_id, position_name, position_name_en, LEVEL_NO,
                job_category, created_at
-        FROM positions
+        FROM tp_manufacture.positions
         ORDER BY LEVEL_NO DESC, position_id
     </select>
 
@@ -26,7 +26,7 @@
     <select id="findByJobCategory" parameterType="string" resultMap="PositionResultMap">
         SELECT position_id, position_name, position_name_en, LEVEL_NO,
                job_category, created_at
-        FROM positions
+        FROM tp_manufacture.positions
         WHERE job_category = #{jobCategory}
         ORDER BY LEVEL_NO DESC
     </select>
@@ -35,7 +35,7 @@
     <select id="findById" parameterType="string" resultMap="PositionResultMap">
         SELECT position_id, position_name, position_name_en, LEVEL_NO,
                job_category, created_at
-        FROM positions
+        FROM tp_manufacture.positions
         WHERE position_id = #{positionId}
     </select>
 

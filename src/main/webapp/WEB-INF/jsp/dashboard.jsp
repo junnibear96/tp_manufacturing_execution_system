@@ -201,13 +201,36 @@
                         </div>
                     </div>
                 </div>
-                <a href="/hr/employees" class="card-link">
-                    <div class="card">
-                        <h2>👥 인사 관리</h2>
-                        <p>직원 정보를 관리하고 조직 구성원을 확인합니다.</p>
-                        <div class="btn-primary" style="display: inline-block; margin-top: 16px;">직원 목록 보기 →</div>
-                    </div>
-                </a>
+
+                <!-- 관리 모듈 카드 -->
+                <div class="dashboard-grid">
+                    <!-- 인사 관리 -->
+                    <a href="/hr/employees" class="card-link">
+                        <div class="card">
+                            <h2>👥 인사 관리</h2>
+                            <p>직원 정보를 관리하고 조직 구성원을 확인합니다.</p>
+                            <div class="btn-primary" style="display: inline-block; margin-top: 16px;">직원 목록 보기 →</div>
+                        </div>
+                    </a>
+
+                    <!-- 공장 관리 -->
+                    <a href="/factory" class="card-link">
+                        <div class="card">
+                            <h2>🏭 공장 관리</h2>
+                            <p>사업장, 공장, 생산라인을 관리하고 운영 현황을 확인합니다.</p>
+                            <div class="btn-primary" style="display: inline-block; margin-top: 16px;">공장 현황 보기 →</div>
+                        </div>
+                    </a>
+
+                    <!-- 재고 관리 -->
+                    <a href="/inventory" class="card-link">
+                        <div class="card">
+                            <h2>📦 재고 관리</h2>
+                            <p>원자재, 부품, 완제품 재고를 추적하고 관리합니다.</p>
+                            <div class="btn-primary" style="display: inline-block; margin-top: 16px;">재고 현황 보기 →</div>
+                        </div>
+                    </a>
+                </div>
                 <div class="card">
                     <h2>🔐 부여된 권한</h2>
                     <p>귀하의 계정에 부여된 시스템 권한:</p>

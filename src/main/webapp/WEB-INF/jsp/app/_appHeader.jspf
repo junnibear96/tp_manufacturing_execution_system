@@ -21,16 +21,37 @@
           <span class="nav-drawer-title">Menu</span>
           <button class="nav-close" type="button" data-nav-close aria-label="Close menu">Close</button>
         </div>
-        <a href="${pageContext.request.contextPath}/app/home" data-nav="page">Home</a>
-        <a href="${pageContext.request.contextPath}/app/companies" data-nav="page">Companies</a>
-        <a href="${pageContext.request.contextPath}/app/notices" data-nav="page">Notices</a>
-        <a href="${pageContext.request.contextPath}/app/board" data-nav="page">Board</a>
+        <a href="${pageContext.request.contextPath}/dashboard" data-nav="page">🏠 Dashboard</a>
+        
+        <!-- 인사 관리 -->
+        <div class="nav-group">
+          <span class="nav-group-title">👥 인사 관리</span>
+          <a href="${pageContext.request.contextPath}/hr/employees" data-nav="page">직원 목록</a>
+          <a href="${pageContext.request.contextPath}/hr/departments" data-nav="page">부서 관리</a>
+          <a href="${pageContext.request.contextPath}/hr/attendance" data-nav="page">근태 관리</a>
+        </div>
+        
+        <!-- 공장 관리 -->
+        <div class="nav-group">
+          <span class="nav-group-title">🏭 공장 관리</span>
+          <a href="${pageContext.request.contextPath}/factory" data-nav="page">공장 현황</a>
+          <a href="${pageContext.request.contextPath}/factories" data-nav="page">사업장 목록</a>
+          <a href="${pageContext.request.contextPath}/production/dashboard" data-nav="page">생산 대시보드</a>
+        </div>
+        
+        <!-- 재고 관리 -->
+        <div class="nav-group">
+          <span class="nav-group-title">📦 재고 관리</span>
+          <a href="${pageContext.request.contextPath}/inventory" data-nav="page">재고 현황</a>
+          <a href="${pageContext.request.contextPath}/inventory/list" data-nav="page">재고 목록</a>
+          <a href="${pageContext.request.contextPath}/inventory/transactions" data-nav="page">입출고 내역</a>
+        </div>
+
         <a href="${pageContext.request.contextPath}/app/production" data-nav="page">Production</a>
-        <a href="${pageContext.request.contextPath}/app/company" data-nav="page">Company</a>
-        <a href="${pageContext.request.contextPath}/app/portfolio" data-nav="page">Portfolio</a>
+        <a href="${pageContext.request.contextPath}/app/notices" data-nav="page">Notices</a>
 
         <c:if test="${sessionScope.AUTH_USER != null && sessionScope.AUTH_USER.hasRole('ROLE_ADMIN')}">
-          <a href="${pageContext.request.contextPath}/admin/companies/new" data-nav="page">Admin</a>
+          <a href="${pageContext.request.contextPath}/admin/companies/new" data-nav="page">⚙️ Admin</a>
         </c:if>
 
         <form method="post" action="${pageContext.request.contextPath}/app/logout">

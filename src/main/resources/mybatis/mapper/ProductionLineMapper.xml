@@ -30,40 +30,40 @@
 
     <!-- 모든 생산라인 조회 -->
     <select id="findAll" resultMap="ProductionLineResultMap">
-        SELECT * FROM production_lines
+        SELECT * FROM tp_manufacture.production_lines
         ORDER BY factory_id, line_name
     </select>
 
     <!-- 공장별 생산라인 조회 -->
     <select id="findByFactory" parameterType="string" resultMap="ProductionLineResultMap">
-        SELECT * FROM production_lines
+        SELECT * FROM tp_manufacture.production_lines
         WHERE factory_id = #{factoryId}
         ORDER BY line_name
     </select>
 
     <!-- 상태별 생산라인 조회 -->
     <select id="findByStatus" parameterType="string" resultMap="ProductionLineResultMap">
-        SELECT * FROM production_lines
+        SELECT * FROM tp_manufacture.production_lines
         WHERE status = #{status}
         ORDER BY line_name
     </select>
 
     <!-- 가동 중인 생산라인 조회 -->
     <select id="findRunning" resultMap="ProductionLineResultMap">
-        SELECT * FROM production_lines
+        SELECT * FROM tp_manufacture.production_lines
         WHERE is_operating = 1 AND status = 'RUNNING'
         ORDER BY line_name
     </select>
 
     <!-- ID로 생산라인 조회 -->
     <select id="findById" parameterType="string" resultMap="ProductionLineResultMap">
-        SELECT * FROM production_lines
+        SELECT * FROM tp_manufacture.production_lines
         WHERE line_id = #{lineId}
     </select>
 
     <!-- 생산라인 등록 -->
     <insert id="insert" parameterType="com.tp.mes.app.factory.model.ProductionLine">
-        INSERT INTO production_lines (
+        INSERT INTO tp_manufacture.production_lines(
             line_id, factory_id, line_name, line_code, line_type,
             status, is_operating, max_capacity, takt_time, cycle_time,
             utilization_rate, standard_workers, current_workers,
@@ -80,7 +80,7 @@
 
     <!-- 생산라인 수정 -->
     <update id="update" parameterType="com.tp.mes.app.factory.model.ProductionLine">
-        UPDATE production_lines SET
+        UPDATE tp_manufacture.production_linesSET
             line_name = #{lineName},
             line_code = #{lineCode},
             line_type = #{lineType},
@@ -102,12 +102,12 @@
 
     <!-- 생산라인 삭제 -->
     <delete id="delete" parameterType="string">
-        DELETE FROM production_lines WHERE line_id = #{lineId}
+        DELETE FROM tp_manufacture.production_linesWHERE line_id = #{lineId}
     </delete>
 
     <!-- 상태 변경 -->
     <update id="updateStatus">
-        UPDATE production_lines SET
+        UPDATE tp_manufacture.production_linesSET
             status = #{status},
             is_operating = #{isOperating},
             last_operated_at = CASE WHEN #{isOperating} = 1 THEN CURRENT_TIMESTAMP ELSE last_operated_at END,
@@ -117,7 +117,7 @@
 
     <!-- 현재 투입 인원 업데이트 -->
     <update id="updateCurrentWorkers">
-        UPDATE production_lines SET
+        UPDATE tp_manufacture.production_linesSET
             current_workers = #{currentWorkers},
             updated_at = CURRENT_TIMESTAMP
         WHERE line_id = #{lineId}
@@ -125,7 +125,7 @@
 
     <!-- 가동률 업데이트 -->
     <update id="updateUtilizationRate">
-        UPDATE production_lines SET
+        UPDATE tp_manufacture.production_linesSET
             utilization_rate = #{utilizationRate},
             updated_at = CURRENT_TIMESTAMP
         WHERE line_id = #{lineId}
@@ -133,7 +133,7 @@
 
     <!-- 공장별 생산라인 수 -->
     <select id="countByFactory" parameterType="string" resultType="int">
-        SELECT COUNT(*) FROM production_lines
+        SELECT COUNT(*) FROM tp_manufacture.production_lines
         WHERE factory_id = #{factoryId}
     </select>
 

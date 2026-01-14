@@ -6,20 +6,20 @@
 
     <!-- 사원의 모든 권한 조회 -->
     <select id="findRolesByEmployeeId" parameterType="string" resultType="string">
-        SELECT role FROM employee_roles 
+        SELECT role FROM tp_manufacture.employee_roles
         WHERE emp_id = #{empId}
         ORDER BY role
     </select>
 
     <!-- 사원-권한 매핑 등록 -->
     <insert id="insert">
-        INSERT INTO employee_roles (emp_id, role, assigned_at, assigned_by)
+        INSERT INTO tp_manufacture.employee_roles(emp_id, role, assigned_at, assigned_by)
         VALUES (#{empId}, #{role}, CURRENT_TIMESTAMP, #{assignedBy})
     </insert>
 
     <!-- 사원의 모든 권한 삭제 -->
     <delete id="deleteByEmployeeId" parameterType="string">
-        DELETE FROM employee_roles WHERE emp_id = #{empId}
+        DELETE FROM tp_manufacture.employee_rolesWHERE emp_id = #{empId}
     </delete>
 
 </mapper>

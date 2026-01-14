@@ -7,7 +7,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-@MapperScan({ "com.tp.mes.app.hr.mapper", "com.tp.mes.app.factory.mapper" })
+@MapperScan({ "com.tp.mes.app.hr.mapper", "com.tp.mes.app.factory.mapper", "com.tp.mes.app.prod.mapper",
+    "com.tp.mes.app.inventory.mapper" })
 public class TpMesApplication extends SpringBootServletInitializer {
 
   public static void main(String[] args) {

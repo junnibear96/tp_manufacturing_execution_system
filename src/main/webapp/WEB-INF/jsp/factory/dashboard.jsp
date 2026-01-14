@@ -388,6 +388,7 @@
                         <a href="/factory/plants" class="btn btn-primary">📍 사업장 관리</a>
                         <a href="/factory/factories" class="btn btn-primary">🏭 공장 관리</a>
                         <a href="/factory/lines" class="btn btn-primary">⚙️ 생산라인 관리</a>
+                        <a href="/production/dashboard" class="btn btn-primary">📊 생산관리</a>
                     </div>
                 </div>
 
