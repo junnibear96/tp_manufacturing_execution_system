@@ -52,9 +52,9 @@
                e.department_id, d.dept_name,
                e.position_id, p.position_name,
                e.status, e.job_type
-        FROM tp_manufacture.employeese
-        LEFT JOIN.departmentsd ON e.department_id = d.department_id
-        LEFT JOIN.positionsp ON e.position_id = p.position_id
+        FROM tp_manufacture.employees e
+        LEFT JOIN tp_manufacture.departments d ON e.department_id = d.department_id
+        LEFT JOIN tp_manufacture.positions p ON e.position_id = p.position_id
         ORDER BY e.created_at DESC
     </select>
 
@@ -65,9 +65,9 @@
                e.department_id, d.dept_name,
                e.position_id, p.position_name,
                e.status, e.job_type
-        FROM tp_manufacture.employeese
-        LEFT JOIN.departmentsd ON e.department_id = d.department_id
-        LEFT JOIN.positionsp ON e.position_id = p.position_id
+        FROM tp_manufacture.employees e
+        LEFT JOIN tp_manufacture.departments d ON e.department_id = d.department_id
+        LEFT JOIN tp_manufacture.positions p ON e.position_id = p.position_id
         WHERE e.department_id = #{departmentId}
         ORDER BY e.created_at DESC
     </select>
@@ -79,16 +79,16 @@
                e.department_id, d.dept_name,
                e.position_id, p.position_name,
                e.status, e.job_type
-        FROM tp_manufacture.employeese
-        LEFT JOIN.departmentsd ON e.department_id = d.department_id
-        LEFT JOIN.positionsp ON e.position_id = p.position_id
+        FROM tp_manufacture.employees e
+        LEFT JOIN tp_manufacture.departments d ON e.department_id = d.department_id
+        LEFT JOIN tp_manufacture.positions p ON e.position_id = p.position_id
         WHERE e.status = #{status}
         ORDER BY e.created_at DESC
     </select>
 
     <!-- ID로 사원 조회 -->
     <select id="findById" parameterType="string" resultMap="EmployeeResultMap">
-        SELECT * FROM tp_manufacture.employeesWHERE emp_id = #{empId}
+        SELECT * FROM tp_manufacture.employees e WHERE emp_id = #{empId}
     </select>
 
     <!-- 사원 등록 -->
@@ -107,7 +107,7 @@
 
     <!-- 사원 정보 수정 -->
     <update id="update" parameterType="com.tp.mes.app.hr.model.Employee">
-        UPDATE tp_manufacture.employeesSET
+        UPDATE tp_manufacture.employees SET
             emp_name = #{empName},
             email = #{email},
             phone = #{phone},
@@ -126,7 +126,7 @@
 
     <!-- 사원 상태 변경 -->
     <update id="updateStatus">
-        UPDATE tp_manufacture.employeesSET status = #{status}, updated_at = CURRENT_TIMESTAMP
+        UPDATE tp_manufacture.employees SET status = #{status}, updated_at = CURRENT_TIMESTAMP
         WHERE emp_id = #{empId}
     </update>
 

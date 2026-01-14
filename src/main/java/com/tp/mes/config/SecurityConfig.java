@@ -36,8 +36,6 @@ public class SecurityConfig {
                                                 .loginProcessingUrl("/login")
                                                 .defaultSuccessUrl("/dashboard", true)
                                                 .failureHandler((request, response, exception) -> {
-                                                        System.out.println("Login Failed: " + exception.getMessage());
-                                                        exception.printStackTrace(); // For debugging in console
                                                         response.sendRedirect("/login?error");
                                                 })
                                                 .permitAll())
