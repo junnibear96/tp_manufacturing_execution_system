@@ -218,8 +218,15 @@
                     </p>
 
                     <div class="form-card">
-                        <form method="post" action="<c:if test='${mode == " new"}'>/hr/employees</c:if>
-                            <c:if test='${mode == "edit"}'>/hr/employees/${employee.empId}</c:if>">
+                        <c:choose>
+                            <c:when test="${mode eq 'edit'}">
+                                <c:set var="formAction" value="/hr/employees/${employee.empId}" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="formAction" value="/hr/employees" />
+                            </c:otherwise>
+                        </c:choose>
+                        <form method="post" action="${formAction}">
 
                             <!-- 기본 정보 -->
                             <div class="form-section">

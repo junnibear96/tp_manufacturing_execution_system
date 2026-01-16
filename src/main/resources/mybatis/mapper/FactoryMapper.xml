@@ -70,8 +70,9 @@
     </insert>
 
     <!-- 공장 수정 -->
+    <!-- 공장 수정 -->
     <update id="update" parameterType="com.tp.mes.app.factory.model.Factory">
-        UPDATE tp_manufacture.factoriesSET
+        UPDATE tp_manufacture.factories SET
             factory_name = #{factoryName},
             factory_name_en = #{factoryNameEn},
             factory_code = #{factoryCode},
@@ -89,7 +90,7 @@
 
     <!-- 공장 삭제 -->
     <delete id="delete" parameterType="string">
-        DELETE FROM tp_manufacture.factoriesWHERE factory_id = #{factoryId}
+        DELETE FROM tp_manufacture.factories WHERE factory_id = #{factoryId}
     </delete>
 
     <!-- 사업장별 공장 수 -->

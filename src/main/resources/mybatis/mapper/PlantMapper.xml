@@ -65,7 +65,7 @@
 
     <!-- 사업장 수정 -->
     <update id="update" parameterType="com.tp.mes.app.factory.model.Plant">
-        UPDATE tp_manufacture.plantsSET
+        UPDATE tp_manufacture.plants SET
             plant_name = #{plantName},
             plant_name_en = #{plantNameEn},
             address = #{address},
@@ -85,7 +85,7 @@
 
     <!-- 사업장 삭제 -->
     <delete id="delete" parameterType="string">
-        DELETE FROM tp_manufacture.plantsWHERE plant_id = #{plantId}
+        DELETE FROM tp_manufacture.plants WHERE plant_id = #{plantId}
     </delete>
 
 </mapper>

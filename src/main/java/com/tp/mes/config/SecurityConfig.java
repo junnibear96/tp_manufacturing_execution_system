@@ -22,6 +22,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+        private final com.tp.mes.security.CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+        public SecurityConfig(
+                        com.tp.mes.security.CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+                this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        }
+
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 http
@@ -34,7 +41,7 @@ public class SecurityConfig {
                                 .formLogin(form -> form
                                                 .loginPage("/login")
                                                 .loginProcessingUrl("/login")
-                                                .defaultSuccessUrl("/dashboard", true)
+                                                .successHandler(customAuthenticationSuccessHandler)
                                                 .failureHandler((request, response, exception) -> {
                                                         response.sendRedirect("/login?error");
                                                 })

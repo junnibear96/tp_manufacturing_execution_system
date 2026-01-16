@@ -24,6 +24,7 @@ public class LoginController {
     public String login(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout,
+            @RequestParam(value = "successUrl", required = false) String successUrl,
             Model model) {
 
         if (error != null) {
@@ -32,6 +33,10 @@ public class LoginController {
 
         if (logout != null) {
             model.addAttribute("message", "로그아웃되었습니다.");
+        }
+
+        if (successUrl != null) {
+            model.addAttribute("successUrl", successUrl);
         }
 
         return "login";

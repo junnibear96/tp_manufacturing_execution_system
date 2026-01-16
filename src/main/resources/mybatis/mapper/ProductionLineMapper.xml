@@ -80,7 +80,7 @@
 
     <!-- 생산라인 수정 -->
     <update id="update" parameterType="com.tp.mes.app.factory.model.ProductionLine">
-        UPDATE tp_manufacture.production_linesSET
+        UPDATE tp_manufacture.production_lines SET
             line_name = #{lineName},
             line_code = #{lineCode},
             line_type = #{lineType},
@@ -102,12 +102,12 @@
 
     <!-- 생산라인 삭제 -->
     <delete id="delete" parameterType="string">
-        DELETE FROM tp_manufacture.production_linesWHERE line_id = #{lineId}
+        DELETE FROM tp_manufacture.production_lines WHERE line_id = #{lineId}
     </delete>
 
     <!-- 상태 변경 -->
     <update id="updateStatus">
-        UPDATE tp_manufacture.production_linesSET
+        UPDATE tp_manufacture.production_lines SET
             status = #{status},
             is_operating = #{isOperating},
             last_operated_at = CASE WHEN #{isOperating} = 1 THEN CURRENT_TIMESTAMP ELSE last_operated_at END,
@@ -117,7 +117,7 @@
 
     <!-- 현재 투입 인원 업데이트 -->
     <update id="updateCurrentWorkers">
-        UPDATE tp_manufacture.production_linesSET
+        UPDATE tp_manufacture.production_lines SET
             current_workers = #{currentWorkers},
             updated_at = CURRENT_TIMESTAMP
         WHERE line_id = #{lineId}
@@ -125,7 +125,7 @@
 
     <!-- 가동률 업데이트 -->
     <update id="updateUtilizationRate">
-        UPDATE tp_manufacture.production_linesSET
+        UPDATE tp_manufacture.production_lines SET
             utilization_rate = #{utilizationRate},
             updated_at = CURRENT_TIMESTAMP
         WHERE line_id = #{lineId}

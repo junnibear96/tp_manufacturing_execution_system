@@ -19,7 +19,7 @@
 
     <!-- 사원의 모든 권한 삭제 -->
     <delete id="deleteByEmployeeId" parameterType="string">
-        DELETE FROM tp_manufacture.employee_rolesWHERE emp_id = #{empId}
+        DELETE FROM tp_manufacture.employee_roles WHERE emp_id = #{empId}
     </delete>
 
 </mapper>
