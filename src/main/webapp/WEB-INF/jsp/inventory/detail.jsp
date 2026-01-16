@@ -282,8 +282,7 @@
                                             <c:forEach items="${transactions}" var="trans">
                                                 <tr>
                                                     <td>
-                                                        <fmt:formatDate value="${trans.transactionDate}"
-                                                            pattern="yyyy-MM-dd HH:mm" />
+                                                        ${trans.transactionDate}
                                                     </td>
                                                     <td>
                                                         <c:choose>

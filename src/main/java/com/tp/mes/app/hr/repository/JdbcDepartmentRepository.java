@@ -59,4 +59,3 @@ public class JdbcDepartmentRepository implements DepartmentRepository {
         }
     }
 }
-

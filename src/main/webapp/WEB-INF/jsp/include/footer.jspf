@@ -1,120 +1,245 @@
 <%@ page pageEncoding="UTF-8" %>
-                <section class="sec-footer">
-                    <div class="inner">
-                        <div class="ft-btm">
-                            <div class="ft-logo"><a href="/"></a></div>
-                            <div class="ft-info">
-                                <p>서울특별시 구로구 디지털로31길12 (구로동, TP타워) <br>
-                                    COPYRIGHT © 1972-<%= java.time.Year.now().getValue() %> TP Inc. ALL RIGHTS RESERVED.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </section>
+<!-- Modern Footer -->
+<footer class="modern-footer">
+    <div class="footer-container">
+        <!-- Footer Top Section -->
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span class="logo-icon">🏭</span>
+                    <span class="logo-text">TP MES</span>
+                </div>
+                <p class="footer-tagline">차세대 제조 실행 시스템</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>시스템</h4>
+                    <ul>
+                        <li><a href="/factory">공장 관리</a></li>
+                        <li><a href="/production/dashboard">생산 현황</a></li>
+                        <li><a href="/inventory">재고 관리</a></li>
+                        <li><a href="/dashboard">대시보드</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>회사 정보</h4>
+                    <ul>
+                        <li><a href="#">회사 소개</a></li>
+                        <li><a href="#">연혁</a></li>
+                        <li><a href="#">사업 분야</a></li>
+                        <li><a href="#">채용</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>고객 지원</h4>
+                    <ul>
+                        <li><a href="#">사용자 가이드</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">기술 지원</a></li>
+                        <li><a href="#">문의하기</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>법적 고지</h4>
+                    <ul>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                        <li><a href="#">보안정책</a></li>
+                        <li><a href="#">라이선스</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <script>
-            // Initialize Swiper when DOM is ready
-            $(document).ready(function () {
-                var timelineSwiper = new Swiper('.swiper-container--timeline', {
-                    direction: 'vertical',
-                    loop: false,
-                    speed: 1600,
-                    pagination: {
-                        el: '.swiper-pagination--timeline',
-                        clickable: true,
-                        renderBullet: function (index, className) {
-                            var labels = ['TP', 'TP Nadia/EO', 'TP Living', 'TP F&B', 'TP Square'];
-                            return '<span class="' + className + '">' + labels[index] + '</span>';
-                        },
-                    },
-                    autoplay: {
-                        delay: 4000,
-                        disableOnInteraction: false,
-                    },
-                    on: {
-                        slideChange: function () {
-                            var progress = ((this.activeIndex + 1) / this.slides.length) * 100;
-                            $('.swiper-timeline-progress span').css('height', progress + '%');
-                        }
-                    }
-                });
+        <!-- Footer Bottom Section -->
+        <div class="footer-bottom">
+            <div class="footer-info">
+                <p class="company-address">
+                    서울특별시 구로구 디지털로31길12 (구로동, TP타워)
+                </p>
+                <p class="copyright">
+                    © 1972-<%= java.time.Year.now().getValue() %> TP Inc. All rights reserved.
+                </p>
+            </div>
+            <div class="footer-badges">
+                <span class="badge-item">🔒 보안 인증</span>
+                <span class="badge-item">✓ ISO 9001</span>
+                <span class="badge-item">⚡ 클라우드 인프라</span>
+            </div>
+        </div>
+    </div>
+</footer>
 
-                // Initialize AOS
-                if (typeof AOS !== 'undefined') {
-                    AOS.init({
-                        duration: 1200,
-                        once: false
-                    });
-                }
+<style>
+.modern-footer {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: #e2e8f0;
+    padding: 60px 0 30px;
+    margin-top: 80px;
+    position: relative;
+}
 
-                // Hamburger Menu Toggle (Mobile Only)
-                $('#hamburger').on('click', function () {
-                    $(this).toggleClass('active');
-                    $('.hd-menu').toggleClass('active');
-                });
+.modern-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
 
-                // Submenu Toggle (Mobile Only)
-                if ($(window).width() <= 960) {
-                    $('.menu-toggle').on('click', function (e) {
-                        e.preventDefault();
-                        const $this = $(this);
-                        const $submenu = $this.next('.submenu');
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
 
-                        // Toggle current submenu
-                        $this.toggleClass('active');
-                        $submenu.toggleClass('active');
+.footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 2.5fr;
+    gap: 60px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-                        // Close other submenus (accordion style)
-                        $('.menu-toggle').not($this).removeClass('active');
-                        $('.submenu').not($submenu).removeClass('active');
-                    });
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-                    // Close menu when clicking on a submenu link
-                    $('.submenu a').on('click', function () {
-                        $('#hamburger').removeClass('active');
-                        $('.hd-menu').removeClass('active');
-                        $('.menu-toggle').removeClass('active');
-                        $('.submenu').removeClass('active');
-                    });
-                }
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+}
 
-                // Close menu when clicking outside
-                $(document).on('click', function (e) {
-                    if (!$(e.target).closest('#header').length) {
-                        $('#hamburger').removeClass('active');
-                        $('.hd-menu').removeClass('active');
-                    }
-                });
+.footer-logo .logo-icon {
+    font-size: 36px;
+}
 
-                // Re-bind on window resize
-                $(window).on('resize', function () {
-                    if ($(window).width() > 960) {
-                        $('#hamburger').removeClass('active');
-                        $('.hd-menu').removeClass('active');
-                        $('.menu-toggle').removeClass('active');
-                        $('.submenu').removeClass('active');
-                    }
-                });
+.footer-tagline {
+    color: #a0aec0;
+    font-size: 15px;
+    margin: 0;
+}
 
-                // Hide pagination when scrolling down (like tp-inc.com)
-                $(window).on('scroll', function () {
-                    const scrollTop = $(window).scrollTop();
-                    const heroHeight = $('.swiper-container-wrapper--timeline').height();
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
 
-                    if (scrollTop > heroHeight * 0.3) {
-                        // Hide pagination when scrolled 30% past hero
-                        $('.swiper-timeline').fadeOut(300);
-                        $('.swiper-pagination--timeline').fadeOut(300);
-                    } else {
-                        // Show pagination when at top
-                        $('.swiper-timeline').fadeIn(300);
-                        $('.swiper-pagination--timeline').fadeIn(300);
-                    }
-                });
-            });
-        </script>
-    </body>
+.footer-column h4 {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
 
-    </html>
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column ul li a {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.footer-column ul li a:hover {
+    color: #667eea;
+    transform: translateX(4px);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.footer-info p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #a0aec0;
+}
+
+.company-address {
+    font-weight: 500;
+    color: #cbd5e0;
+}
+
+.copyright {
+    color: #718096;
+}
+
+.footer-badges {
+    display: flex;
+    gap: 16px;
+}
+
+.badge-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modern-footer {
+        padding: 40px 0 20px;
+        margin-top: 60px;
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .footer-badges {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+</style>

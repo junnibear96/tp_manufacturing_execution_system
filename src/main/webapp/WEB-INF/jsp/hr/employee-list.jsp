@@ -346,7 +346,7 @@
         </head>
 
         <body>
-            <%@ include file="../include/header.jspf" %>
+            <%@ include file="../app/_appHeader.jspf" %>
 
                 <div class="container">
                     <div class="page-header fade-in">

@@ -345,8 +345,7 @@
                                                     </c:choose>
                                                 </span>
                                                 <span class="transaction-date">
-                                                    <fmt:formatDate value="${trans.transactionDate}"
-                                                        pattern="MM/dd HH:mm" />
+                                                    ${trans.transactionDate}
                                                 </span>
                                             </div>
                                             <div class="transaction-details">

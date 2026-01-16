@@ -446,7 +446,7 @@
                                     </li>
                                     <%-- Portfolio Menu: Direct link to login --%>
                                     <li>
-                                        <a href="/login">포트폴리오</a>
+                                        <a href="/dashboard">포트폴리오</a>
                                     </li>
                                 </ul>
                             </nav>
