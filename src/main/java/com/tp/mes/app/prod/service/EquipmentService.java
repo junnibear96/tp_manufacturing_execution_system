@@ -2,6 +2,7 @@ package com.tp.mes.app.prod.service;
 
 import com.tp.mes.app.prod.model.Equipment;
 import com.tp.mes.app.prod.model.EquipmentStatus;
+import com.tp.mes.app.prod.model.MaintenanceHistory;
 import java.util.List;
 
 /**
@@ -23,6 +24,11 @@ public interface EquipmentService {
      * 상태별 장비 목록 조회
      */
     List<Equipment> listEquipmentByStatus(EquipmentStatus status);
+
+    /**
+     * 장비 검색 (키워드 + 상태)
+     */
+    List<Equipment> searchEquipment(String keyword, EquipmentStatus status);
 
     /**
      * ID로 장비 조회
@@ -53,4 +59,14 @@ public interface EquipmentService {
      * 가동률 업데이트
      */
     void updateUtilizationRate(Long equipmentId, Double rate);
+
+    /**
+     * 점검 이력 조회
+     */
+    List<MaintenanceHistory> getMaintenanceHistory(Long equipmentId);
+
+    /**
+     * 점검 이력 등록
+     */
+    void addMaintenanceHistory(MaintenanceHistory history);
 }

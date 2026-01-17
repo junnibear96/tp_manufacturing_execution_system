@@ -65,25 +65,26 @@ public class ProductionManagerController {
      */
     @GetMapping("/equipment")
     public String equipmentManagement(
-            @RequestParam(value = "lineId", required = false) String lineId,
+            @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "status", required = false) String status,
             Model model) {
 
-        log.info("Accessing equipment management - lineId: {}, status: {}", lineId, status);
+        log.info("Accessing equipment management - keyword: {}, status: {}", keyword, status);
 
-        List<Equipment> equipmentList;
-
-        if (lineId != null && !lineId.isEmpty()) {
-            equipmentList = equipmentService.listEquipmentByLine(lineId);
-        } else if (status != null && !status.isEmpty()) {
-            equipmentList = equipmentService.listEquipmentByStatus(EquipmentStatus.valueOf(status));
-        } else {
-            equipmentList = equipmentService.listAllEquipment();
+        EquipmentStatus statusEnum = null;
+        if (status != null && !status.isEmpty()) {
+            try {
+                statusEnum = EquipmentStatus.valueOf(status);
+            } catch (IllegalArgumentException e) {
+                log.warn("Invalid equipment status: {}", status);
+            }
         }
 
+        List<Equipment> equipmentList = equipmentService.searchEquipment(keyword, statusEnum);
+
         model.addAttribute("equipment", equipmentList);
-        model.addAttribute("selectedLineId", lineId);
-        model.addAttribute("selectedStatus", status);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("selectedStatus", statusEnum);
         model.addAttribute("statusOptions", EquipmentStatus.values());
 
         return "production/equipment-management";
@@ -104,6 +105,9 @@ public class ProductionManagerController {
             EquipmentStatus newStatus = EquipmentStatus.valueOf(status);
             equipmentService.updateEquipmentStatus(equipmentId, newStatus);
             return "SUCCESS";
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid status value: {}", status, e);
+            return "FAILED: Invalid status value (" + status + ")";
         } catch (Exception e) {
             log.error("Failed to update equipment status", e);
             return "FAILED: " + e.getMessage();
@@ -115,16 +119,33 @@ public class ProductionManagerController {
      */
     @PostMapping("/equipment/{equipmentId}/maintenance")
     @ResponseBody
-    public String recordMaintenance(@PathVariable Long equipmentId) {
+    public String recordMaintenance(@PathVariable Long equipmentId,
+            @RequestParam(value = "description", required = false, defaultValue = "Regular Check") String description,
+            @RequestParam(value = "worker", required = false, defaultValue = "Unknown") String worker) {
         log.info("Recording maintenance for equipment {}", equipmentId);
 
         try {
             equipmentService.recordMaintenance(equipmentId);
+
+            // Record history
+            com.tp.mes.app.prod.model.MaintenanceHistory history = new com.tp.mes.app.prod.model.MaintenanceHistory();
+            history.setEquipmentId(equipmentId);
+            history.setDescription(description);
+            history.setWorker(worker);
+            history.setMaintenanceDate(java.time.LocalDateTime.now());
+            equipmentService.addMaintenanceHistory(history);
+
             return "SUCCESS";
         } catch (Exception e) {
             log.error("Failed to record maintenance", e);
             return "FAILED: " + e.getMessage();
         }
+    }
+
+    @GetMapping("/equipment/{id}/history")
+    @ResponseBody
+    public List<com.tp.mes.app.prod.model.MaintenanceHistory> getHistory(@PathVariable("id") Long equipmentId) {
+        return equipmentService.getMaintenanceHistory(equipmentId);
     }
 
     /**

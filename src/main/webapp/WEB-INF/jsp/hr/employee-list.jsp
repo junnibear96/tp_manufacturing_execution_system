@@ -6,7 +6,7 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>사원 관리 - TP MES</title>
+            <title>인사 관리 - TP MES</title>
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
                 rel="stylesheet">
             <style>
@@ -352,7 +352,7 @@
                     <div class="page-header fade-in">
                         <h1>
                             <span>👥</span>
-                            사원 관리
+                            인사 관리
                         </h1>
                         <p class="subtitle">조직 구성원 정보를 관리합니다</p>
                     </div>

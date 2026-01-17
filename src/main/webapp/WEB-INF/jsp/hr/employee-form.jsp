@@ -134,12 +134,17 @@
                 }
 
                 .btn-danger {
-                    background: #fc8181;
+                    background: #dc3545;
                     color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    font-weight: 600;
                 }
 
                 .btn-danger:hover {
-                    background: #f56565;
+                    background: #c82333;
+                    transform: translateY(-1px);
                 }
 
                 .form-actions {
@@ -205,7 +210,7 @@
         </head>
 
         <body>
-            <%@ include file="../include/header.jspf" %>
+            <%@ include file="/WEB-INF/jsp/app/_appHeader.jspf" %>
 
                 <div class="container">
                     <h1>
@@ -403,12 +408,17 @@
                             <c:if test="${mode == 'edit'}">수정</c:if>
                         </button>
                     </div>
+                    <c:if test="${mode == 'new'}">
+                        <p style="text-align: right; margin-top: 10px; font-size: 0.9em; color: #666;">
+                            * 생성 시 기본 비밀번호는 <strong>test1234</strong> 입니다.
+                        </p>
+                    </c:if>
                     </form>
 
                     <!-- 재직 상태 변경 (수정 모드일 때만) -->
                     <c:if test="${mode == 'edit'}">
                         <div style="margin-top: 40px; padding-top: 40px; border-top: 2px solid #e2e8f0;">
-                            <h2 style="font-size: 18px; margin-bottom: 16px; color: #2d3748;">위험 영역</h2>
+                            <h2 style="font-size: 18px; margin-bottom: 16px; color: #2d3748;">재직 상태 영역</h2>
                             <form method="post" action="/hr/employees/${employee.empId}/status"
                                 onsubmit="return confirm('재직 상태를 변경하시겠습니까?');">
                                 <div class="form-row">
@@ -426,7 +436,7 @@
                                         <input type="text" name="reason" placeholder="변경 사유를 입력하세요">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-danger">상태 변경</button>
+                                <button type="submit" class="btn-danger">상태 변경</button>
                             </form>
                         </div>
                     </c:if>

@@ -35,4 +35,23 @@ public class ProductionKpiSummary {
     private Integer maintenanceEquipment;
     private Integer errorEquipment;
     private Double equipmentUtilizationRate;
+
+    public Double getTodayAchievementRate() {
+        if (todayAchievementRate != null)
+            return todayAchievementRate;
+        if (todayTargetQuantity == null || todayTargetQuantity == 0)
+            return 0.0;
+        if (todayActualQuantity == null)
+            return 0.0;
+        return Math.round(todayActualQuantity * 100.0 / todayTargetQuantity * 100) / 100.0;
+    }
+
+    public Double getTodayDefectRate() {
+        if (todayDefectRate != null)
+            return todayDefectRate;
+        long total = (todayTotalGood != null ? todayTotalGood : 0) + (todayTotalDefect != null ? todayTotalDefect : 0);
+        if (total == 0)
+            return 0.0;
+        return Math.round((todayTotalDefect != null ? todayTotalDefect : 0) * 100.0 / total * 100) / 100.0;
+    }
 }

@@ -22,6 +22,31 @@
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
     </resultMap>
+
+    <!-- ID로 장비 조회 -->
+    <select id="findById" resultMap="equipmentResultMap">
+        SELECT * FROM tp_manufacture.tp_equipment WHERE equipment_id = #{equipmentId}
+    </select>
+
+    <!-- 코드로 장비 조회 -->
+    <select id="findByCode" resultMap="equipmentResultMap">
+        SELECT * FROM tp_manufacture.tp_equipment WHERE equipment_code = #{equipmentCode}
+    </select>
+
+    <!-- 라인별 장비 목록 -->
+    <select id="findByLineId" resultMap="equipmentResultMap">
+        SELECT * FROM tp_manufacture.tp_equipment WHERE line_id = #{lineId} ORDER BY equipment_code
+    </select>
+
+    <!-- 상태별 장비 목록 -->
+    <select id="findByStatus" resultMap="equipmentResultMap">
+        SELECT * FROM tp_manufacture.tp_equipment WHERE status = #{status} ORDER BY equipment_code
+    </select>
+
+    <!-- 전체 장비 목록 -->
+    <select id="findAll" resultMap="equipmentResultMap">
+        SELECT * FROM tp_manufacture.tp_equipment WHERE active_yn = 'Y' ORDER BY equipment_code
+    </select>
     
     <!-- 점검 필요 장비 조회 -->
     <select id="findMaintenanceDue" resultMap="equipmentResultMap">
@@ -42,5 +67,40 @@
         WHERE line_id = #{lineId}
           AND active_yn = 'Y'
     </select>
+
+    <!-- 장비 검색 -->
+    <select id="search" resultMap="equipmentResultMap">
+        SELECT *
+        FROM tp_manufacture.tp_equipment
+        WHERE active_yn = 'Y'
+        <if test="keyword != null and keyword != ''">
+            AND (equipment_name LIKE '%' || #{keyword} || '%' OR line_id LIKE '%' || #{keyword} || '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        ORDER BY equipment_code
+    </select>
+
+    <!-- 장비 상태 업데이트 -->
+    <update id="updateStatus">
+        UPDATE tp_manufacture.tp_equipment 
+        SET status = #{status} 
+        WHERE equipment_id = #{equipmentId}
+    </update>
+
+    <!-- 점검 기록 -->
+    <update id="recordMaintenance">
+        UPDATE tp_manufacture.tp_equipment 
+        SET last_maintenance_at = SYSTIMESTAMP 
+        WHERE equipment_id = #{equipmentId}
+    </update>
+
+    <!-- 가동률 업데이트 -->
+    <update id="updateUtilizationRate">
+        UPDATE tp_manufacture.tp_equipment 
+        SET utilization_rate = #{rate} 
+        WHERE equipment_id = #{equipmentId}
+    </update>
     
 </mapper>

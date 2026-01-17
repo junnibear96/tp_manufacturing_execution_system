@@ -101,16 +101,7 @@
              FROM tp_manufacture.tp_prod_result r
              WHERE r.work_date = #{date}) AS todayActualQuantity,
             
-            (SELECT ROUND(
-                        NVL(SUM(r.qty_good), 0) * 100.0 /
-                        NULLIF(
-                             (SELECT NVL(SUM(p2.target_quantity), 0)
-                              FROM tp_manufacture.tp_prod_plan p2
-                              WHERE p2.plan_date = #{date}),
-                        0),
-                    2)
-             FROM tp_manufacture.tp_prod_result r
-             WHERE r.work_date = #{date}) AS todayAchievementRate,
+
             
             /* 품질 정보 */
             (SELECT NVL(SUM(r.qty_good), 0)
@@ -121,12 +112,7 @@
              FROM tp_manufacture.tp_prod_result r
              WHERE r.work_date = #{date}) AS todayTotalDefect,
             
-            (SELECT ROUND(
-                        NVL(SUM(r.qty_ng), 0) * 100.0 /
-                        NULLIF(NVL(SUM(r.qty_good + r.qty_ng), 0), 0),
-                    2)
-             FROM tp_manufacture.tp_prod_result r
-             WHERE r.work_date = #{date}) AS todayDefectRate,
+
             
             /* 장비 현황 */
             (SELECT COUNT(*)

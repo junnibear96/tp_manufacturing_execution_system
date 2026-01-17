@@ -14,13 +14,14 @@
                         font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         margin: 0;
-                        padding: 20px;
+                        padding: 0;
                         min-height: 100vh;
                     }
 
                     .container {
                         max-width: 1400px;
                         margin: 0 auto;
+                        padding: 20px;
                     }
 
                     .header {
@@ -251,118 +252,122 @@
             </head>
 
             <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>📦 재고 관리 대시보드</h1>
-                        <div class="header-actions">
-                            <a href="/inventory/list" class="btn btn-primary">전체 재고 목록</a>
-                            <a href="/dashboard" class="btn btn-secondary">홈으로</a>
-                        </div>
-                    </div>
+                <%@ include file="/WEB-INF/jsp/app/_appHeader.jspf" %>
 
-                    <!-- Statistics Cards -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">📦</span>
-                                <span class="stat-title">전체 품목</span>
+                    <div class="container">
+                        <div class="header">
+                            <h1>📦 재고 관리 대시보드</h1>
+                            <div class="header-actions">
+                                <a href="/inventory/list" class="btn btn-primary">전체 재고 목록</a>
+                                <a href="/dashboard" class="btn btn-secondary">홈으로</a>
                             </div>
-                            <p class="stat-value">${stats.totalItems}</p>
                         </div>
 
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">💰</span>
-                                <span class="stat-title">총 재고 가치</span>
+                        <!-- Statistics Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon">📦</span>
+                                    <span class="stat-title">전체 품목</span>
+                                </div>
+                                <p class="stat-value">${stats.totalItems}</p>
                             </div>
-                            <p class="stat-value">
-                                <fmt:formatNumber value="${stats.totalValue}" pattern="#,##0" />원
-                            </p>
-                        </div>
 
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">⚠️</span>
-                                <span class="stat-title">재고 부족 품목</span>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon">💰</span>
+                                    <span class="stat-title">총 재고 가치</span>
+                                </div>
+                                <p class="stat-value">
+                                    <fmt:formatNumber value="${stats.totalValue}" pattern="#,##0" />원
+                                </p>
                             </div>
-                            <p class="stat-value">${stats.lowStockItems}</p>
-                        </div>
 
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <span class="stat-icon">📊</span>
-                                <span class="stat-title">최근 거래 (7일)</span>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon">⚠️</span>
+                                    <span class="stat-title">재고 부족 품목</span>
+                                </div>
+                                <p class="stat-value">${stats.lowStockItems}</p>
                             </div>
-                            <p class="stat-value">${stats.recentTransactions}</p>
-                        </div>
-                    </div>
 
-                    <!-- Content Grid -->
-                    <div class="content-grid">
-                        <!-- Low Stock Alerts -->
-                        <div class="card">
-                            <h2>⚠️ 재고 부족 알림</h2>
-                            <c:choose>
-                                <c:when test="${not empty lowStockItems}">
-                                    <c:forEach items="${lowStockItems}" var="item">
-                                        <div class="list-item">
-                                            <div class="item-info">
-                                                <h3>${item.itemName}</h3>
-                                                <span class="item-code">${item.itemCode}</span>
-                                            </div>
-                                            <div style="text-align: right;">
-                                                <div style="font-weight: 600; color: #c53030;">
-                                                    ${item.currentQuantity} ${item.unit}
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon">📊</span>
+                                    <span class="stat-title">최근 거래 (7일)</span>
+                                </div>
+                                <p class="stat-value">${stats.recentTransactions}</p>
+                            </div>
+                        </div>
+
+                        <!-- Content Grid -->
+                        <div class="content-grid">
+                            <!-- Low Stock Alerts -->
+                            <div class="card">
+                                <h2>⚠️ 재고 부족 알림</h2>
+                                <c:choose>
+                                    <c:when test="${not empty lowStockItems}">
+                                        <c:forEach items="${lowStockItems}" var="item">
+                                            <div class="list-item">
+                                                <div class="item-info">
+                                                    <h3>${item.itemName}</h3>
+                                                    <span class="item-code">${item.itemCode}</span>
                                                 </div>
-                                                <div style="font-size: 12px; color: #718096;">
-                                                    최소: ${item.minQuantity} ${item.unit}
+                                                <div style="text-align: right;">
+                                                    <div style="font-weight: 600; color: #c53030;">
+                                                        ${item.currentQuantity} ${item.unit}
+                                                    </div>
+                                                    <div style="font-size: 12px; color: #718096;">
+                                                        최소: ${item.minQuantity} ${item.unit}
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="empty-state">
+                                            <p>✅ 모든 재고가 안전 수준입니다</p>
                                         </div>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="empty-state">
-                                        <p>✅ 모든 재고가 안전 수준입니다</p>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
 
-                        <!-- Recent Transactions -->
-                        <div class="card">
-                            <h2>📋 최근 거래 내역</h2>
-                            <c:choose>
-                                <c:when test="${not empty recentTransactions}">
-                                    <c:forEach items="${recentTransactions}" var="trans">
-                                        <div class="transaction-item ${trans.transactionType.toLowerCase()}">
-                                            <div class="transaction-header">
-                                                <span class="transaction-type">
-                                                    <c:choose>
-                                                        <c:when test="${trans.transactionType == 'IN'}">📥 입고</c:when>
-                                                        <c:when test="${trans.transactionType == 'OUT'}">📤 출고</c:when>
-                                                        <c:otherwise>🔄 조정</c:otherwise>
-                                                    </c:choose>
-                                                </span>
-                                                <span class="transaction-date">
-                                                    ${trans.transactionDate}
-                                                </span>
+                            <!-- Recent Transactions -->
+                            <div class="card">
+                                <h2>📋 최근 거래 내역</h2>
+                                <c:choose>
+                                    <c:when test="${not empty recentTransactions}">
+                                        <c:forEach items="${recentTransactions}" var="trans">
+                                            <div class="transaction-item ${trans.transactionType.toLowerCase()}">
+                                                <div class="transaction-header">
+                                                    <span class="transaction-type">
+                                                        <c:choose>
+                                                            <c:when test="${trans.transactionType == 'IN'}">📥 입고
+                                                            </c:when>
+                                                            <c:when test="${trans.transactionType == 'OUT'}">📤 출고
+                                                            </c:when>
+                                                            <c:otherwise>🔄 조정</c:otherwise>
+                                                        </c:choose>
+                                                    </span>
+                                                    <span class="transaction-date">
+                                                        ${trans.transactionDate}
+                                                    </span>
+                                                </div>
+                                                <div class="transaction-details">
+                                                    ${trans.itemName} - ${trans.quantity} 단위
+                                                </div>
                                             </div>
-                                            <div class="transaction-details">
-                                                ${trans.itemName} - ${trans.quantity} 단위
-                                            </div>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="empty-state">
+                                            <p>최근 거래 내역이 없습니다</p>
                                         </div>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="empty-state">
-                                        <p>최근 거래 내역이 없습니다</p>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
                     </div>
-                </div>
             </body>
 
             </html>

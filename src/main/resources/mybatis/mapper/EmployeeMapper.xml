@@ -98,10 +98,12 @@
             department_id, position_id, job_type, manager_emp_id, status,
             shift_type, factory_id, production_line_id, skill_level, password
         ) VALUES (
-            #{empId}, #{empName}, #{email}, #{phone}, #{hireDate}, #{birthDate}, #{gender},
-            #{departmentId}, #{positionId}, #{jobType}, #{managerEmpId}, #{status},
-            #{shiftType}, #{factoryId}, #{productionLineId}, #{skillLevel},
-            '$2a$10$defaultPasswordHashHere'
+            #{empId}, #{empName}, #{email, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, 
+            #{hireDate, jdbcType=DATE}, #{birthDate, jdbcType=DATE}, #{gender, jdbcType=CHAR},
+            #{departmentId}, #{positionId}, #{jobType}, #{managerEmpId, jdbcType=VARCHAR}, #{status},
+            #{shiftType, jdbcType=VARCHAR}, #{factoryId, jdbcType=VARCHAR}, 
+            #{productionLineId, jdbcType=VARCHAR}, #{skillLevel, jdbcType=INTEGER},
+            '$2a$10$5PwHqG/TomigDFdLktj5ueuCXtwKDM031eRB53MPVRMQ43bTP8Tyu'
         )
     </insert>
 
@@ -109,17 +111,17 @@
     <update id="update" parameterType="com.tp.mes.app.hr.model.Employee">
         UPDATE tp_manufacture.employees SET
             emp_name = #{empName},
-            email = #{email},
-            phone = #{phone},
+            email = #{email, jdbcType=VARCHAR},
+            phone = #{phone, jdbcType=VARCHAR},
             department_id = #{departmentId},
             position_id = #{positionId},
             job_type = #{jobType},
-            manager_emp_id = #{managerEmpId},
+            manager_emp_id = #{managerEmpId, jdbcType=VARCHAR},
             status = #{status},
-            shift_type = #{shiftType},
-            factory_id = #{factoryId},
-            production_line_id = #{productionLineId},
-            skill_level = #{skillLevel},
+            shift_type = #{shiftType, jdbcType=VARCHAR},
+            factory_id = #{factoryId, jdbcType=VARCHAR},
+            production_line_id = #{productionLineId, jdbcType=VARCHAR},
+            skill_level = #{skillLevel, jdbcType=INTEGER},
             updated_at = CURRENT_TIMESTAMP
         WHERE emp_id = #{empId}
     </update>

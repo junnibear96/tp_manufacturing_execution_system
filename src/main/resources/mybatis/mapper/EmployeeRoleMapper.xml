@@ -6,14 +6,14 @@
 
     <!-- 사원의 모든 권한 조회 -->
     <select id="findRolesByEmployeeId" parameterType="string" resultType="string">
-        SELECT role FROM tp_manufacture.employee_roles
+        SELECT role_id FROM tp_manufacture.employee_roles
         WHERE emp_id = #{empId}
-        ORDER BY role
+        ORDER BY role_id
     </select>
 
     <!-- 사원-권한 매핑 등록 -->
     <insert id="insert">
-        INSERT INTO tp_manufacture.employee_roles(emp_id, role, assigned_at, assigned_by)
+        INSERT INTO tp_manufacture.employee_roles(emp_id, role_id, granted_at, granted_by)
         VALUES (#{empId}, #{role}, CURRENT_TIMESTAMP, #{assignedBy})
     </insert>
 

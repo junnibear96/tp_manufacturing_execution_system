@@ -37,4 +37,11 @@ public class DefectRateDto {
     public boolean isCriticalDefectRate() {
         return defectRate != null && defectRate > 10.0;
     }
+
+    /**
+     * 총 생산량 (양품 + 불량)
+     */
+    public Integer getTotalProduction() {
+        return (totalGood == null ? 0 : totalGood) + (totalDefect == null ? 0 : totalDefect);
+    }
 }

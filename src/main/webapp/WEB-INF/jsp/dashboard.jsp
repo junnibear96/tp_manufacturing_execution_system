@@ -77,6 +77,9 @@
                     border-radius: 12px;
                     padding: 24px;
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
                 }
 
                 .card h2 {
@@ -88,6 +91,8 @@
                 .card p {
                     color: #666;
                     line-height: 1.6;
+                    flex: 1;
+                    /* This pushes the footer content to the bottom if needed, or just fills space */
                 }
 
                 .stats {
@@ -115,7 +120,9 @@
                 .card-link {
                     text-decoration: none;
                     color: inherit;
-                    display: block;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
                     transition: transform 0.2s, box-shadow 0.2s;
                 }
 
@@ -136,7 +143,10 @@
                     text-decoration: none;
                     border-radius: 6px;
                     font-weight: 600;
-                    margin-top: 12px;
+                    margin-top: auto;
+                    /* Push to bottom if inside flex column */
+                    align-self: flex-start;
+                    /* Prevent full width stretch if parent is flex column */
                     transition: transform 0.2s;
                 }
 

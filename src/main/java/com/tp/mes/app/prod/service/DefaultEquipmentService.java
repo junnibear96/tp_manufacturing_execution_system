@@ -19,6 +19,7 @@ import java.util.List;
 public class DefaultEquipmentService implements EquipmentService {
 
     private final EquipmentMapper equipmentMapper;
+    private final com.tp.mes.app.prod.mapper.MaintenanceHistoryMapper historyMapper;
 
     @Override
     public List<Equipment> listAllEquipment() {
@@ -36,6 +37,13 @@ public class DefaultEquipmentService implements EquipmentService {
     public List<Equipment> listEquipmentByStatus(EquipmentStatus status) {
         log.debug("Listing equipment by status: {}", status);
         return equipmentMapper.findByStatus(status.name());
+    }
+
+    @Override
+    public List<Equipment> searchEquipment(String keyword, EquipmentStatus status) {
+        log.debug("Searching equipment with keyword: {}, status: {}", keyword, status);
+        String statusStr = status != null ? status.name() : null;
+        return equipmentMapper.search(keyword, statusStr);
     }
 
     @Override
@@ -93,5 +101,15 @@ public class DefaultEquipmentService implements EquipmentService {
             log.warn("Equipment {} not found", equipmentId);
             throw new IllegalArgumentException("Equipment not found: " + equipmentId);
         }
+    }
+
+    @Override
+    public List<com.tp.mes.app.prod.model.MaintenanceHistory> getMaintenanceHistory(Long equipmentId) {
+        return historyMapper.findByEquipmentId(equipmentId);
+    }
+
+    @Override
+    public void addMaintenanceHistory(com.tp.mes.app.prod.model.MaintenanceHistory history) {
+        historyMapper.insert(history);
     }
 }
