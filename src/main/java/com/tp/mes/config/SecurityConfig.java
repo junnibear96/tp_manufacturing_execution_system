@@ -38,7 +38,9 @@ public class SecurityConfig {
                                 // Allow public resources and login page
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/assets/**", "/WEB-INF/**", "/error").permitAll()
-                                                .requestMatchers("/", "/login", "/cover-letter", "/api/**").permitAll()
+                                                .requestMatchers("/", "/login", "/cover-letter", "/api/**",
+                                                                "/actuator/**")
+                                                .permitAll()
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
