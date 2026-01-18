@@ -7,7 +7,7 @@
   <groupId>com.tp</groupId>
   <artifactId>tp-manufacturing-execution-system</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>tp_manufacturing_execution_system</name>
   <description>TP portfolio + mini API (Spring + Oracle) packaged as a WAR.</description>
@@ -87,16 +87,11 @@
       <version>21.9.0.0</version>
     </dependency>
 
-    <!-- Default: include embedded Tomcat so you can run locally without installing Tomcat. -->
+    <!-- Provided Tomcat for WAR deployment -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tomcat</artifactId>
-    </dependency>
-
-    <!-- JSP support for embedded Tomcat (Spring MVC -> JSP). -->
-    <dependency>
-      <groupId>org.apache.tomcat.embed</groupId>
-      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- JSTL API -->

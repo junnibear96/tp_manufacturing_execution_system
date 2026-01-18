@@ -1,47 +1,49 @@
-# Stage 1: Build
+# Stage 1: Build the WAR file
 FROM eclipse-temurin:17-jdk-jammy AS build
 
-WORKDIR /build
-
-# Copy Maven wrapper and pom.xml
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
-
-# Make mvnw executable
-RUN chmod +x mvnw
-
-# Download dependencies (cached layer)
-RUN ./mvnw dependency:go-offline
-
-# Copy source code
-COPY src/ ./src/
-
-# Build application (skip tests for faster build)
-RUN ./mvnw clean package -DskipTests
-
-# Stage 2: Runtime
-FROM eclipse-temurin:17-jre-jammy
-
-# Install curl for healthcheck
-RUN apt-get update && \
-    apt-get install -y curl && \
-    rm -rf /var/lib/apt/lists/*
+# Install unzip for wallet handling
+RUN apt-get update && apt-get install -y unzip && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy wallet files (required for Oracle Cloud connection)
-COPY wallet/ /app/wallet/
+# Copy Maven wrapper and configs
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
 
-# Copy JAR from build stage
-COPY --from=build /build/target/TP-exec.jar /app/app.jar
+# Grant execute permission to mvnw
+RUN chmod +x mvnw
 
-# Set Oracle wallet environment variables
+# Download dependencies (go offline)
+RUN ./mvnw dependency:go-offline -B
+
+# Copy source code and wallet
+COPY src src
+COPY wallet wallet
+
+# Build the WAR file (skip tests)
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Run in external Tomcat
+FROM tomcat:10.1-jdk17-temurin-jammy
+
+# Remove default ROOT application
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+
+# Copy the WAR file to the webapps directory as ROOT.war
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+# Copy wallet files (required for Oracle connection)
+COPY --from=build /app/wallet /app/wallet
+
+# Set environment variables for Oracle Wallet
 ENV TNS_ADMIN=/app/wallet
-ENV ORACLE_NET_TNS_ADMIN=/app/wallet
 
-# Expose port (Railway will override with PORT env var)
-EXPOSE 8090
+# Set JVM options (for Railway Free Tier)
+ENV JAVA_OPTS="-Xmx256m -Xms256m"
 
-# Run application (Ultra-optimized for 512MB RAM)
-ENTRYPOINT ["java"]
-CMD ["-Xmx256m", "-Xms256m", "-Dspring.profiles.active=railway", "-jar", "app.jar"]
+# Expose port 8080 (Tomcat default)
+EXPOSE 8080
+
+# Start Tomcat
+CMD ["catalina.sh", "run"]
