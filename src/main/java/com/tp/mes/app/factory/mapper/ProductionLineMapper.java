@@ -4,6 +4,7 @@ import com.tp.mes.app.factory.model.ProductionLine;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 생산라인 MyBatis Mapper
@@ -65,6 +66,12 @@ public interface ProductionLineMapper {
      * 가동률 업데이트
      */
     void updateUtilizationRate(String lineId, double utilizationRate);
+
+    /**
+     * 가동률 업데이트 (BigDecimal) - Simulation feature
+     */
+    void updateUtilizationRateDecimal(@Param("lineId") String lineId,
+            @Param("utilizationRate") java.math.BigDecimal utilizationRate);
 
     /**
      * 공장별 생산라인 수

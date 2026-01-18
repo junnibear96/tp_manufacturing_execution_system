@@ -184,6 +184,56 @@
                     .bg-danger {
                         background-color: #f56565;
                     }
+
+                    /* Responsive Design */
+                    @media (max-width: 768px) {
+                        body {
+                            padding: 12px;
+                        }
+
+                        .page-header {
+                            padding: 20px;
+                        }
+
+                        .page-header h1 {
+                            font-size: 22px;
+                        }
+
+                        .filter-form {
+                            flex-direction: column;
+                        }
+
+                        .filter-form .form-group,
+                        .filter-form .btn {
+                            width: 100%;
+                        }
+
+                        table {
+                            font-size: 13px;
+                            display: block;
+                            overflow-x: auto;
+                        }
+
+                        .nav-link-btn {
+                            width: 100%;
+                            text-align: center;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .page-header h1 {
+                            font-size: 20px;
+                        }
+
+                        table {
+                            font-size: 12px;
+                        }
+
+                        .btn {
+                            padding: 8px 16px;
+                            font-size: 13px;
+                        }
+                    }
                 </style>
             </head>
 

@@ -51,6 +51,12 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
+    <!-- Spring Security Taglibs for JSP -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+    </dependency>
+
     <!-- Oracle JDBC driver is available in Maven Central for many versions.
          If your org pins a different driver/version, change it here. -->
     <dependency>
@@ -116,23 +122,10 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
+          <encoding>UTF-8</encoding>
           <compilerArgs>
             <arg>-parameters</arg>
           </compilerArgs>
-        </configuration>
-      </plugin>
-
-
-      <!-- Ensure Java sources are compiled with UTF-8 encoding -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
 

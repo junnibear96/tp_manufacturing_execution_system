@@ -17,19 +17,19 @@ public class BoardController {
     this.service = service;
   }
 
-  @GetMapping("/app/board")
+  @GetMapping({ "/board" })
   public String list(Model model) {
     model.addAttribute("posts", service.listPosts());
-    return "app/board";
+    return "board/list";
   }
 
-  @GetMapping("/app/board/{postId}")
+  @GetMapping({ "/board/{postId}" })
   public String view(@PathVariable("postId") long postId, Model model) {
     Optional<BoardPost> found = service.findPost(postId);
     if (found.isEmpty()) {
-      return "redirect:/app/board";
+      return "redirect:/board";
     }
     model.addAttribute("post", found.get());
-    return "app/board-view";
+    return "board/view";
   }
 }

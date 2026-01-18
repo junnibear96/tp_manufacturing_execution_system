@@ -237,15 +237,142 @@
                         color: #a0aec0;
                     }
 
+                    /* Responsive Design */
                     @media (max-width: 1024px) {
                         .content-grid {
                             grid-template-columns: 1fr;
                         }
+
+                        .stats-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                        }
                     }
 
                     @media (max-width: 768px) {
+                        .container {
+                            padding: 12px;
+                        }
+
+                        .header {
+                            flex-direction: column;
+                            align-items: flex-start;
+                            padding: 16px 20px;
+                        }
+
+                        .header h1 {
+                            font-size: 22px;
+                            margin-bottom: 12px;
+                        }
+
+                        .header-actions {
+                            width: 100%;
+                            flex-direction: column;
+                        }
+
+                        .header-actions .btn {
+                            width: 100%;
+                            text-align: center;
+                        }
+
                         .stats-grid {
                             grid-template-columns: 1fr;
+                            gap: 12px;
+                        }
+
+                        .stat-card {
+                            padding: 16px;
+                        }
+
+                        .stat-value {
+                            font-size: 24px;
+                        }
+
+                        /* Search section responsive */
+                        .search-section {
+                            padding: 16px;
+                        }
+
+                        .search-form {
+                            flex-direction: column;
+                        }
+
+                        .search-form input,
+                        .search-form select {
+                            width: 100%;
+                        }
+
+                        .search-form .btn {
+                            width: 100%;
+                        }
+
+                        /* Table responsive - make scrollable */
+                        .table-container {
+                            overflow-x: auto;
+                            -webkit-overflow-scrolling: touch;
+                        }
+
+                        .data-table {
+                            min-width: 800px;
+                            /* Prevent table from collapsing */
+                            font-size: 13px;
+                        }
+
+                        .data-table th,
+                        .data-table td {
+                            padding: 10px 8px;
+                            white-space: nowrap;
+                        }
+
+                        /* List items */
+                        .list-item {
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 12px;
+                        }
+
+                        .list-item .btn {
+                            width: 100%;
+                        }
+
+                        /* Cards */
+                        .card {
+                            padding: 16px;
+                        }
+
+                        .card h2 {
+                            font-size: 18px;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .header h1 {
+                            font-size: 20px;
+                        }
+
+                        .btn {
+                            padding: 8px 16px;
+                            font-size: 13px;
+                        }
+
+                        .stat-card {
+                            padding: 12px;
+                        }
+
+                        .stat-label {
+                            font-size: 11px;
+                        }
+
+                        .stat-value {
+                            font-size: 20px;
+                        }
+
+                        .data-table {
+                            font-size: 12px;
+                        }
+
+                        .badge {
+                            font-size: 11px;
+                            padding: 4px 10px;
                         }
                     }
                 </style>

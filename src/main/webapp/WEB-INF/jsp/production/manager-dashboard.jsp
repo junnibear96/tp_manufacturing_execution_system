@@ -253,6 +253,69 @@
                     tbody tr:hover {
                         background: #f7fafc;
                     }
+
+                    /* Responsive Design */
+                    @media (max-width: 1024px) {
+                        .stats-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                        }
+                    }
+
+                    @media (max-width: 768px) {
+                        .container {
+                            padding: 12px;
+                        }
+
+                        .page-header {
+                            padding: 20px;
+                        }
+
+                        .page-header h1 {
+                            font-size: 22px;
+                        }
+
+                        .stats-grid {
+                            grid-template-columns: 1fr;
+                            gap: 12px;
+                        }
+
+                        .stat-card {
+                            padding: 16px;
+                        }
+
+                        .quick-actions {
+                            flex-direction: column;
+                        }
+
+                        .quick-actions .btn {
+                            width: 100%;
+                        }
+
+                        table {
+                            font-size: 13px;
+                            min-width: 800px;
+                        }
+
+                        .table-container {
+                            overflow-x: auto;
+                            -webkit-overflow-scrolling: touch;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .page-header h1 {
+                            font-size: 20px;
+                        }
+
+                        .btn {
+                            padding: 8px 16px;
+                            font-size: 13px;
+                        }
+
+                        table {
+                            font-size: 12px;
+                        }
+                    }
                 </style>
             </head>
 
@@ -266,10 +329,9 @@
                         </div>
 
                         <div class="nav-links">
-                            <a href="/production/dashboard" class="btn btn-primary">대시보드</a>
                             <a href="/production/equipment" class="btn btn-primary">장비 관리</a>
                             <a href="/production/analytics" class="btn btn-primary">분석 리포트</a>
-                            <a href="/app/production/plans" class="btn btn-primary">계획 관리</a>
+                            <a href="/production/plans" class="btn btn-primary">계획 관리</a>
                         </div>
 
                         <!-- 점검 필요 알림 -->

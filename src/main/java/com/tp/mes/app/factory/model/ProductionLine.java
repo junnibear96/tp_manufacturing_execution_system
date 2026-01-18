@@ -28,7 +28,11 @@ public class ProductionLine {
     private Integer maxCapacity; // 최대 생산 능력 (개/일)
     private Integer taktTime; // Takt Time (초)
     private Integer cycleTime; // Cycle Time (초)
-    private Double utilizationRate; // 가동률 (%)
+    private Double utilizationRate; // 가동률 (%) - DEPRECATED: use utilizationRateDecimal
+
+    // Simulation features (added 2026-01-18)
+    private java.math.BigDecimal utilizationRateDecimal; // 정확한 가동률 (0.00 ~ 100.00)
+    private LocalDateTime utilizationUpdatedAt; // 가동률 최종 업데이트 시각
 
     // 인력 정보
     private Integer standardWorkers; // 표준 인원 (명)

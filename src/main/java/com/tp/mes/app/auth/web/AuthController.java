@@ -32,12 +32,11 @@ public class AuthController {
   public String login(
       @RequestParam("username") String username,
       @RequestParam("password") String password,
-      HttpSession session
-  ) {
+      HttpSession session) {
     return authService.authenticate(username, password)
         .map(user -> {
           session.setAttribute(AuthUser.SESSION_KEY, user);
-          return "redirect:/app/home";
+          return "redirect:/dashboard";
         })
         .orElse("redirect:/app/login?error=1");
   }
@@ -46,13 +45,5 @@ public class AuthController {
   public String logout(HttpSession session) {
     session.invalidate();
     return "redirect:/";
-  }
-
-  @GetMapping("/home")
-  public String home(Model model, HttpSession session) {
-    AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
-    model.addAttribute("now", Instant.now().toString());
-    model.addAttribute("user", user);
-    return "app/home";
   }
 }

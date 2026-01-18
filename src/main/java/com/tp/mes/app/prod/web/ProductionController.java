@@ -4,6 +4,7 @@ import com.tp.mes.app.auth.model.AuthUser;
 import com.tp.mes.app.prod.service.ProductionService;
 import java.util.stream.Collectors;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,67 +20,57 @@ public class ProductionController {
     this.service = service;
   }
 
-  @GetMapping("/app/production")
-  public String home() {
-    return "app/production/home";
-  }
-
-  @GetMapping("/app/production/processes")
+  @GetMapping({ "/production/processes" })
   public String processes(Model model) {
     model.addAttribute("processes", service.listProcesses());
-    return "app/production/processes";
+    return "production/processes";
   }
 
-  @GetMapping("/app/production/equipment")
-  public String equipment(Model model) {
-    model.addAttribute("equipment", service.listEquipment());
-    return "app/production/equipment";
-  }
-
-  @GetMapping("/app/production/plans")
+  @GetMapping({ "/production/plans" })
   public String plans(Model model) {
     model.addAttribute("plans", service.listPlans());
-    return "app/production/plans";
+    return "production/plans";
   }
 
-  @GetMapping("/app/production/results")
+  @GetMapping({ "/production/results" })
   public String results(Model model) {
     model.addAttribute("results", service.listResults());
-    return "app/production/results";
+    return "production/results";
   }
 
-  @GetMapping("/app/production/stats")
+  @GetMapping({ "/production/stats" })
   public String stats(Model model) {
     model.addAttribute("daily", service.dailyStatsLast14Days());
     model.addAttribute("monthly", service.monthlyStatsThisYear());
-    return "app/production/stats";
+    return "production/stats";
   }
 
-  @GetMapping("/admin/production/plans/new")
+  @GetMapping("/production/plans/new")
   public String newPlanForm(Model model) {
     model.addAttribute("planDate", "");
     model.addAttribute("itemCode", "");
     model.addAttribute("qtyPlan", "0");
-    return "admin/production-plan-form";
+    return "production/production-plan-form";
   }
 
-  @PostMapping("/admin/production/plans/new")
+  @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+  @PostMapping("/production/plans/new")
   public String createPlan(
       @RequestParam("planDate") String planDate,
       @RequestParam("itemCode") String itemCode,
       @RequestParam("qtyPlan") String qtyPlan,
-      HttpSession session
-  ) {
+      HttpSession session) {
     AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
     Long createdBy = user == null ? null : user.getUserId();
     service.createPlan(planDate, itemCode, qtyPlan, createdBy);
-    return "redirect:/app/production/plans";
+    return "redirect:/production/plans";
   }
 
-  @PostMapping("/admin/production/plans/delete")
+  @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+  @PostMapping("/production/plans/delete")
   public String deletePlan(@RequestParam("planId") long planId) {
     service.deletePlan(planId);
-    return "redirect:/app/production/plans";
+    return "redirect:/production/plans";
   }
 
   @GetMapping("/admin/production/results/new")
@@ -101,17 +92,16 @@ public class ProductionController {
       @RequestParam("qtyGood") String qtyGood,
       @RequestParam("qtyNg") String qtyNg,
       @RequestParam(value = "equipmentId", required = false) Long equipmentId,
-      HttpSession session
-  ) {
+      HttpSession session) {
     AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
     Long createdBy = user == null ? null : user.getUserId();
     service.createResult(workDate, itemCode, qtyGood, qtyNg, equipmentId, createdBy);
-    return "redirect:/app/production/results";
+    return "redirect:/production/results";
   }
 
   @PostMapping("/admin/production/results/delete")
   public String deleteResult(@RequestParam("resultId") long resultId) {
     service.deleteResult(resultId);
-    return "redirect:/app/production/results";
+    return "redirect:/production/results";
   }
 }

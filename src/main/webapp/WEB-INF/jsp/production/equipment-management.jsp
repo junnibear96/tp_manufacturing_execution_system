@@ -292,6 +292,46 @@
                         gap: 12px;
                         align-items: center;
                     }
+
+                    /* Responsive Design */
+                    @media (max-width: 768px) {
+                        body {
+                            padding: 12px;
+                        }
+
+                        .page-header {
+                            padding: 20px;
+                        }
+
+                        .page-header h1 {
+                            font-size: 22px;
+                        }
+
+                        .equipment-grid {
+                            grid-template-columns: 1fr;
+                        }
+
+                        table {
+                            font-size: 13px;
+                            display: block;
+                            overflow-x: auto;
+                        }
+
+                        .btn {
+                            width: 100%;
+                            margin-bottom: 8px;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .page-header h1 {
+                            font-size: 20px;
+                        }
+
+                        table {
+                            font-size: 12px;
+                        }
+                    }
                 </style>
                 <script>
                     function openHistoryModal(id, name, status, statusDesc) {

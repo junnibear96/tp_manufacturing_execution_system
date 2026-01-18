@@ -2,6 +2,7 @@ package com.tp.mes.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,11 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Spring Security Configuration
  * - Form-based login
- * - In-memory user authentication (for demo purposes)
- * - Role-based access control
+ * - Role-based access control (RBAC)
+ * - Method-level security enabled
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
         private final com.tp.mes.security.CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -56,26 +58,45 @@ public class SecurityConfig {
 
         @Bean
         public UserDetailsService userDetailsService() {
-                // Demo users (in production, use database authentication)
+                // Demo users with RBAC roles
                 UserDetails admin = User.builder()
                                 .username("admin")
                                 .password(passwordEncoder().encode("admin123"))
-                                .roles("ADMIN", "USER")
+                                .roles("ADMIN", "MANAGER", "OPERATOR", "VIEWER")
                                 .build();
 
-                UserDetails productionManager = User.builder()
+                UserDetails manager = User.builder()
+                                .username("manager")
+                                .password(passwordEncoder().encode("manager123"))
+                                .roles("MANAGER", "VIEWER")
+                                .build();
+
+                UserDetails operator = User.builder()
+                                .username("operator")
+                                .password(passwordEncoder().encode("operator123"))
+                                .roles("OPERATOR", "VIEWER")
+                                .build();
+
+                UserDetails viewer = User.builder()
+                                .username("viewer")
+                                .password(passwordEncoder().encode("viewer123"))
+                                .roles("VIEWER")
+                                .build();
+
+                // Legacy users for backward compatibility
+                UserDetails prod001 = User.builder()
                                 .username("prod001")
                                 .password(passwordEncoder().encode("prod123"))
-                                .roles("PRODUCTION", "USER")
+                                .roles("MANAGER", "VIEWER")
                                 .build();
 
-                UserDetails worker = User.builder()
+                UserDetails worker001 = User.builder()
                                 .username("worker001")
                                 .password(passwordEncoder().encode("work123"))
-                                .roles("USER")
+                                .roles("OPERATOR", "VIEWER")
                                 .build();
 
-                return new InMemoryUserDetailsManager(admin, productionManager, worker);
+                return new InMemoryUserDetailsManager(admin, manager, operator, viewer, prod001, worker001);
         }
 
         @Bean

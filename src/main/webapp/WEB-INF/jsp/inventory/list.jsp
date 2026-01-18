@@ -205,6 +205,119 @@
                         font-size: 18px;
                         margin: 12px 0;
                     }
+
+                    /* Responsive Design */
+                    @media (max-width: 1024px) {
+                        .container {
+                            max-width: 100%;
+                        }
+
+                        table {
+                            font-size: 13px;
+                        }
+                    }
+
+                    @media (max-width: 768px) {
+                        body {
+                            padding: 12px;
+                        }
+
+                        .header {
+                            padding: 16px 20px;
+                        }
+
+                        .header-top {
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+
+                        .header h1 {
+                            font-size: 22px;
+                            margin-bottom: 12px;
+                        }
+
+                        .header-actions {
+                            width: 100%;
+                            flex-direction: column;
+                        }
+
+                        .header-actions .btn {
+                            width: 100%;
+                            text-align: center;
+                        }
+
+                        /* Filters responsive */
+                        .filters {
+                            flex-direction: column;
+                            width: 100%;
+                        }
+
+                        .search-box {
+                            max-width: 100%;
+                            width: 100%;
+                        }
+
+                        .filters select,
+                        .filters button {
+                            width: 100%;
+                        }
+
+                        /* Card and table */
+                        .card {
+                            padding: 16px;
+                        }
+
+                        .table-wrapper {
+                            overflow-x: auto;
+                            -webkit-overflow-scrolling: touch;
+                        }
+
+                        table {
+                            min-width: 900px;
+                            /* Prevent table collapse */
+                            font-size: 12px;
+                        }
+
+                        th,
+                        td {
+                            padding: 12px 8px;
+                            white-space: nowrap;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .header h1 {
+                            font-size: 20px;
+                        }
+
+                        .btn:not(table .btn) {
+                            padding: 8px 16px;
+                            font-size: 13px;
+                        }
+
+                        .card {
+                            padding: 12px;
+                        }
+
+                        table {
+                            font-size: 11px;
+                        }
+
+                        th,
+                        td {
+                            padding: 10px 6px;
+                        }
+
+                        .badge {
+                            font-size: 10px;
+                            padding: 3px 8px;
+                        }
+
+                        .btn-sm {
+                            padding: 4px 10px;
+                            font-size: 11px;
+                        }
+                    }
                 </style>
             </head>
 
@@ -214,7 +327,8 @@
                         <div class="header-top">
                             <h1>📦 재고 목록</h1>
                             <div class="header-actions">
-                                <a href="/inventory" class="btn btn-secondary">대시보드</a>
+                                <a href="/inventory/new" class="btn btn-primary">+ 새 재고 등록</a>
+                                <a href="/inventory" class="btn btn-secondary">재고관리</a>
                                 <a href="/dashboard" class="btn btn-secondary">홈으로</a>
                             </div>
                         </div>

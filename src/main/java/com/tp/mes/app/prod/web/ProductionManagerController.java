@@ -5,6 +5,7 @@ import com.tp.mes.app.prod.service.EquipmentService;
 import com.tp.mes.app.prod.service.ProductionAnalysisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,7 +93,9 @@ public class ProductionManagerController {
 
     /**
      * 장비 상태 변경 (AJAX)
+     * RBAC: OPERATOR, ADMIN only
      */
+    @PreAuthorize("hasAnyRole('OPERATOR', 'ADMIN')")
     @PostMapping("/equipment/{equipmentId}/status")
     @ResponseBody
     public String updateEquipmentStatus(
@@ -116,7 +119,9 @@ public class ProductionManagerController {
 
     /**
      * 장비 점검 기록 (AJAX)
+     * RBAC: OPERATOR, ADMIN only
      */
+    @PreAuthorize("hasAnyRole('OPERATOR', 'ADMIN')")
     @PostMapping("/equipment/{equipmentId}/maintenance")
     @ResponseBody
     public String recordMaintenance(@PathVariable Long equipmentId,

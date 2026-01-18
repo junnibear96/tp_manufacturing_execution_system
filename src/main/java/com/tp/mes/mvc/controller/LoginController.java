@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.tp.mes.app.notice.service.NoticeService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class LoginController {
+
+    private final NoticeService noticeService;
+
+    public LoginController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     /**
      * Login page
@@ -70,6 +77,9 @@ public class LoginController {
 
         model.addAttribute("userName", displayName);
         model.addAttribute("userRoles", roles);
+
+        // Load recent notices for dashboard
+        model.addAttribute("recentNotices", noticeService.listNotices());
 
         return "dashboard";
     }

@@ -142,10 +142,19 @@
             warehouse_location, line_id, specifications, status,
             created_at, updated_at
         ) VALUES (
-            #{itemCode}, #{itemName}, #{itemType}, #{category}, #{unit},
-            #{currentQuantity}, #{minQuantity}, #{maxQuantity}, #{unitPrice},
-            #{warehouseLocation}, #{lineId}, #{specifications}, 
-            NVL(#{status}, 'ACTIVE'),
+            #{itemCode,jdbcType=VARCHAR}, 
+            #{itemName,jdbcType=VARCHAR}, 
+            #{itemType,jdbcType=VARCHAR}, 
+            #{category,jdbcType=VARCHAR}, 
+            #{unit,jdbcType=VARCHAR},
+            #{currentQuantity,jdbcType=DECIMAL}, 
+            #{minQuantity,jdbcType=DECIMAL}, 
+            #{maxQuantity,jdbcType=DECIMAL}, 
+            #{unitPrice,jdbcType=DECIMAL},
+            #{warehouseLocation,jdbcType=VARCHAR}, 
+            #{lineId,jdbcType=NUMERIC}, 
+            #{specifications,jdbcType=VARCHAR}, 
+            NVL(#{status,jdbcType=VARCHAR}, 'ACTIVE'),
             CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         )
     </insert>
@@ -153,17 +162,17 @@
     <!-- 재고 정보 수정 -->
     <update id="update">
         UPDATE tp_manufacture.tp_inventory i
-        SET i.item_name = #{itemName},
-            i.item_type = #{itemType},
-            i.category = #{category},
-            i.unit = #{unit},
-            i.min_quantity = #{minQuantity},
-            i.max_quantity = #{maxQuantity},
-            i.unit_price = #{unitPrice},
-            i.warehouse_location = #{warehouseLocation},
-            i.line_id = #{lineId},
-            i.specifications = #{specifications},
-            i.status = #{status},
+        SET i.item_name = #{itemName,jdbcType=VARCHAR},
+            i.item_type = #{itemType,jdbcType=VARCHAR},
+            i.category = #{category,jdbcType=VARCHAR},
+            i.unit = #{unit,jdbcType=VARCHAR},
+            i.min_quantity = #{minQuantity,jdbcType=DECIMAL},
+            i.max_quantity = #{maxQuantity,jdbcType=DECIMAL},
+            i.unit_price = #{unitPrice,jdbcType=DECIMAL},
+            i.warehouse_location = #{warehouseLocation,jdbcType=VARCHAR},
+            i.line_id = #{lineId,jdbcType=NUMERIC},
+            i.specifications = #{specifications,jdbcType=VARCHAR},
+            i.status = #{status,jdbcType=VARCHAR},
             i.updated_at = CURRENT_TIMESTAMP
         WHERE i.inventory_id = #{inventoryId}
     </update>

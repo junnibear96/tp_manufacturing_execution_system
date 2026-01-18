@@ -17,6 +17,45 @@
 
                 .filter-row {
                     grid-template-columns: 1fr 1fr auto;
+
+                    /* Responsive Design */
+                    @media (max-width: 768px) {
+                        body {
+                            padding: 12px;
+                        }
+
+                        .page-header {
+                            padding: 20px;
+                        }
+
+                        .page-header h1 {
+                            font-size: 22px;
+                        }
+
+                        table {
+                            font-size: 13px;
+                            display: block;
+                            overflow-x: auto;
+                        }
+
+                        .filter-form {
+                            flex-direction: column;
+                        }
+
+                        .btn {
+                            width: 100%;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .page-header h1 {
+                            font-size: 20px;
+                        }
+
+                        table {
+                            font-size: 12px;
+                        }
+                    }
                 }
             </style>
         </head>

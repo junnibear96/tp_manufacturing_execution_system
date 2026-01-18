@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FactoryController {
 
     private final FactoryService factoryService;
+    private final com.tp.mes.app.factory.service.ProductionLineService productionLineService;
 
     // ========== 대시보드 ==========
 
@@ -300,11 +301,20 @@ public class FactoryController {
             @RequestParam(defaultValue = "0") Integer standardWorkers,
             RedirectAttributes redirectAttributes) {
 
-        ProductionLine line = new ProductionLine(
-                lineId, factoryId, lineName, null, lineType,
-                status, false, maxCapacity, 0, 0, 0.0,
-                standardWorkers, 0, null, null, null, null,
-                null, null, null);
+        ProductionLine line = new ProductionLine();
+        line.setLineId(lineId);
+        line.setFactoryId(factoryId);
+        line.setLineName(lineName);
+        line.setLineType(lineType);
+        line.setStatus(status);
+        line.setIsOperating(false);
+        line.setMaxCapacity(maxCapacity);
+        line.setTaktTime(0);
+        line.setCycleTime(0);
+        line.setUtilizationRate(0.0);
+        line.setUtilizationRateDecimal(java.math.BigDecimal.ZERO);
+        line.setStandardWorkers(standardWorkers);
+        line.setCurrentWorkers(0);
 
         factoryService.createLine(line);
 
@@ -325,6 +335,27 @@ public class FactoryController {
         factoryService.changeLineStatus(lineId, status, isOperating);
 
         redirectAttributes.addFlashAttribute("message", "라인 상태가 변경되었습니다");
+        return "redirect:/factory/lines";
+    }
+
+    /**
+     * 가동률 업데이트 (Simulation feature)
+     */
+    @PostMapping("/lines/{lineId}/utilization")
+    public String updateUtilizationRate(
+            @PathVariable String lineId,
+            @RequestParam java.math.BigDecimal rate,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            productionLineService.updateUtilizationRate(lineId, rate);
+            redirectAttributes.addFlashAttribute("message",
+                    "가동률이 " + rate + "% 로 업데이트되었습니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("Failed to update utilization rate", e);
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/factory/lines";
     }
 }

@@ -184,7 +184,7 @@
                         <h1>📦 ${item.itemName}</h1>
                         <div style="display: flex; gap: 12px;">
                             <a href="/inventory/list" class="btn btn-secondary">목록으로</a>
-                            <a href="/inventory" class="btn btn-secondary">대시보드</a>
+                            <a href="/inventory" class="btn btn-secondary">재고관리</a>
                         </div>
                     </div>
 

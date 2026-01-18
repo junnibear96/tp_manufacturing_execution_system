@@ -18,7 +18,7 @@
             <div class="page-header">
               <h1 class="page-title">📋 생산 계획</h1>
               <sec:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
-                <a href="/admin/production/plans/new" class="btn-primary">+ 새 계획 등록</a>
+                <a href="${pageContext.request.contextPath}/production/plans/new" class="btn-primary">+ 새 계획 등록</a>
               </sec:authorize>
             </div>
 
@@ -62,7 +62,8 @@
                           </td>
                           <sec:authorize access="hasRole('ADMIN')">
                             <td style="text-align: center;">
-                              <form method="post" action="/admin/production/plans/delete" style="display: inline;">
+                              <form method="post" action="${pageContext.request.contextPath}/production/plans/delete"
+                                style="display: inline;">
                                 <input type="hidden" name="planId" value="${plan.planId}" />
                                 <button type="submit" class="btn-danger"
                                   style="padding: 6px 12px; font-size: 12px;">삭제</button>
