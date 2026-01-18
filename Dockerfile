@@ -42,10 +42,6 @@ ENV ORACLE_NET_TNS_ADMIN=/app/wallet
 # Expose port (Railway will override with PORT env var)
 EXPOSE 8090
 
-# Health check (Maximum startup time)
-HEALTHCHECK --interval=30s --timeout=30s --start-period=300s --retries=5 \
-    CMD curl -f http://localhost:${PORT:-8090}/actuator/health || exit 1
-
 # Run application (Ultra-optimized for 512MB RAM)
 ENTRYPOINT ["java"]
 CMD ["-Xmx256m", "-Xms256m", "-Dspring.profiles.active=railway", "-jar", "app.jar"]
