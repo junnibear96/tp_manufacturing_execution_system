@@ -1,3 +1,22 @@
+# Stage 1: Build
+FROM eclipse-temurin:17-jdk-jammy AS build
+
+WORKDIR /build
+
+# Copy Maven wrapper and pom.xml
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
+
+# Download dependencies (cached layer)
+RUN ./mvnw dependency:go-offline
+
+# Copy source code
+COPY src/ ./src/
+
+# Build application (skip tests for faster build)
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Runtime
 FROM eclipse-temurin:17-jre-jammy
 
 # Install curl for healthcheck
@@ -5,14 +24,13 @@ RUN apt-get update && \
     apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
 # Copy wallet files (required for Oracle Cloud connection)
 COPY wallet/ /app/wallet/
 
-# Copy application JAR
-COPY target/TP-exec.jar /app/app.jar
+# Copy JAR from build stage
+COPY --from=build /build/target/TP-exec.jar /app/app.jar
 
 # Set Oracle wallet environment variables
 ENV TNS_ADMIN=/app/wallet
