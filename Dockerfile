@@ -48,4 +48,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 
 # Run application
 ENTRYPOINT ["java"]
-CMD ["-Xmx1g", "-Xms512m", "-jar", "app.jar"]
+CMD ["-Xmx1g", "-Xms512m", "-Dspring.profiles.active=railway", "-jar", "app.jar"]
