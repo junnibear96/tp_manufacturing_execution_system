@@ -37,7 +37,8 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
                                 // Allow public resources and login page
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/assets/**", "/WEB-INF/**", "/error").permitAll()
+                                                .requestMatchers("/assets/**", "/WEB-INF/**", "/views/**", "/error")
+                                                .permitAll()
                                                 .requestMatchers("/", "/login", "/cover-letter", "/api/**",
                                                                 "/actuator/**")
                                                 .permitAll()
