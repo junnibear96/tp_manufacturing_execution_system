@@ -1,82 +1,52 @@
-# ===== Build outputs =====
-/target/
-**/target/
+# Generated files
+target/
+*.class
+*.jar
+*.war
+*.ear
 
-# ===== Logs =====
-*.log
-logs/
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
 
-# ===== Local tools (DO NOT COMMIT) =====
-tools/
-
-# ===== OS / Editor =====
+# OS files
 .DS_Store
 Thumbs.db
 
-# VS Code
-.vscode/
+# Logs
+*.log
+logs/
 
-# IntelliJ
-.idea/
-*.iml
-out/
-
-# Eclipse
-.project
-.classpath
-.settings/
-
-# NetBeans
-nbproject/
-
-# ===== Local secrets (DO NOT COMMIT) =====
+# Environment files
 .env
-.env.*
-*.local
-*.local.*
+.env.local
+.env.prod
 
-# Local scripts that may contain credentials
-scripts/*secret*
-scripts/*oracle*env*
+# Wallet sensitive files (DO NOT COMMIT PASSWORDS!)
+wallet/*.p12
+wallet/*.pem
 
-# ===== Maven wrapper =====
-# Keep wrapper jar committed so clones can build consistently.
+# But keep these wallet files (needed for deployment)
+!wallet/tnsnames.ora
+!wallet/sqlnet.ora
+!wallet/ojdbc.properties
+!wallet/truststore.jks
+!wallet/keystore.jks
+!wallet/cwallet.sso
+!wallet/README
 
-# ===== Temporary =====
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Temp files
 *.tmp
 *.bak
 *.swp
 *~
 
-# ===== Spring Boot =====
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### STS ###
-.apt_generated
-.factorypath
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-# ===== Testing/Recording artifacts =====
-*.webp
-screenshots/
-recordings/
-
-# ===== Node/NPM (if used) =====
-node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
-
-# ===== Database =====
-*.db
-*.sqlite
-*.sqlite3
+# Test files
+test-output/
