@@ -10,13 +10,16 @@ public class HomeController {
 
   @GetMapping("/")
   public String home(Model model, java.security.Principal principal) {
+    System.out.println("DEBUG: HomeController / requested. Principal: " + principal);
     // Check if user is logged in
     if (principal != null) {
+      System.out.println("DEBUG: User logged in, redirecting to dashboard");
       // User is logged in, redirect to dashboard
       return "redirect:/dashboard";
     }
 
     // User is not logged in, show index page
+    System.out.println("DEBUG: User NOT logged in, showing index");
     model.addAttribute("now", Instant.now().toString());
     return "index";
   }
