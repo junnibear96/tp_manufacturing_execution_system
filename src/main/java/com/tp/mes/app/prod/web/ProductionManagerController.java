@@ -16,14 +16,19 @@ import java.util.List;
 /**
  * Production Manager Controller - 관리자용 생산관리 컨트롤러
  */
-@Slf4j
 @Controller
 @RequestMapping("/production")
-@RequiredArgsConstructor
 public class ProductionManagerController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProductionManagerController.class);
 
     private final EquipmentService equipmentService;
     private final ProductionAnalysisService analysisService;
+
+    public ProductionManagerController(EquipmentService equipmentService, ProductionAnalysisService analysisService) {
+        this.equipmentService = equipmentService;
+        this.analysisService = analysisService;
+    }
 
     /**
      * 생산관리 루트 - 대시보드로 리다이렉트

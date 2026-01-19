@@ -38,9 +38,7 @@ public class JdbcNoticeRepository implements NoticeRepository {
               rs.getLong("notice_id"),
               rs.getString("title"),
               rs.getString("body"),
-              rs.getString("created_at")
-          )
-      );
+              rs.getString("created_at")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_notice table not found; returning fallback notices. Run scripts/oracle-init.sql");
@@ -60,10 +58,8 @@ public class JdbcNoticeRepository implements NoticeRepository {
               rs.getLong("notice_id"),
               rs.getString("title"),
               rs.getString("body"),
-              rs.getString("created_at")
-          ),
-          noticeId
-      );
+              rs.getString("created_at")),
+          noticeId);
       return items.stream().findFirst();
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
@@ -81,12 +77,28 @@ public class JdbcNoticeRepository implements NoticeRepository {
       args.put("title", title);
       args.put("body", body);
       args.put("created_by", createdByUserId);
+      args.put("created_at", new java.sql.Timestamp(System.currentTimeMillis()));
       Number key = insert.executeAndReturnKey(args);
       return key.longValue();
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_notice table not found; insert is skipped. Run scripts/oracle-init.sql");
         return -1L;
+      }
+      throw ex;
+    }
+  }
+
+  @Override
+  public void updateNotice(long noticeId, String title, String body, Long updatedByUserId) {
+    try {
+      jdbcTemplate.update(
+          "update tp_notice set title = ?, body = ? where notice_id = ?",
+          title, body, noticeId);
+    } catch (DataAccessException ex) {
+      if (OracleErrorSupport.isMissingTableOrView(ex)) {
+        log.warn("tp_notice table not found; update is skipped.");
+        return;
       }
       throw ex;
     }

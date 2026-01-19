@@ -14,16 +14,21 @@ import org.springframework.stereotype.Repository;
  * 생산라인 Repository 구현체
  */
 @Repository
-@RequiredArgsConstructor
-@Slf4j
 public class MyBatisProductionLineRepository implements ProductionLineRepository {
 
-    private final ProductionLineMapper lineMapper;
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
+            .getLogger(MyBatisProductionLineRepository.class);
+
+    private final ProductionLineMapper productionLineMapper;
+
+    public MyBatisProductionLineRepository(ProductionLineMapper productionLineMapper) {
+        this.productionLineMapper = productionLineMapper;
+    }
 
     @Override
     public List<ProductionLine> findAll() {
         try {
-            return lineMapper.findAll();
+            return productionLineMapper.findAll();
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found. Run scripts/factory-schema.sql");
@@ -36,7 +41,7 @@ public class MyBatisProductionLineRepository implements ProductionLineRepository
     @Override
     public List<ProductionLine> findByFactory(String factoryId) {
         try {
-            return lineMapper.findByFactory(factoryId);
+            return productionLineMapper.findByFactory(factoryId);
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found");
@@ -49,7 +54,7 @@ public class MyBatisProductionLineRepository implements ProductionLineRepository
     @Override
     public List<ProductionLine> findByStatus(String status) {
         try {
-            return lineMapper.findByStatus(status);
+            return productionLineMapper.findByStatus(status);
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found");
@@ -62,7 +67,7 @@ public class MyBatisProductionLineRepository implements ProductionLineRepository
     @Override
     public List<ProductionLine> findRunning() {
         try {
-            return lineMapper.findRunning();
+            return productionLineMapper.findRunning();
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found");
@@ -75,7 +80,7 @@ public class MyBatisProductionLineRepository implements ProductionLineRepository
     @Override
     public Optional<ProductionLine> findById(String lineId) {
         try {
-            return lineMapper.findById(lineId);
+            return productionLineMapper.findById(lineId);
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found");
@@ -87,38 +92,38 @@ public class MyBatisProductionLineRepository implements ProductionLineRepository
 
     @Override
     public void save(ProductionLine line) {
-        lineMapper.insert(line);
+        productionLineMapper.insert(line);
     }
 
     @Override
     public void update(ProductionLine line) {
-        lineMapper.update(line);
+        productionLineMapper.update(line);
     }
 
     @Override
     public void delete(String lineId) {
-        lineMapper.delete(lineId);
+        productionLineMapper.delete(lineId);
     }
 
     @Override
     public void updateStatus(String lineId, String status, Boolean isOperating) {
-        lineMapper.updateStatus(lineId, status, isOperating);
+        productionLineMapper.updateStatus(lineId, status, isOperating);
     }
 
     @Override
     public void updateCurrentWorkers(String lineId, int currentWorkers) {
-        lineMapper.updateCurrentWorkers(lineId, currentWorkers);
+        productionLineMapper.updateCurrentWorkers(lineId, currentWorkers);
     }
 
     @Override
     public void updateUtilizationRate(String lineId, double utilizationRate) {
-        lineMapper.updateUtilizationRate(lineId, utilizationRate);
+        productionLineMapper.updateUtilizationRate(lineId, utilizationRate);
     }
 
     @Override
     public int countByFactory(String factoryId) {
         try {
-            return lineMapper.countByFactory(factoryId);
+            return productionLineMapper.countByFactory(factoryId);
         } catch (DataAccessException ex) {
             if (OracleErrorSupport.isMissingTableOrView(ex)) {
                 log.warn("production_lines table not found");

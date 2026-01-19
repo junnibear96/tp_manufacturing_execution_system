@@ -13,13 +13,19 @@ import java.util.List;
 /**
  * Equipment Service Implementation
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class DefaultEquipmentService implements EquipmentService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultEquipmentService.class);
 
     private final EquipmentMapper equipmentMapper;
     private final com.tp.mes.app.prod.mapper.MaintenanceHistoryMapper historyMapper;
+
+    public DefaultEquipmentService(EquipmentMapper equipmentMapper,
+            com.tp.mes.app.prod.mapper.MaintenanceHistoryMapper historyMapper) {
+        this.equipmentMapper = equipmentMapper;
+        this.historyMapper = historyMapper;
+    }
 
     @Override
     public List<Equipment> listAllEquipment() {

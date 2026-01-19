@@ -14,11 +14,15 @@ import org.springframework.stereotype.Repository;
  * 직급 Repository (MyBatis 기반)
  */
 @Repository
-@RequiredArgsConstructor
-@Slf4j
 public class JdbcPositionRepository implements PositionRepository {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JdbcPositionRepository.class);
+
     private final PositionMapper positionMapper;
+
+    public JdbcPositionRepository(PositionMapper positionMapper) {
+        this.positionMapper = positionMapper;
+    }
 
     @Override
     public List<Position> findAll() {

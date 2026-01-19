@@ -1,16 +1,7 @@
 package com.tp.mes.app.factory.model;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-/**
- * 생산라인 (Production Line) - 실제 생산이 일어나는 최소 단위
- */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductionLine {
 
     private String lineId; // 라인 ID (PK)
@@ -48,4 +39,223 @@ public class ProductionLine {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime lastOperatedAt; // 마지막 가동 시각
+
+    public ProductionLine() {
+    }
+
+    public ProductionLine(String lineId, String factoryId, String lineName, String lineCode, String lineType,
+            String status, Boolean isOperating, Integer maxCapacity, Integer taktTime, Integer cycleTime,
+            Double utilizationRate, java.math.BigDecimal utilizationRateDecimal, LocalDateTime utilizationUpdatedAt,
+            Integer standardWorkers, Integer currentWorkers, String lineLeaderEmpId, String producibleItems,
+            String equipmentList, String shiftPattern, LocalDateTime createdAt, LocalDateTime updatedAt,
+            LocalDateTime lastOperatedAt) {
+        this.lineId = lineId;
+        this.factoryId = factoryId;
+        this.lineName = lineName;
+        this.lineCode = lineCode;
+        this.lineType = lineType;
+        this.status = status;
+        this.isOperating = isOperating;
+        this.maxCapacity = maxCapacity;
+        this.taktTime = taktTime;
+        this.cycleTime = cycleTime;
+        this.utilizationRate = utilizationRate;
+        this.utilizationRateDecimal = utilizationRateDecimal;
+        this.utilizationUpdatedAt = utilizationUpdatedAt;
+        this.standardWorkers = standardWorkers;
+        this.currentWorkers = currentWorkers;
+        this.lineLeaderEmpId = lineLeaderEmpId;
+        this.producibleItems = producibleItems;
+        this.equipmentList = equipmentList;
+        this.shiftPattern = shiftPattern;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.lastOperatedAt = lastOperatedAt;
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId;
+    }
+
+    public String getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(String factoryId) {
+        this.factoryId = factoryId;
+    }
+
+    public String getLineName() {
+        return lineName;
+    }
+
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    public String getLineCode() {
+        return lineCode;
+    }
+
+    public void setLineCode(String lineCode) {
+        this.lineCode = lineCode;
+    }
+
+    public String getLineType() {
+        return lineType;
+    }
+
+    public void setLineType(String lineType) {
+        this.lineType = lineType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getIsOperating() {
+        return isOperating;
+    }
+
+    public void setIsOperating(Boolean isOperating) {
+        this.isOperating = isOperating;
+    }
+
+    public Integer getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(Integer maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public Integer getTaktTime() {
+        return taktTime;
+    }
+
+    public void setTaktTime(Integer taktTime) {
+        this.taktTime = taktTime;
+    }
+
+    public Integer getCycleTime() {
+        return cycleTime;
+    }
+
+    public void setCycleTime(Integer cycleTime) {
+        this.cycleTime = cycleTime;
+    }
+
+    public Double getUtilizationRate() {
+        return utilizationRate;
+    }
+
+    public void setUtilizationRate(Double utilizationRate) {
+        this.utilizationRate = utilizationRate;
+    }
+
+    public java.math.BigDecimal getUtilizationRateDecimal() {
+        return utilizationRateDecimal;
+    }
+
+    public void setUtilizationRateDecimal(java.math.BigDecimal utilizationRateDecimal) {
+        this.utilizationRateDecimal = utilizationRateDecimal;
+    }
+
+    public LocalDateTime getUtilizationUpdatedAt() {
+        return utilizationUpdatedAt;
+    }
+
+    public void setUtilizationUpdatedAt(LocalDateTime utilizationUpdatedAt) {
+        this.utilizationUpdatedAt = utilizationUpdatedAt;
+    }
+
+    public Integer getStandardWorkers() {
+        return standardWorkers;
+    }
+
+    public void setStandardWorkers(Integer standardWorkers) {
+        this.standardWorkers = standardWorkers;
+    }
+
+    public Integer getCurrentWorkers() {
+        return currentWorkers;
+    }
+
+    public void setCurrentWorkers(Integer currentWorkers) {
+        this.currentWorkers = currentWorkers;
+    }
+
+    public String getLineLeaderEmpId() {
+        return lineLeaderEmpId;
+    }
+
+    public void setLineLeaderEmpId(String lineLeaderEmpId) {
+        this.lineLeaderEmpId = lineLeaderEmpId;
+    }
+
+    public String getProducibleItems() {
+        return producibleItems;
+    }
+
+    public void setProducibleItems(String producibleItems) {
+        this.producibleItems = producibleItems;
+    }
+
+    public String getEquipmentList() {
+        return equipmentList;
+    }
+
+    public void setEquipmentList(String equipmentList) {
+        this.equipmentList = equipmentList;
+    }
+
+    public String getShiftPattern() {
+        return shiftPattern;
+    }
+
+    public void setShiftPattern(String shiftPattern) {
+        this.shiftPattern = shiftPattern;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getLastOperatedAt() {
+        return lastOperatedAt;
+    }
+
+    public void setLastOperatedAt(LocalDateTime lastOperatedAt) {
+        this.lastOperatedAt = lastOperatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductionLine{" +
+                "lineId='" + lineId + '\'' +
+                ", lineName='" + lineName + '\'' +
+                ", status='" + status + '\'' +
+                ", utilizationRateDecimal=" + utilizationRateDecimal +
+                '}';
+    }
 }

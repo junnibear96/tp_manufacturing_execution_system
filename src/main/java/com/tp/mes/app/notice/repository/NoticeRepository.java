@@ -11,4 +11,6 @@ public interface NoticeRepository {
   Optional<Notice> findNotice(long noticeId);
 
   long insertNotice(String title, String body, Long createdByUserId);
+
+  void updateNotice(long noticeId, String title, String body, Long updatedByUserId);
 }

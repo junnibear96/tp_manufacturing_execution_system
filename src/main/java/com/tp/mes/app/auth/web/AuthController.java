@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
-@RequestMapping("/app")
+//@Controller
 public class AuthController {
 
   private final AuthService authService;
@@ -25,7 +24,7 @@ public class AuthController {
   public String loginForm(Model model, @RequestParam(value = "error", required = false) String error) {
     model.addAttribute("now", Instant.now().toString());
     model.addAttribute("error", error);
-    return "app/login";
+    return "app/login"; // View name remains same (jsp location), but URL changes
   }
 
   @PostMapping("/login")
@@ -36,9 +35,9 @@ public class AuthController {
     return authService.authenticate(username, password)
         .map(user -> {
           session.setAttribute(AuthUser.SESSION_KEY, user);
-          return "redirect:/dashboard";
+          return "redirect:/dashboard"; // Assuming dashboard is at root or specific path
         })
-        .orElse("redirect:/app/login?error=1");
+        .orElse("redirect:/login?error=1");
   }
 
   @PostMapping("/logout")

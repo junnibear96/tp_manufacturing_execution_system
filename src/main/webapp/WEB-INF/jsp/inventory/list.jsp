@@ -348,7 +348,7 @@
                                 <div class="filters">
                                     <div class="search-box">
                                         <input type="text" name="keyword"
-                                            placeholder="<spring:message code='inventory.search.placeholder' default='품목코드 또는 품명으로 검색...'/>"
+                                            placeholder="<spring:message code='inventory.search.placeholder' text='품목코드 또는 품명으로 검색...'/>"
                                             value="${keyword}">
                                     </div>
                                     <select name="type" onchange="this.form.submit()">

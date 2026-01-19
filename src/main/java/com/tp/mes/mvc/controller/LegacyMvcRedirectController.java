@@ -10,11 +10,11 @@ public class LegacyMvcRedirectController {
 
   @GetMapping("/company")
   public String company() {
-    return "redirect:/app/company";
+    return "redirect:/companies"; // Assuming companies is the list
   }
 
   @GetMapping("/portfolio")
   public String portfolio() {
-    return "redirect:/app/portfolio";
+    return "redirect:/portfolio";
   }
 }

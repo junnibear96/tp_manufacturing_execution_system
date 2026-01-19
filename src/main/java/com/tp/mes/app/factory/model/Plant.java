@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 /**
  * 사업장 (Plant) - 최상위 운영 단위
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Plant {
 
     private String plantId; // 사업장 ID (PK)
@@ -40,4 +37,166 @@ public class Plant {
     // 메타 정보
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public Plant() {
+    }
+
+    public Plant(String plantId, String plantName, String plantNameEn, String address, String addressDetail,
+            String postalCode, String coordinates, String plantType, String status, Double totalArea,
+            LocalDate establishedDate, String managerEmpId, String phone, String fax, LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
+        this.plantId = plantId;
+        this.plantName = plantName;
+        this.plantNameEn = plantNameEn;
+        this.address = address;
+        this.addressDetail = addressDetail;
+        this.postalCode = postalCode;
+        this.coordinates = coordinates;
+        this.plantType = plantType;
+        this.status = status;
+        this.totalArea = totalArea;
+        this.establishedDate = establishedDate;
+        this.managerEmpId = managerEmpId;
+        this.phone = phone;
+        this.fax = fax;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public String getPlantId() {
+        return plantId;
+    }
+
+    public void setPlantId(String plantId) {
+        this.plantId = plantId;
+    }
+
+    public String getPlantName() {
+        return plantName;
+    }
+
+    public void setPlantName(String plantName) {
+        this.plantName = plantName;
+    }
+
+    public String getPlantNameEn() {
+        return plantNameEn;
+    }
+
+    public void setPlantNameEn(String plantNameEn) {
+        this.plantNameEn = plantNameEn;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public String getPlantType() {
+        return plantType;
+    }
+
+    public void setPlantType(String plantType) {
+        this.plantType = plantType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getTotalArea() {
+        return totalArea;
+    }
+
+    public void setTotalArea(Double totalArea) {
+        this.totalArea = totalArea;
+    }
+
+    public LocalDate getEstablishedDate() {
+        return establishedDate;
+    }
+
+    public void setEstablishedDate(LocalDate establishedDate) {
+        this.establishedDate = establishedDate;
+    }
+
+    public String getManagerEmpId() {
+        return managerEmpId;
+    }
+
+    public void setManagerEmpId(String managerEmpId) {
+        this.managerEmpId = managerEmpId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Plant{" +
+                "plantId='" + plantId + '\'' +
+                ", plantName='" + plantName + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

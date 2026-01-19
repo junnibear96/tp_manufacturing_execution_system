@@ -128,21 +128,27 @@ body::after {
     letter-spacing: 0.5px;
 }
 
-.filter-group select {
+.filter-group select,
+.filter-group input[type="text"],
+.filter-group input[type="number"],
+.filter-group input[type="date"] {
     padding: 14px 16px;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
     font-size: 14px;
     background: white;
+    width: 100%;
     transition: all 0.3s;
-    cursor: pointer;
+    font-family: inherit;
 }
 
-.filter-group select:hover {
+.filter-group select:hover,
+.filter-group input:hover {
     border-color: #cbd5e0;
 }
 
-.filter-group select:focus {
+.filter-group select:focus,
+.filter-group input:focus {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);

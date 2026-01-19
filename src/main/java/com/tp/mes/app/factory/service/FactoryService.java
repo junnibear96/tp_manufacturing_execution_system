@@ -17,14 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
  * 공장 관리 Service
  */
 @Service
-@RequiredArgsConstructor
-@Slf4j
 @Transactional(readOnly = true)
 public class FactoryService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FactoryService.class);
 
     private final PlantRepository plantRepository;
     private final FactoryRepository factoryRepository;
     private final ProductionLineRepository lineRepository;
+
+    public FactoryService(PlantRepository plantRepository, FactoryRepository factoryRepository,
+            ProductionLineRepository lineRepository) {
+        this.plantRepository = plantRepository;
+        this.factoryRepository = factoryRepository;
+        this.lineRepository = lineRepository;
+    }
 
     // ========== Plant 관련 ==========
 

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductionController {
 
   private final ProductionService service;
+  private final com.tp.mes.app.inventory.service.InventoryService inventoryService;
 
-  public ProductionController(ProductionService service) {
+  public ProductionController(ProductionService service,
+      com.tp.mes.app.inventory.service.InventoryService inventoryService) {
     this.service = service;
+    this.inventoryService = inventoryService;
   }
 
   @GetMapping({ "/production/processes" })
@@ -50,6 +53,7 @@ public class ProductionController {
     model.addAttribute("planDate", "");
     model.addAttribute("itemCode", "");
     model.addAttribute("qtyPlan", "0");
+    model.addAttribute("items", inventoryService.getAllItems());
     return "production/production-plan-form";
   }
 
@@ -59,9 +63,10 @@ public class ProductionController {
       @RequestParam("planDate") String planDate,
       @RequestParam("itemCode") String itemCode,
       @RequestParam("qtyPlan") String qtyPlan,
-      HttpSession session) {
-    AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
-    Long createdBy = user == null ? null : user.getUserId();
+      org.springframework.security.core.Authentication authentication) {
+    // AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
+    // Long createdBy = user == null ? null : user.getUserId();
+    Long createdBy = 1L; // Fallback for in-memory users
     service.createPlan(planDate, itemCode, qtyPlan, createdBy);
     return "redirect:/production/plans";
   }
@@ -82,6 +87,7 @@ public class ProductionController {
     model.addAttribute("equipmentList", service.listEquipment().stream()
         .filter(e -> "Y".equalsIgnoreCase(e.getActiveYn()))
         .collect(Collectors.toList()));
+    model.addAttribute("items", inventoryService.getAllItems());
     return "admin/production-result-form";
   }
 
@@ -92,9 +98,10 @@ public class ProductionController {
       @RequestParam("qtyGood") String qtyGood,
       @RequestParam("qtyNg") String qtyNg,
       @RequestParam(value = "equipmentId", required = false) Long equipmentId,
-      HttpSession session) {
-    AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
-    Long createdBy = user == null ? null : user.getUserId();
+      org.springframework.security.core.Authentication authentication) {
+    // AuthUser user = (AuthUser) session.getAttribute(AuthUser.SESSION_KEY);
+    // Long createdBy = user == null ? null : user.getUserId();
+    Long createdBy = 1L; // Fallback for in-memory users
     service.createResult(workDate, itemCode, qtyGood, qtyNg, equipmentId, createdBy);
     return "redirect:/production/results";
   }

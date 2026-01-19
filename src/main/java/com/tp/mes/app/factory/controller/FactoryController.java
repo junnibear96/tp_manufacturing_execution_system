@@ -5,6 +5,7 @@ import com.tp.mes.app.factory.model.Plant;
 import com.tp.mes.app.factory.model.ProductionLine;
 import com.tp.mes.app.factory.service.FactoryService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping("/factory")
-@RequiredArgsConstructor
-@Slf4j
 public class FactoryController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FactoryController.class);
 
     private final FactoryService factoryService;
     private final com.tp.mes.app.factory.service.ProductionLineService productionLineService;
+
+    public FactoryController(FactoryService factoryService,
+            com.tp.mes.app.factory.service.ProductionLineService productionLineService) {
+        this.factoryService = factoryService;
+        this.productionLineService = productionLineService;
+    }
 
     // ========== 대시보드 ==========
 
@@ -154,7 +161,7 @@ public class FactoryController {
 
         factoryService.updatePlant(updated);
 
-        redirectAttributes.addFlashAttribute("message", "사업장 정보가 수정되었습니다");
+        redirectAttributes.addFlashAttribute("message", "수정 되었습니다.");
         return "redirect:/factory/plants/" + plantId;
     }
 
@@ -244,6 +251,46 @@ public class FactoryController {
         model.addAttribute("mode", "edit");
 
         return "factory/factory-detail";
+    }
+
+    /**
+     * 공장 정보 수정 처리
+     */
+    @PostMapping("/factories/{factoryId}")
+    public String updateFactory(
+            @PathVariable String factoryId,
+            @RequestParam String factoryName,
+            @RequestParam(required = false) String factoryNameEn,
+            @RequestParam String factoryType,
+            @RequestParam String status,
+            @RequestParam(required = false) String productCategory,
+            @RequestParam(required = false) Double targetUtilizationRate,
+            RedirectAttributes redirectAttributes) {
+
+        Factory existing = factoryService.getFactoryById(factoryId)
+                .orElseThrow(() -> new IllegalArgumentException("공장을 찾을 수 없습니다: " + factoryId));
+
+        Factory updated = new Factory(
+                factoryId,
+                existing.getPlantId(),
+                factoryName,
+                factoryNameEn,
+                existing.getFactoryCode(),
+                factoryType,
+                status,
+                productCategory,
+                existing.getBuildingCode(),
+                existing.getFloor(),
+                existing.getArea(),
+                targetUtilizationRate,
+                existing.getManagerEmpId(),
+                existing.getCreatedAt(),
+                LocalDateTime.now());
+
+        factoryService.updateFactory(updated);
+
+        redirectAttributes.addFlashAttribute("message", "공장 정보가 수정되었습니다");
+        return "redirect:/factory/factories/" + factoryId;
     }
 
     // ========== Production Line 관리 ==========

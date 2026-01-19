@@ -18,14 +18,21 @@ import java.util.List;
  * Inventory Consumption Service
  * 생산 라인 가동에 따른 자동 재고 소진 로직
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class InventoryConsumptionService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InventoryConsumptionService.class);
 
     private final ProductionLineMapper lineMapper;
     private final ProductionBomMapper bomMapper;
     private final InventoryService inventoryService;
+
+    public InventoryConsumptionService(ProductionLineMapper lineMapper, ProductionBomMapper bomMapper,
+            InventoryService inventoryService) {
+        this.lineMapper = lineMapper;
+        this.bomMapper = bomMapper;
+        this.inventoryService = inventoryService;
+    }
 
     /**
      * 가동 중인 모든 라인의 재고 소진 처리

@@ -47,10 +47,10 @@
             </p>
 
             <div class="landing-chips" role="list" aria-label="Quick links">
-              <a class="chip" role="listitem" href="${pageContext.request.contextPath}/app/company">
+              <a class="chip" role="listitem" href="${pageContext.request.contextPath}/company">
                 <spring:message code="app.intro.company" text="회사 소개" />
               </a>
-              <a class="chip" role="listitem" href="${pageContext.request.contextPath}/app/portfolio">
+              <a class="chip" role="listitem" href="${pageContext.request.contextPath}/portfolio">
                 <spring:message code="app.intro.portfolio" text="포트폴리오" />
               </a>
               <a class="chip" role="listitem" href="${pageContext.request.contextPath}/api/health">Health</a>

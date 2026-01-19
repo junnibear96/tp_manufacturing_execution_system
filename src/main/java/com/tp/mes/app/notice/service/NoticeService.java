@@ -11,4 +11,6 @@ public interface NoticeService {
   Optional<Notice> findNotice(long noticeId);
 
   long createNotice(String title, String body, Long createdByUserId);
+
+  void updateNotice(long noticeId, String title, String body, Long updatedByUserId);
 }

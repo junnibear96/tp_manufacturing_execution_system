@@ -6,8 +6,8 @@ import com.tp.mes.app.hr.model.EmployeeListItem;
 import com.tp.mes.support.OracleErrorSupport;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +15,15 @@ import org.springframework.stereotype.Repository;
  * 사원 Repository (MyBatis 기반)
  */
 @Repository
-@RequiredArgsConstructor
-@Slf4j
 public class JdbcEmployeeRepository implements EmployeeRepository {
 
+    private static final Logger log = LoggerFactory.getLogger(JdbcEmployeeRepository.class);
+
     private final EmployeeMapper employeeMapper;
+
+    public JdbcEmployeeRepository(EmployeeMapper employeeMapper) {
+        this.employeeMapper = employeeMapper;
+    }
 
     @Override
     public List<EmployeeListItem> findAllWithDeptAndPosition() {

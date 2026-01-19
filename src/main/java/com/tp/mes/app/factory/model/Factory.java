@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 /**
  * 공장 (Factory) - 사업장 내 생산 기능별 구역
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Factory {
 
     private String factoryId; // 공장 ID (PK)
@@ -39,4 +36,156 @@ public class Factory {
     // 메타 정보
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public Factory() {
+    }
+
+    public Factory(String factoryId, String plantId, String factoryName, String factoryNameEn, String factoryCode,
+            String factoryType, String status, String productCategory, String buildingCode, String floor, Double area,
+            Double targetUtilizationRate, String managerEmpId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.factoryId = factoryId;
+        this.plantId = plantId;
+        this.factoryName = factoryName;
+        this.factoryNameEn = factoryNameEn;
+        this.factoryCode = factoryCode;
+        this.factoryType = factoryType;
+        this.status = status;
+        this.productCategory = productCategory;
+        this.buildingCode = buildingCode;
+        this.floor = floor;
+        this.area = area;
+        this.targetUtilizationRate = targetUtilizationRate;
+        this.managerEmpId = managerEmpId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public String getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(String factoryId) {
+        this.factoryId = factoryId;
+    }
+
+    public String getPlantId() {
+        return plantId;
+    }
+
+    public void setPlantId(String plantId) {
+        this.plantId = plantId;
+    }
+
+    public String getFactoryName() {
+        return factoryName;
+    }
+
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
+
+    public String getFactoryNameEn() {
+        return factoryNameEn;
+    }
+
+    public void setFactoryNameEn(String factoryNameEn) {
+        this.factoryNameEn = factoryNameEn;
+    }
+
+    public String getFactoryCode() {
+        return factoryCode;
+    }
+
+    public void setFactoryCode(String factoryCode) {
+        this.factoryCode = factoryCode;
+    }
+
+    public String getFactoryType() {
+        return factoryType;
+    }
+
+    public void setFactoryType(String factoryType) {
+        this.factoryType = factoryType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    public String getBuildingCode() {
+        return buildingCode;
+    }
+
+    public void setBuildingCode(String buildingCode) {
+        this.buildingCode = buildingCode;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public Double getTargetUtilizationRate() {
+        return targetUtilizationRate;
+    }
+
+    public void setTargetUtilizationRate(Double targetUtilizationRate) {
+        this.targetUtilizationRate = targetUtilizationRate;
+    }
+
+    public String getManagerEmpId() {
+        return managerEmpId;
+    }
+
+    public void setManagerEmpId(String managerEmpId) {
+        this.managerEmpId = managerEmpId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Factory{" +
+                "factoryId='" + factoryId + '\'' +
+                ", plantId='" + plantId + '\'' +
+                ", factoryName='" + factoryName + '\'' +
+                '}';
+    }
 }

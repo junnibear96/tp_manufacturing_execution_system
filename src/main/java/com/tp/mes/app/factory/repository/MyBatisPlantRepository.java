@@ -14,11 +14,15 @@ import org.springframework.stereotype.Repository;
  * 사업장 Repository 구현체
  */
 @Repository
-@RequiredArgsConstructor
-@Slf4j
 public class MyBatisPlantRepository implements PlantRepository {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyBatisPlantRepository.class);
+
     private final PlantMapper plantMapper;
+
+    public MyBatisPlantRepository(PlantMapper plantMapper) {
+        this.plantMapper = plantMapper;
+    }
 
     @Override
     public List<Plant> findAll() {

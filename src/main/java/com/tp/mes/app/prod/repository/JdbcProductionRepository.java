@@ -43,9 +43,7 @@ public class JdbcProductionRepository implements ProductionRepository {
           (rs, rowNum) -> new ProcessItem(
               rs.getLong("process_id"),
               rs.getString("process_code"),
-              rs.getString("process_name")
-          )
-      );
+              rs.getString("process_name")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_process table not found; returning fallback processes. Run scripts/oracle-init.sql");
@@ -68,9 +66,7 @@ public class JdbcProductionRepository implements ProductionRepository {
               rs.getString("equipment_code"),
               rs.getString("equipment_name"),
               rs.getString("process_name"),
-              rs.getString("active_yn")
-          )
-      );
+              rs.getString("active_yn")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_equipment table not found; returning fallback equipment. Run scripts/oracle-init.sql");
@@ -92,9 +88,7 @@ public class JdbcProductionRepository implements ProductionRepository {
               rs.getString("plan_date"),
               rs.getString("item_code"),
               rs.getString("qty_plan"),
-              rs.getString("created_at")
-          )
-      );
+              rs.getString("created_at")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_prod_plan table not found; returning fallback plans. Run scripts/oracle-init.sql");
@@ -112,6 +106,7 @@ public class JdbcProductionRepository implements ProductionRepository {
       args.put("item_code", itemCode);
       args.put("qty_plan", qtyPlan);
       args.put("created_by", createdBy);
+      args.put("created_at", new java.util.Date());
       return insertPlan.executeAndReturnKey(args).longValue();
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
@@ -151,9 +146,7 @@ public class JdbcProductionRepository implements ProductionRepository {
               rs.getString("qty_good"),
               rs.getString("qty_ng"),
               rs.getString("equipment_name"),
-              rs.getString("created_at")
-          )
-      );
+              rs.getString("created_at")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("tp_prod_result table not found; returning fallback results. Run scripts/oracle-init.sql");
@@ -170,8 +163,7 @@ public class JdbcProductionRepository implements ProductionRepository {
       String qtyGood,
       String qtyNg,
       Long equipmentId,
-      Long createdBy
-  ) {
+      Long createdBy) {
     try {
       Map<String, Object> args = new HashMap<>();
       args.put("work_date", java.sql.Date.valueOf(workDate));
@@ -180,6 +172,7 @@ public class JdbcProductionRepository implements ProductionRepository {
       args.put("qty_ng", qtyNg);
       args.put("equipment_id", equipmentId);
       args.put("created_by", createdBy);
+      args.put("created_at", new java.util.Date());
       return insertResult.executeAndReturnKey(args).longValue();
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
@@ -220,9 +213,7 @@ public class JdbcProductionRepository implements ProductionRepository {
               rs.getString("bucket"),
               rs.getString("qty_plan"),
               rs.getString("qty_good"),
-              rs.getString("qty_ng")
-          )
-      );
+              rs.getString("qty_ng")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("production tables not found; returning fallback stats. Run scripts/oracle-init.sql");
@@ -250,9 +241,7 @@ public class JdbcProductionRepository implements ProductionRepository {
               rs.getString("bucket"),
               rs.getString("qty_plan"),
               rs.getString("qty_good"),
-              rs.getString("qty_ng")
-          )
-      );
+              rs.getString("qty_ng")));
     } catch (DataAccessException ex) {
       if (OracleErrorSupport.isMissingTableOrView(ex)) {
         log.warn("production tables not found; returning fallback stats. Run scripts/oracle-init.sql");

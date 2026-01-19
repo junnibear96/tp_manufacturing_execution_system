@@ -14,11 +14,15 @@ import org.springframework.stereotype.Repository;
  * 공장 Repository 구현체
  */
 @Repository
-@RequiredArgsConstructor
-@Slf4j
 public class MyBatisFactoryRepository implements FactoryRepository {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyBatisFactoryRepository.class);
+
     private final FactoryMapper factoryMapper;
+
+    public MyBatisFactoryRepository(FactoryMapper factoryMapper) {
+        this.factoryMapper = factoryMapper;
+    }
 
     @Override
     public List<Factory> findAll() {

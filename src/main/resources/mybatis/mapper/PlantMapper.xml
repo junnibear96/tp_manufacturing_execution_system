@@ -57,9 +57,9 @@
             postal_code, coordinates, plant_type, status, total_area,
             established_date, manager_emp_id, phone, fax
         ) VALUES (
-            #{plantId}, #{plantName}, #{plantNameEn}, #{address}, #{addressDetail},
-            #{postalCode}, #{coordinates}, #{plantType}, #{status}, #{totalArea},
-            #{establishedDate}, #{managerEmpId}, #{phone}, #{fax}
+            #{plantId}, #{plantName}, #{plantNameEn, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{addressDetail, jdbcType=VARCHAR},
+            #{postalCode, jdbcType=VARCHAR}, #{coordinates, jdbcType=VARCHAR}, #{plantType}, #{status}, #{totalArea, jdbcType=NUMERIC},
+            #{establishedDate, jdbcType=DATE}, #{managerEmpId, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{fax, jdbcType=VARCHAR}
         )
     </insert>
 
@@ -67,18 +67,18 @@
     <update id="update" parameterType="com.tp.mes.app.factory.model.Plant">
         UPDATE plants SET
             plant_name = #{plantName},
-            plant_name_en = #{plantNameEn},
-            address = #{address},
-            address_detail = #{addressDetail},
-            postal_code = #{postalCode},
-            coordinates = #{coordinates},
+            plant_name_en = #{plantNameEn, jdbcType=VARCHAR},
+            address = #{address, jdbcType=VARCHAR},
+            address_detail = #{addressDetail, jdbcType=VARCHAR},
+            postal_code = #{postalCode, jdbcType=VARCHAR},
+            coordinates = #{coordinates, jdbcType=VARCHAR},
             plant_type = #{plantType},
             status = #{status},
-            total_area = #{totalArea},
-            established_date = #{establishedDate},
-            manager_emp_id = #{managerEmpId},
-            phone = #{phone},
-            fax = #{fax},
+            total_area = #{totalArea, jdbcType=NUMERIC},
+            established_date = #{establishedDate, jdbcType=DATE},
+            manager_emp_id = #{managerEmpId, jdbcType=VARCHAR},
+            phone = #{phone, jdbcType=VARCHAR},
+            fax = #{fax, jdbcType=VARCHAR},
             updated_at = CURRENT_TIMESTAMP
         WHERE plant_id = #{plantId}
     </update>

@@ -19,7 +19,7 @@ public class GroupCompanyController {
     this.service = service;
   }
 
-  @GetMapping("/app/companies")
+  @GetMapping("/companies")
   public String list(Model model) {
     model.addAttribute("companies", service.listCompanies());
     return "app/companies";
@@ -41,17 +41,16 @@ public class GroupCompanyController {
       @RequestParam("companyCode") String companyCode,
       @RequestParam("companyName") String companyName,
       @RequestParam(value = "description", required = false) String description,
-      @RequestParam(value = "activeYn", required = false) String activeYn
-  ) {
+      @RequestParam(value = "activeYn", required = false) String activeYn) {
     service.createCompany(companyCode, companyName, description, activeYn);
-    return "redirect:/app/companies";
+    return "redirect:/companies";
   }
 
   @GetMapping("/admin/companies/{companyId}/edit")
   public String editForm(@PathVariable("companyId") long companyId, Model model) {
     Optional<GroupCompany> found = service.findCompany(companyId);
     if (found.isEmpty()) {
-      return "redirect:/app/companies";
+      return "redirect:/companies";
     }
     GroupCompany c = found.get();
     model.addAttribute("mode", "edit");
@@ -69,15 +68,14 @@ public class GroupCompanyController {
       @RequestParam("companyCode") String companyCode,
       @RequestParam("companyName") String companyName,
       @RequestParam(value = "description", required = false) String description,
-      @RequestParam(value = "activeYn", required = false) String activeYn
-  ) {
+      @RequestParam(value = "activeYn", required = false) String activeYn) {
     service.updateCompany(companyId, companyCode, companyName, description, activeYn);
-    return "redirect:/app/companies";
+    return "redirect:/companies";
   }
 
   @PostMapping("/admin/companies/{companyId}/delete")
   public String delete(@PathVariable("companyId") long companyId) {
     service.deleteCompany(companyId);
-    return "redirect:/app/companies";
+    return "redirect:/companies";
   }
 }

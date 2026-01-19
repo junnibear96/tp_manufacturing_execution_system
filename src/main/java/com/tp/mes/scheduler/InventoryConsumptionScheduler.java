@@ -11,13 +11,17 @@ import org.springframework.stereotype.Component;
  * Inventory Consumption Scheduler
  * 주기적으로 생산 라인의 재고 소진을 처리
  */
-@Slf4j
 @Component
 @EnableScheduling
-@RequiredArgsConstructor
 public class InventoryConsumptionScheduler {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InventoryConsumptionScheduler.class);
+
     private final InventoryConsumptionService consumptionService;
+
+    public InventoryConsumptionScheduler(InventoryConsumptionService consumptionService) {
+        this.consumptionService = consumptionService;
+    }
 
     /**
      * 매 시간마다 실행 - 1시간 분량의 재고 소진

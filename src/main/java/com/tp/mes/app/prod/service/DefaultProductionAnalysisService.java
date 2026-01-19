@@ -12,12 +12,17 @@ import java.util.List;
 /**
  * Production Analysis Service Implementation
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class DefaultProductionAnalysisService implements ProductionAnalysisService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
+            .getLogger(DefaultProductionAnalysisService.class);
+
     private final ProductionAnalysisMapper analysisMapper;
+
+    public DefaultProductionAnalysisService(ProductionAnalysisMapper analysisMapper) {
+        this.analysisMapper = analysisMapper;
+    }
 
     @Override
     public PlanAchievementReport analyzePlanAchievement(Long planId) {

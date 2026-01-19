@@ -265,6 +265,52 @@
                                         <spring:message code="login.back_home" />
                                     </a>
                                 </div>
+
+                                <div
+                                    style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed #e0e0e0; font-size: 11px; color: #888;">
+                                    <h4 style="margin-bottom: 8px; color: #667eea; font-weight: 600;">Test Accounts</h4>
+                                    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                                        <thead>
+                                            <tr style="border-bottom: 1px solid #eee;">
+                                                <th style="padding: 4px;">User</th>
+                                                <th style="padding: 4px;">Pass</th>
+                                                <th style="padding: 4px;">Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 2px 4px;">admin</td>
+                                                <td style="padding: 2px 4px;">admin123</td>
+                                                <td style="padding: 2px 4px;">ADMIN</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px 4px;">manager</td>
+                                                <td style="padding: 2px 4px;">manager123</td>
+                                                <td style="padding: 2px 4px;">MANAGER</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px 4px;">operator</td>
+                                                <td style="padding: 2px 4px;">operator123</td>
+                                                <td style="padding: 2px 4px;">OPERATOR</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px 4px;">viewer</td>
+                                                <td style="padding: 2px 4px;">viewer123</td>
+                                                <td style="padding: 2px 4px;">VIEWER</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px 4px; color: #999;">prod001</td>
+                                                <td style="padding: 2px 4px; color: #999;">prod123</td>
+                                                <td style="padding: 2px 4px; color: #999;">MANAGER</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 2px 4px; color: #999;">worker001</td>
+                                                <td style="padding: 2px 4px; color: #999;">work123</td>
+                                                <td style="padding: 2px 4px; color: #999;">OPERATOR</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                 </div>
             </body>
 

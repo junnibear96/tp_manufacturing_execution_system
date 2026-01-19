@@ -30,6 +30,11 @@ public class DefaultNoticeService implements NoticeService {
     return repository.insertNotice(safe(title), safeBody(body), createdByUserId);
   }
 
+  @Override
+  public void updateNotice(long noticeId, String title, String body, Long updatedByUserId) {
+    repository.updateNotice(noticeId, safe(title), safeBody(body), updatedByUserId);
+  }
+
   private static String safe(String value) {
     if (value == null) {
       return "";

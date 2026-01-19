@@ -14,12 +14,17 @@ import java.util.List;
  * Production Line Service
  * 생산 라인 비즈니스 로직 처리
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class ProductionLineService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProductionLineService.class);
+
     private final ProductionLineMapper productionLineMapper;
+
+    public ProductionLineService(ProductionLineMapper productionLineMapper) {
+        this.productionLineMapper = productionLineMapper;
+    }
 
     /**
      * 모든 생산 라인 조회
