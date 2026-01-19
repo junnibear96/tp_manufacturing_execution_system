@@ -10,47 +10,158 @@
         <title>TP · Intro</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles.css" />
         <style>
-          /* Mobile Menu Dropdown */
-          .mobile-menu-dropdown {
-            display: none;
+          /* Mobile Menu Overlay */
+          .menu-overlay {
             position: fixed;
-            top: 60px;
-            right: 0;
-            background: rgba(26, 32, 44, 0.98);
-            backdrop-filter: blur(20px);
-            min-width: 200px;
-            border-radius: 0 0 0 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            z-index: 999;
-            transform: translateY(-10px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9998;
             opacity: 0;
-            transition: all 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
           }
 
-          .mobile-menu-dropdown.active {
-            display: block;
-            transform: translateY(0);
+          .menu-overlay.active {
             opacity: 1;
+            visibility: visible;
           }
 
-          .mobile-menu-dropdown a {
-            display: block;
-            padding: 16px 24px;
-            color: white;
-            text-decoration: none;
+          /* Mobile Menu Panel */
+          .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 400px;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 9999;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+          }
+
+          .mobile-menu-panel.active {
+            right: 0;
+          }
+
+          /* Menu Header */
+          .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+          }
+
+          .menu-lang {
+            display: flex;
+            gap: 12px;
             font-size: 14px;
             font-weight: 500;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .menu-lang a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+          }
+
+          .menu-lang a.active {
+            color: #111827;
+          }
+
+          .menu-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            color: #111827;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          /* Menu Navigation */
+          .menu-nav {
+            padding: 12px 0;
+          }
+
+          .menu-item {
+            border-bottom: 1px solid #f3f4f6;
+          }
+
+          .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #111827;
+            transition: background-color 0.2s;
+          }
+
+          .menu-item-header:hover {
+            background-color: #f9fafb;
+          }
+
+          .menu-item-header.expanded {
+            color: #3b82f6;
+          }
+
+          .menu-chevron {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #9ca3af;
+            transition: transform 0.3s ease;
+          }
+
+          .menu-item-header.expanded .menu-chevron {
+            transform: rotate(180deg);
+            border-top-color: #3b82f6;
+          }
+
+          /* Submenu */
+          .menu-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #f9fafb;
+          }
+
+          .menu-submenu.expanded {
+            max-height: 500px;
+          }
+
+          .menu-submenu a {
+            display: block;
+            padding: 14px 24px 14px 40px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
             transition: all 0.2s;
+            border-left: 3px solid transparent;
           }
 
-          .mobile-menu-dropdown a:last-child {
-            border-bottom: none;
-          }
-
-          .mobile-menu-dropdown a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            padding-left: 32px;
+          .menu-submenu a:hover {
+            color: #3b82f6;
+            background-color: #eff6ff;
+            border-left-color: #3b82f6;
           }
 
           .landing-menu {
@@ -70,7 +181,9 @@
           }
 
           @media (min-width: 769px) {
-            .mobile-menu-dropdown {
+
+            .menu-overlay,
+            .mobile-menu-panel {
               display: none !important;
             }
           }
@@ -96,23 +209,116 @@
               </button>
             </nav>
           </div>
-
-          <!-- Mobile Menu Dropdown -->
-          <div class="mobile-menu-dropdown" id="mobileMenuDropdown">
-            <a href="${pageContext.request.contextPath}/company">
-              <spring:message code="app.intro.company" text="회사 소개" />
-            </a>
-            <a href="${pageContext.request.contextPath}/portfolio">
-              <spring:message code="app.intro.portfolio" text="포트폴리오" />
-            </a>
-            <a href="${pageContext.request.contextPath}/login">
-              <spring:message code="app.header.login" text="로그인" />
-            </a>
-            <a href="${pageContext.request.contextPath}/dashboard">
-              <spring:message code="app.header.dashboard" text="대시보드" />
-            </a>
-          </div>
         </header>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+
+        <!-- Mobile Menu Panel -->
+        <div class="mobile-menu-panel" id="mobileMenuPanel">
+          <div class="menu-header">
+            <div class="menu-lang">
+              <a href="#" class="active">KOR</a>
+              <span>|</span>
+              <a href="#">ENG</a>
+            </div>
+            <button class="menu-close" id="menuCloseButton" aria-label="Close Menu">×</button>
+          </div>
+
+          <nav class="menu-nav">
+            <!-- Company Section -->
+            <div class="menu-item">
+              <button class="menu-item-header" data-menu="company">
+                <span>
+                  <spring:message code="app.intro.company" text="회사 소개" />
+                </span>
+                <span class="menu-chevron"></span>
+              </button>
+              <div class="menu-submenu" id="submenu-company">
+                <a href="${pageContext.request.contextPath}/company">
+                  <spring:message code="app.intro.company" text="회사 소개" />
+                </a>
+                <a href="${pageContext.request.contextPath}/dashboard">
+                  <spring:message code="app.header.dashboard" text="대시보드" />
+                </a>
+              </div>
+            </div>
+
+            <!-- Business Section -->
+            <div class="menu-item">
+              <button class="menu-item-header" data-menu="business">
+                <span>
+                  <spring:message code="app.header.production" text="생산 관리" />
+                </span>
+                <span class="menu-chevron"></span>
+              </button>
+              <div class="menu-submenu" id="submenu-business">
+                <a href="${pageContext.request.contextPath}/production/plans">
+                  <spring:message code="app.header.production" text="생산 관리" />
+                </a>
+                <a href="${pageContext.request.contextPath}/inventory/dashboard">
+                  <spring:message code="app.header.inventory" text="재고 관리" />
+                </a>
+              </div>
+            </div>
+
+            <!-- Factory Management -->
+            <div class="menu-item">
+              <button class="menu-item-header" data-menu="factory">
+                <span>
+                  <spring:message code="app.header.factory" text="공장 관리" />
+                </span>
+                <span class="menu-chevron"></span>
+              </button>
+              <div class="menu-submenu" id="submenu-factory">
+                <a href="${pageContext.request.contextPath}/factory/dashboard">
+                  <spring:message code="factory.dashboard.title" text="공장 대시보드" />
+                </a>
+                <a href="${pageContext.request.contextPath}/factory/list">
+                  <spring:message code="factory.list.title" text="공장 목록" />
+                </a>
+              </div>
+            </div>
+
+            <!-- HR Management -->
+            <div class="menu-item">
+              <button class="menu-item-header" data-menu="hr">
+                <span>
+                  <spring:message code="app.header.hr" text="인사 관리" />
+                </span>
+                <span class="menu-chevron"></span>
+              </button>
+              <div class="menu-submenu" id="submenu-hr">
+                <a href="${pageContext.request.contextPath}/hr/employees">
+                  <spring:message code="app.header.hr.employees" text="직원 관리" />
+                </a>
+                <a href="${pageContext.request.contextPath}/hr/departments">
+                  <spring:message code="app.header.hr.departments" text="부서 관리" />
+                </a>
+              </div>
+            </div>
+
+            <!-- Portfolio -->
+            <div class="menu-item">
+              <a href="${pageContext.request.contextPath}/portfolio" class="menu-item-header"
+                style="text-decoration: none;">
+                <span>
+                  <spring:message code="app.intro.portfolio" text="포트폴리오" />
+                </span>
+              </a>
+            </div>
+
+            <!-- Login -->
+            <div class="menu-item">
+              <a href="${pageContext.request.contextPath}/login" class="menu-item-header"
+                style="text-decoration: none;">
+                <span>
+                  <spring:message code="app.header.login" text="로그인" />
+                </span>
+              </a>
+            </div>
+          </nav>
+        </div>
 
         <main id="content" class="landing" role="main">
           <div class="landing-overlay" aria-hidden="true"></div>
@@ -166,34 +372,82 @@
         </main>
 
         <script>
-          // Mobile Menu Toggle
+          // Mobile Menu Toggle with TP Inc Style
           document.addEventListener('DOMContentLoaded', function () {
             const menuButton = document.getElementById('mobileMenuButton');
-            const menuDropdown = document.getElementById('mobileMenuDropdown');
+            const menuPanel = document.getElementById('mobileMenuPanel');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuCloseButton = document.getElementById('menuCloseButton');
 
-            if (menuButton && menuDropdown) {
+            // Open menu
+            function openMenu() {
+              menuButton.classList.add('active');
+              menuPanel.classList.add('active');
+              menuOverlay.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
+
+            // Close menu
+            function closeMenu() {
+              menuButton.classList.remove('active');
+              menuPanel.classList.remove('active');
+              menuOverlay.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+
+            // Toggle menu on button click
+            if (menuButton) {
               menuButton.addEventListener('click', function () {
-                this.classList.toggle('active');
-                menuDropdown.classList.toggle('active');
-              });
-
-              // Close menu when clicking outside
-              document.addEventListener('click', function (event) {
-                if (!menuButton.contains(event.target) && !menuDropdown.contains(event.target)) {
-                  menuButton.classList.remove('active');
-                  menuDropdown.classList.remove('active');
+                if (menuPanel.classList.contains('active')) {
+                  closeMenu();
+                } else {
+                  openMenu();
                 }
               });
-
-              // Close menu when clicking a link
-              const menuLinks = menuDropdown.querySelectorAll('a');
-              menuLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                  menuButton.classList.remove('active');
-                  menuDropdown.classList.remove('active');
-                });
-              });
             }
+
+            // Close menu on close button click
+            if (menuCloseButton) {
+              menuCloseButton.addEventListener('click', closeMenu);
+            }
+
+            // Close menu when clicking overlay
+            if (menuOverlay) {
+              menuOverlay.addEventListener('click', closeMenu);
+            }
+
+            // Accordion functionality for submenu items
+            const menuHeaders = document.querySelectorAll('.menu-item-header[data-menu]');
+            menuHeaders.forEach(header => {
+              header.addEventListener('click', function () {
+                const menuName = this.getAttribute('data-menu');
+                const submenu = document.getElementById('submenu-' + menuName);
+
+                if (submenu) {
+                  const isExpanded = this.classList.contains('expanded');
+
+                  // Close all other submenus
+                  document.querySelectorAll('.menu-item-header').forEach(h => {
+                    h.classList.remove('expanded');
+                  });
+                  document.querySelectorAll('.menu-submenu').forEach(s => {
+                    s.classList.remove('expanded');
+                  });
+
+                  // Toggle current submenu
+                  if (!isExpanded) {
+                    this.classList.add('expanded');
+                    submenu.classList.add('expanded');
+                  }
+                }
+              });
+            });
+
+            // Close menu when clicking a submenu link
+            const submenuLinks = document.querySelectorAll('.menu-submenu a');
+            submenuLinks.forEach(link => {
+              link.addEventListener('click', closeMenu);
+            });
           });
         </script>
         <script src="${pageContext.request.contextPath}/assets/app.js" defer></script>

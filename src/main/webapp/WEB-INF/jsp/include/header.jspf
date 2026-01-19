@@ -435,9 +435,9 @@
                                         <ul class="submenu">
                                             <li><a href="https://tp-inc.com/company/ceo.php"><spring:message code="menu.company.ceo"/></a></li>
                                             <li><a href="https://tp-inc.com/company/history.php"><spring:message code="menu.company.history"/></a></li>
-                                            <li><a href="https://tp-inc.com/company/mission.php"><spring:message code="menu.company.mission"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/vision.php"><spring:message code="menu.company.mission"/></a></li>
                                             <li><a href="https://tp-inc.com/company/ci.php"><spring:message code="menu.company.ci"/></a></li>
-                                            <li><a href="https://tp-inc.com/company/affiliates.php"><spring:message code="menu.company.affiliates"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/subsidiary.php"><spring:message code="menu.company.affiliates"/></a></li>
                                             <li><a href="https://tp-inc.com/company/global.php"><spring:message code="menu.company.global"/></a></li>
                                         </ul>
                                     </li>
@@ -476,6 +476,18 @@
                 <script>
                     // Mobile menu toggle handler
                     document.addEventListener('DOMContentLoaded', function() {
+                        // Hamburger menu toggle
+                        var hamburger = document.getElementById('hamburger');
+                        var hdMenu = document.querySelector('.hd-menu');
+                        
+                        if (hamburger && hdMenu) {
+                            hamburger.addEventListener('click', function() {
+                                this.classList.toggle('active');
+                                hdMenu.classList.toggle('active');
+                                document.body.style.overflow = hdMenu.classList.contains('active') ? 'hidden' : '';
+                            });
+                        }
+                        
                         var gnb = document.querySelector('.hd-menu .gnb');
                         if (!gnb) return;
 
