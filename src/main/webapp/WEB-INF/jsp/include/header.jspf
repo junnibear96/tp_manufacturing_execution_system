@@ -259,17 +259,11 @@
                     width: 30px;
                     height: 30px;
                     background: transparent;
-                    border: none;
+                border: none;
                     cursor: pointer;
                     padding: 0;
                     z-index: 1001;
                     margin-left: 15px;
-                }\r
-\r
-                /* Hide desktop navigation tabs */\r
-                .gnb-wrap,\r
-                .gnb {\r
-                    display: none !important;\r
                 }
 
                 .btn_all_menu span {
@@ -507,8 +501,8 @@
 
                             // Check if this is a menu-toggle link (has submenu)
                             if (link.classList.contains('menu-toggle')) {
-                                // Only prevent default on mobile (screen width < 880px)
-                                if (window.innerWidth <= 880) {
+                                // Only prevent default on mobile (screen width <= 1280px)
+                                if (window.innerWidth <= 1280) {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     
@@ -528,8 +522,13 @@
                                         }
                                     }
                                 }
+                            } else {
+                                // Explicitly force navigation for regular links
+                                // This ensures they work even if common.js or other scripts interfere
+                                if (link.href && link.getAttribute('href') !== '#') {
+                                    window.location.href = link.href;
+                                }
                             }
-                            // Regular links (like 자기소개서) will navigate normally
                         });
                     });
                 </script>
