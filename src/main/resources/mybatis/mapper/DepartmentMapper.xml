@@ -19,7 +19,7 @@
     <select id="findAll" resultMap="DepartmentResultMap">
         SELECT department_id, dept_name, dept_name_en, division, 
                manager_emp_id, created_at, updated_at
-        FROM tp_manufacture.departments
+        FROM departments
         ORDER BY department_id
     </select>
 
@@ -27,7 +27,7 @@
     <select id="findByDivision" parameterType="string" resultMap="DepartmentResultMap">
         SELECT department_id, dept_name, dept_name_en, division,
                manager_emp_id, created_at, updated_at
-        FROM tp_manufacture.departments
+        FROM departments
         WHERE division = #{division}
         ORDER BY department_id
     </select>
@@ -36,7 +36,7 @@
     <select id="findById" parameterType="string" resultMap="DepartmentResultMap">
         SELECT department_id, dept_name, dept_name_en, division,
                manager_emp_id, created_at, updated_at
-        FROM tp_manufacture.departments
+        FROM departments
         WHERE department_id = #{departmentId}
     </select>
 

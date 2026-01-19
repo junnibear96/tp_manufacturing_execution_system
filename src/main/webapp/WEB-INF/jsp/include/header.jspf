@@ -1,5 +1,6 @@
-<%@ page pageEncoding="UTF-8" %>
+﻿<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
     <html lang="ko">
 
@@ -430,32 +431,40 @@
                             <nav class="gnb-wrap">
                                 <ul class="gnb">
                                     <li class="has-submenu">
-                                        <a href="https://tp-inc.com/company/ceo.php" class="menu-toggle">TP 소개</a>
+                                        <a href="https://tp-inc.com/company/ceo.php" class="menu-toggle"><spring:message code="menu.company"/></a>
                                         <ul class="submenu">
-                                            <li><a href="https://tp-inc.com/company/ceo.php">CEO 인사말</a></li>
-                                            <li><a href="https://tp-inc.com/company/history.php">연혁</a></li>
-                                            <li><a href="https://tp-inc.com/company/mission.php">미션·비전</a></li>
-                                            <li><a href="https://tp-inc.com/company/ci.php">CI</a></li>
-                                            <li><a href="https://tp-inc.com/company/affiliates.php">계열사</a></li>
-                                            <li><a href="https://tp-inc.com/company/global.php">글로벌 사업장</a></li>
+                                            <li><a href="https://tp-inc.com/company/ceo.php"><spring:message code="menu.company.ceo"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/history.php"><spring:message code="menu.company.history"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/mission.php"><spring:message code="menu.company.mission"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/ci.php"><spring:message code="menu.company.ci"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/affiliates.php"><spring:message code="menu.company.affiliates"/></a></li>
+                                            <li><a href="https://tp-inc.com/company/global.php"><spring:message code="menu.company.global"/></a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <%-- Cover Letter Link --%>
-                                        <a href="/cover-letter">자기소개서</a>
+                                        <a href="/cover-letter"><spring:message code="menu.coverletter"/></a>
                                     </li>
                                     <%-- Portfolio Menu: Direct link to login --%>
                                     <li>
-                                        <a href="/dashboard">포트폴리오</a>
+                                        <a href="/dashboard"><spring:message code="menu.portfolio"/></a>
                                     </li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="hd-info">
                             <div class="lang">
-                                <a href="#" class="on">KOR</a>
-                                <a href="#">ENG</a>
+                                <c:set var="lang" value="${pageContext.response.locale.language}" />
+                                <a href="#" onclick="changeLanguage('ko'); return false;" class="${lang == 'ko' || lang == 'kor' ? 'on' : ''}">KOR</a>
+                                <a href="#" onclick="changeLanguage('en'); return false;" class="${lang == 'en' ? 'on' : ''}">ENG</a>
                             </div>
+                            <script>
+                                function changeLanguage(lang) {
+                                    const url = new URL(window.location);
+                                    url.searchParams.set('lang', lang);
+                                    window.location.href = url.toString();
+                                }
+                            </script>
                             <button class="btn_all_menu" id="hamburger" aria-label="Toggle menu">
                                 <span></span>
                                 <span></span>

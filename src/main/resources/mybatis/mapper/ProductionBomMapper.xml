@@ -26,9 +26,9 @@
         SELECT b.bom_id, b.line_id, b.inventory_id, b.consumption_rate,
                b.unit, b.notes, b.is_active, b.created_at, b.updated_at,
                l.line_name, i.item_code, i.item_name
-        FROM tp_manufacture.tp_production_bom b
-        LEFT JOIN tp_manufacture.tp_production_lines l ON b.line_id = l.line_id
-        LEFT JOIN tp_manufacture.tp_inventory i ON b.inventory_id = i.inventory_id
+        FROM tp_production_bom b
+        LEFT JOIN tp_production_lines l ON b.line_id = l.line_id
+        LEFT JOIN tp_inventory i ON b.inventory_id = i.inventory_id
         ORDER BY b.line_id, b.bom_id
     </select>
 
@@ -37,9 +37,9 @@
         SELECT b.bom_id, b.line_id, b.inventory_id, b.consumption_rate,
                b.unit, b.notes, b.is_active, b.created_at, b.updated_at,
                l.line_name, i.item_code, i.item_name
-        FROM tp_manufacture.tp_production_bom b
-        LEFT JOIN tp_manufacture.tp_production_lines l ON b.line_id = l.line_id
-        LEFT JOIN tp_manufacture.tp_inventory i ON b.inventory_id = i.inventory_id
+        FROM tp_production_bom b
+        LEFT JOIN tp_production_lines l ON b.line_id = l.line_id
+        LEFT JOIN tp_inventory i ON b.inventory_id = i.inventory_id
         WHERE b.line_id = #{lineId,jdbcType=VARCHAR}
         ORDER BY b.bom_id
     </select>
@@ -49,9 +49,9 @@
         SELECT b.bom_id, b.line_id, b.inventory_id, b.consumption_rate,
                b.unit, b.notes, b.is_active, b.created_at, b.updated_at,
                l.line_name, i.item_code, i.item_name
-        FROM tp_manufacture.tp_production_bom b
-        LEFT JOIN tp_manufacture.tp_production_lines l ON b.line_id = l.line_id
-        LEFT JOIN tp_manufacture.tp_inventory i ON b.inventory_id = i.inventory_id
+        FROM tp_production_bom b
+        LEFT JOIN tp_production_lines l ON b.line_id = l.line_id
+        LEFT JOIN tp_inventory i ON b.inventory_id = i.inventory_id
         WHERE b.inventory_id = #{inventoryId,jdbcType=NUMERIC}
         ORDER BY b.line_id, b.bom_id
     </select>
@@ -61,9 +61,9 @@
         SELECT b.bom_id, b.line_id, b.inventory_id, b.consumption_rate,
                b.unit, b.notes, b.is_active, b.created_at, b.updated_at,
                l.line_name, i.item_code, i.item_name
-        FROM tp_manufacture.tp_production_bom b
-        LEFT JOIN tp_manufacture.tp_production_lines l ON b.line_id = l.line_id
-        LEFT JOIN tp_manufacture.tp_inventory i ON b.inventory_id = i.inventory_id
+        FROM tp_production_bom b
+        LEFT JOIN tp_production_lines l ON b.line_id = l.line_id
+        LEFT JOIN tp_inventory i ON b.inventory_id = i.inventory_id
         WHERE b.line_id = #{lineId,jdbcType=VARCHAR}
           AND b.is_active = 'Y'
         ORDER BY b.bom_id
@@ -74,15 +74,15 @@
         SELECT b.bom_id, b.line_id, b.inventory_id, b.consumption_rate,
                b.unit, b.notes, b.is_active, b.created_at, b.updated_at,
                l.line_name, i.item_code, i.item_name
-        FROM tp_manufacture.tp_production_bom b
-        LEFT JOIN tp_manufacture.tp_production_lines l ON b.line_id = l.line_id
-        LEFT JOIN tp_manufacture.tp_inventory i ON b.inventory_id = i.inventory_id
+        FROM tp_production_bom b
+        LEFT JOIN tp_production_lines l ON b.line_id = l.line_id
+        LEFT JOIN tp_inventory i ON b.inventory_id = i.inventory_id
         WHERE b.bom_id = #{bomId,jdbcType=NUMERIC}
     </select>
 
     <!-- BOM 등록 -->
     <insert id="insert" parameterType="com.tp.mes.app.prod.model.ProductionBom">
-        INSERT INTO tp_manufacture.tp_production_bom (
+        INSERT INTO tp_production_bom (
             line_id, inventory_id, consumption_rate, unit, notes, is_active
         ) VALUES (
             #{lineId,jdbcType=VARCHAR},
@@ -96,7 +96,7 @@
 
     <!-- BOM 수정 -->
     <update id="update">
-        UPDATE tp_manufacture.tp_production_bom
+        UPDATE tp_production_bom
         SET consumption_rate = #{consumptionRate,jdbcType=DECIMAL},
             unit = #{unit,jdbcType=VARCHAR},
             notes = #{notes,jdbcType=VARCHAR},
@@ -107,7 +107,7 @@
 
     <!-- BOM 삭제 (소프트 삭제) -->
     <update id="delete">
-        UPDATE tp_manufacture.tp_production_bom
+        UPDATE tp_production_bom
         SET is_active = 'N',
             updated_at = CURRENT_TIMESTAMP
         WHERE bom_id = #{bomId}
@@ -115,7 +115,7 @@
 
     <!-- BOM 완전 삭제 -->
     <delete id="deleteHard">
-        DELETE FROM tp_manufacture.tp_production_bom
+        DELETE FROM tp_production_bom
         WHERE bom_id = #{bomId}
     </delete>
 

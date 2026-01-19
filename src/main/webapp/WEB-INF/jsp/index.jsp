@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="/WEB-INF/jsp/include/header.jspf" %>
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
         <section class="sec-content">
             <div class="index">
@@ -9,47 +10,47 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="title mo-none">
-                                        <h2>TP<small>,</small> 100년을 향한 <br class="only-mo">새로운 도약</h2>
-                                        <p>Your Trusted Partner <b>TP</b></p>
+                                        <h2><spring:message code="main.title" arguments="<br class='only-mo'>"/></h2>
+                                        <p><spring:message code="main.subtitle"/></p>
                                     </div>
                                     <div class="image mo-none"><img
-                                            src="/assets/images/hero_slide_1_vision_1767942773232.png" alt="TP 비전">
+                                            src="/assets/images/hero_slide_1_vision_1767942773232.png" alt="<spring:message code='main.vision'/>">
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="title mo-none">
-                                        <h2>국내 브랜드 만족도 <br class="only-mo">No.1 의류 기업</h2>
-                                        <p><b>TP Nadia / EO</b></p>
+                                        <h2><spring:message code="main.apparel.title" arguments="<br class='only-mo'>"/></h2>
+                                        <p><b><spring:message code="main.apparel.subtitle"/></b></p>
                                     </div>
                                     <div class="image mo-none"><img
-                                            src="/assets/images/hero_slide_2_apparel_1767942790465.png" alt="TP 의류">
+                                            src="/assets/images/hero_slide_2_apparel_1767942790465.png" alt="<spring:message code='main.apparel.alt'/>">
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="title mo-none">
-                                        <h2>업계 1위 <br class="only-mo">프리미엄 라이프스타일 크리에이터</h2>
-                                        <p><b>TP Living</b></p>
+                                        <h2><spring:message code="main.living.title" arguments="<br class='only-mo'>"/></h2>
+                                        <p><b><spring:message code="main.living.subtitle"/></b></p>
                                     </div>
                                     <div class="image mo-none"><img
-                                            src="/assets/images/hero_slide_3_living_1767942807472.png" alt="TP 리빙">
+                                            src="/assets/images/hero_slide_3_living_1767942807472.png" alt="<spring:message code='main.living.alt'/>">
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="title mo-none">
-                                        <h2>안전한 먹거리, <br class="only-mo">건강한 삶</h2>
-                                        <p><b>TP F&B</b></p>
+                                        <h2><spring:message code="main.food.title" arguments="<br class='only-mo'>"/></h2>
+                                        <p><b><spring:message code="main.food.subtitle"/></b></p>
                                     </div>
                                     <div class="image mo-none"><img
-                                            src="/assets/images/hero_slide_4_food_1767942833305.png" alt="TP F&B"></div>
+                                            src="/assets/images/hero_slide_4_food_1767942833305.png" alt="<spring:message code='main.food.alt'/>"></div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="title mo-none">
-                                        <h2>Work-life balance의 <br class="only-mo">공간과 문화를 창조하는 기업</h2>
-                                        <p><b>TP Square</b></p>
+                                        <h2><spring:message code="main.workspace.title" arguments="<br class='only-mo'>"/></h2>
+                                        <p><b><spring:message code="main.workspace.subtitle"/></b></p>
                                     </div>
                                     <div class="image mo-none"><img
                                             src="/assets/images/hero_slide_5_workspace_1767942851159.png"
-                                            alt="TP Square">
+                                            alt="<spring:message code='main.workspace.alt'/>">
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +66,7 @@
                     <div class="sec03">
                         <a href="/login">
                             <div class="main-tit">
-                                <h3>글로벌 사업장<i>↗</i></h3>
+                                <h3><spring:message code="main.global.title"/><i>↗</i></h3>
                             </div>
                             <div class="circle">
                                 <div class="image"><img src="https://tp-inc.com/images/main_global_bg.jpg" alt=""></div>
@@ -76,7 +77,7 @@
 
                 <div class="sec04">
                     <div class="sec-tit">
-                        <h3>더 나은 환경을 만들고 인류에 기여하는 <br class="only-mo">Trusted Partner, TP</h3>
+                        <h3><spring:message code="main.esg.title" arguments="<br class='only-mo'>"/></h3>
                     </div>
                     <div class="sec-box">
                         <ul>
@@ -86,7 +87,7 @@
                                             alt="Environmental"></div>
                                     <div class="tit">
                                         <h4>Environmental</h4>
-                                        <p>환경</p>
+                                        <p><spring:message code="main.esg.environmental.kor"/></p>
                                     </div>
                                 </a>
                             </li>
@@ -97,7 +98,7 @@
                                     </div>
                                     <div class="tit">
                                         <h4>Social</h4>
-                                        <p>사회</p>
+                                        <p><spring:message code="main.esg.social.kor"/></p>
                                     </div>
                                 </a>
                             </li>
@@ -108,7 +109,7 @@
                                     </div>
                                     <div class="tit">
                                         <h4>Ethical</h4>
-                                        <p>윤리</p>
+                                        <p><spring:message code="main.esg.ethical.kor"/></p>
                                     </div>
                                 </a>
                             </li>

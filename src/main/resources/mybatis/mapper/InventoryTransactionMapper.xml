@@ -25,8 +25,8 @@
                t.quantity, t.transaction_reason, t.reference_no,
                t.notes, t.performed_by, t.transaction_date,
                i.item_code, i.item_name
-        FROM tp_manufacture.tp_inventory_transactions t
-        LEFT JOIN tp_manufacture.tp_inventory i ON t.inventory_id = i.inventory_id
+        FROM tp_inventory_transactions t
+        LEFT JOIN tp_inventory i ON t.inventory_id = i.inventory_id
         ORDER BY t.transaction_date DESC
     </select>
     
@@ -36,8 +36,8 @@
                t.quantity, t.transaction_reason, t.reference_no,
                t.notes, t.performed_by, t.transaction_date,
                i.item_code, i.item_name
-        FROM tp_manufacture.tp_inventory_transactions t
-        LEFT JOIN tp_manufacture.tp_inventory i ON t.inventory_id = i.inventory_id
+        FROM tp_inventory_transactions t
+        LEFT JOIN tp_inventory i ON t.inventory_id = i.inventory_id
         WHERE t.inventory_id = #{inventoryId}
         ORDER BY t.transaction_date DESC
     </select>
@@ -48,8 +48,8 @@
                t.quantity, t.transaction_reason, t.reference_no,
                t.notes, t.performed_by, t.transaction_date,
                i.item_code, i.item_name
-        FROM tp_manufacture.tp_inventory_transactions t
-        LEFT JOIN tp_manufacture.tp_inventory i ON t.inventory_id = i.inventory_id
+        FROM tp_inventory_transactions t
+        LEFT JOIN tp_inventory i ON t.inventory_id = i.inventory_id
         ORDER BY t.transaction_date DESC
         FETCH FIRST #{limit} ROWS ONLY
     </select>
@@ -57,7 +57,7 @@
     <!-- 거래 내역 등록 -->
     <insert id="insert" parameterType="com.tp.mes.app.inventory.model.InventoryTransaction"
             useGeneratedKeys="true" keyProperty="transactionId" keyColumn="transaction_id">
-        INSERT INTO tp_manufacture.tp_inventory_transactions (
+        INSERT INTO tp_inventory_transactions (
             inventory_id, transaction_type, quantity, transaction_reason,
             reference_no, notes, performed_by, transaction_date
         ) VALUES (

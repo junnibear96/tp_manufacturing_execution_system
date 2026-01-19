@@ -40,7 +40,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/assets/**", "/WEB-INF/**", "/views/**", "/error")
                                                 .permitAll()
                                                 .requestMatchers("/", "/login", "/cover-letter", "/api/**",
-                                                                "/actuator/**")
+                                                                "/actuator/**", "/.well-known/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form

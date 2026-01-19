@@ -25,40 +25,40 @@
 
     <!-- 모든 공장 조회 -->
     <select id="findAll" resultMap="FactoryResultMap">
-        SELECT * FROM tp_manufacture.factories
+        SELECT * FROM factories
         ORDER BY plant_id, factory_name
     </select>
 
     <!-- 사업장별 공장 조회 -->
     <select id="findByPlant" parameterType="string" resultMap="FactoryResultMap">
-        SELECT * FROM tp_manufacture.factories
+        SELECT * FROM factories
         WHERE plant_id = #{plantId}
         ORDER BY factory_name
     </select>
 
     <!-- 유형별 공장 조회 -->
     <select id="findByType" parameterType="string" resultMap="FactoryResultMap">
-        SELECT * FROM tp_manufacture.factories
+        SELECT * FROM factories
         WHERE factory_type = #{factoryType}
         ORDER BY factory_name
     </select>
 
     <!-- 상태별 공장 조회 -->
     <select id="findByStatus" parameterType="string" resultMap="FactoryResultMap">
-        SELECT * FROM tp_manufacture.factories
+        SELECT * FROM factories
         WHERE status = #{status}
         ORDER BY factory_name
     </select>
 
     <!-- ID로 공장 조회 -->
     <select id="findById" parameterType="string" resultMap="FactoryResultMap">
-        SELECT * FROM tp_manufacture.factories
+        SELECT * FROM factories
         WHERE factory_id = #{factoryId}
     </select>
 
     <!-- 공장 등록 -->
     <insert id="insert" parameterType="com.tp.mes.app.factory.model.Factory">
-        INSERT INTO tp_manufacture.factories(
+        INSERT INTO factories(
             factory_id, plant_id, factory_name, factory_name_en, factory_code,
             factory_type, status, product_category, building_code, floor,
             area, target_utilization_rate, manager_emp_id
@@ -72,7 +72,7 @@
     <!-- 공장 수정 -->
     <!-- 공장 수정 -->
     <update id="update" parameterType="com.tp.mes.app.factory.model.Factory">
-        UPDATE tp_manufacture.factories SET
+        UPDATE factories SET
             factory_name = #{factoryName},
             factory_name_en = #{factoryNameEn},
             factory_code = #{factoryCode},
@@ -90,12 +90,12 @@
 
     <!-- 공장 삭제 -->
     <delete id="delete" parameterType="string">
-        DELETE FROM tp_manufacture.factories WHERE factory_id = #{factoryId}
+        DELETE FROM factories WHERE factory_id = #{factoryId}
     </delete>
 
     <!-- 사업장별 공장 수 -->
     <select id="countByPlant" parameterType="string" resultType="int">
-        SELECT COUNT(*) FROM tp_manufacture.factories
+        SELECT COUNT(*) FROM factories
         WHERE plant_id = #{plantId}
     </select>
 

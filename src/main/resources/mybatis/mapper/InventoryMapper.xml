@@ -30,7 +30,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.status = 'ACTIVE'
         ORDER BY i.created_at DESC
     </select>
@@ -41,7 +41,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.inventory_id = #{inventoryId}
     </select>
     
@@ -51,7 +51,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.item_code = #{itemCode}
     </select>
     
@@ -62,7 +62,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.current_quantity < i.min_quantity
           AND i.status = 'ACTIVE'
         ORDER BY (i.min_quantity - i.current_quantity) DESC
@@ -75,7 +75,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.item_type = #{itemType}
           AND i.status = 'ACTIVE'
         ORDER BY i.item_name
@@ -87,7 +87,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE i.status = #{status}
         ORDER BY i.created_at DESC
     </select>
@@ -98,7 +98,7 @@
                i.category, i.unit, i.current_quantity, i.min_quantity,
                i.max_quantity, i.unit_price, i.warehouse_location, i.line_id,
                i.specifications, i.status, i.created_at, i.updated_at
-        FROM tp_manufacture.tp_inventory i
+        FROM tp_inventory i
         WHERE (UPPER(i.item_code) LIKE '%' || UPPER(#{keyword}) || '%'
            OR UPPER(i.item_name) LIKE '%' || UPPER(#{keyword}) || '%')
           AND i.status = 'ACTIVE'
@@ -110,24 +110,24 @@
         <![CDATA[
         SELECT
             (SELECT COUNT(*)
-             FROM tp_manufacture.tp_inventory i
+             FROM tp_inventory i
              WHERE i.status = 'ACTIVE') AS totalItems,
              
             (SELECT COUNT(*)
-             FROM tp_manufacture.tp_inventory i
+             FROM tp_inventory i
              WHERE i.status = 'ACTIVE') AS activeItems,
              
             (SELECT COUNT(*)
-             FROM tp_manufacture.tp_inventory i
+             FROM tp_inventory i
              WHERE i.current_quantity < i.min_quantity
                AND i.status = 'ACTIVE') AS lowStockItems,
                
             (SELECT NVL(SUM(i.current_quantity * i.unit_price), 0)
-             FROM tp_manufacture.tp_inventory i
+             FROM tp_inventory i
              WHERE i.status = 'ACTIVE') AS totalValue,
              
             (SELECT COUNT(*)
-             FROM tp_manufacture.tp_inventory_transactions t
+             FROM tp_inventory_transactions t
              WHERE t.transaction_date >= SYSDATE - 7) AS recentTransactions
         FROM DUAL
         ]]>
@@ -136,7 +136,7 @@
     <!-- 신규 재고 등록 -->
     <insert id="insert" parameterType="com.tp.mes.app.inventory.model.InventoryItem"
             useGeneratedKeys="true" keyProperty="inventoryId" keyColumn="inventory_id">
-        INSERT INTO tp_manufacture.tp_inventory (
+        INSERT INTO tp_inventory (
             item_code, item_name, item_type, category, unit,
             current_quantity, min_quantity, max_quantity, unit_price,
             warehouse_location, line_id, specifications, status,
@@ -161,7 +161,7 @@
     
     <!-- 재고 정보 수정 -->
     <update id="update">
-        UPDATE tp_manufacture.tp_inventory i
+        UPDATE tp_inventory i
         SET i.item_name = #{itemName,jdbcType=VARCHAR},
             i.item_type = #{itemType,jdbcType=VARCHAR},
             i.category = #{category,jdbcType=VARCHAR},
@@ -179,7 +179,7 @@
     
     <!-- 수량 업데이트 -->
     <update id="updateQuantity">
-        UPDATE tp_manufacture.tp_inventory i
+        UPDATE tp_inventory i
         SET i.current_quantity = #{quantity},
             i.updated_at = CURRENT_TIMESTAMP
         WHERE i.inventory_id = #{inventoryId}
@@ -187,7 +187,7 @@
     
     <!-- 재고 삭제 (소프트 삭제) -->
     <update id="delete">
-        UPDATE tp_manufacture.tp_inventory i
+        UPDATE tp_inventory i
         SET i.status = 'DISCONTINUED',
             i.updated_at = CURRENT_TIMESTAMP
         WHERE i.inventory_id = #{inventoryId}
