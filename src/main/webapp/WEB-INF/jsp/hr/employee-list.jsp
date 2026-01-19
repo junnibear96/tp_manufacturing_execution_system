@@ -355,9 +355,11 @@
                         <div class="page-header fade-in">
                             <h1>
                                 <span>👥</span>
-                                <spring:message code="hr.page.title" text="인사 관리" />
+                                <spring:message code="hr.page.heading" text="인사 관리" />
                             </h1>
-                            <p class="subtitle">조직 구성원 정보를 관리합니다</p>
+                            <p class="subtitle">
+                                <spring:message code="hr.page.subtitle" text="조직 구성원 정보를 관리합니다" />
+                            </p>
                         </div>
 
                         <c:if test="${not empty message}">
@@ -371,16 +373,19 @@
                                         <label>🔍
                                             <spring:message code="common.search" text="검색" />
                                         </label>
-                                        <input type="text" name="search" id="searchInput" placeholder="사원명 또는 사번 입력..."
+                                        <input type="text" name="search" id="searchInput"
+                                            placeholder="<spring:message code='hr.filter.search.placeholder' text='사원명 또는 사번 입력...' />"
                                             value="${param.search}">
                                     </div>
 
                                     <div class="filter-group">
                                         <label>🏢
-                                            <spring:message code="hr.department" text="부서" />
+                                            <spring:message code="hr.filter.department" text="부서" />
                                         </label>
                                         <select name="department" id="departmentSelect">
-                                            <option value="">전체 부서</option>
+                                            <option value="">
+                                                <spring:message code="hr.filter.department.all" text="전체 부서" />
+                                            </option>
                                             <c:forEach items="${departments}" var="dept">
                                                 <option value="${dept.departmentId}" <c:if
                                                     test="${dept.departmentId == selectedDepartment}">selected</c:if>>
@@ -392,26 +397,36 @@
 
                                     <div class="filter-group">
                                         <label>📊
-                                            <spring:message code="hr.status" text="재직상태" />
+                                            <spring:message code="hr.filter.status" text="재직상태" />
                                         </label>
                                         <select name="status" id="statusSelect">
-                                            <option value="">전체 상태</option>
+                                            <option value="">
+                                                <spring:message code="hr.filter.status.all" text="전체 상태" />
+                                            </option>
                                             <option value="ACTIVE" <c:if test="${selectedStatus == 'ACTIVE'}">selected
-                                                </c:if>>재직</option>
+                                                </c:if>>
+                                                <spring:message code="hr.filter.status.active" text="재직" />
+                                            </option>
                                             <option value="LEAVE" <c:if test="${selectedStatus == 'LEAVE'}">selected
                                                 </c:if>
-                                                >휴직</option>
+                                                >
+                                                <spring:message code="hr.filter.status.leave" text="휴직" />
+                                            </option>
                                             <option value="PROBATION" <c:if test="${selectedStatus == 'PROBATION'}">
                                                 selected
-                                                </c:if>>수습</option>
+                                                </c:if>>
+                                                <spring:message code="hr.filter.status.probation" text="수습" />
+                                            </option>
                                             <option value="RETIRED" <c:if test="${selectedStatus == 'RETIRED'}">selected
-                                                </c:if>>퇴직</option>
+                                                </c:if>>
+                                                <spring:message code="hr.filter.status.retired" text="퇴직" />
+                                            </option>
                                         </select>
                                     </div>
 
                                     <div class="filter-group">
                                         <button type="submit" class="btn btn-secondary">
-                                            <spring:message code="common.filter.apply" text="필터 적용" />
+                                            <spring:message code="hr.filter.apply" text="필터 적용" />
                                         </button>
                                     </div>
                                 </div>
@@ -421,7 +436,7 @@
                         <div class="action-buttons fade-in">
                             <a href="/hr/employees/new" class="btn btn-primary">
                                 <span>➕</span>
-                                <spring:message code="hr.employee.new" text="신규 사원 등록" />
+                                <spring:message code="hr.btn.new" text="신규 사원 등록" />
                             </a>
                         </div>
 
@@ -430,11 +445,15 @@
                                 <c:when test="${empty employees}">
                                     <div class="empty-state">
                                         <div class="empty-state-icon">📂</div>
-                                        <h3>등록된 사원이 없습니다</h3>
-                                        <p>신규 사원을 등록하거나 DB 스키마를 확인하세요</p>
+                                        <h3>
+                                            <spring:message code="hr.empty.title" text="등록된 사원이 없습니다" />
+                                        </h3>
+                                        <p>
+                                            <spring:message code="hr.empty.message" text="신규 사원을 등록하거나 DB 스키마를 확인하세요" />
+                                        </p>
                                         <a href="/hr/employees/new" class="btn btn-primary">
                                             <span>➕</span>
-                                            첫 번째 사원 등록하기
+                                            <spring:message code="hr.empty.btn" text="첫 번째 사원 등록하기" />
                                         </a>
                                     </div>
                                 </c:when>
@@ -443,31 +462,31 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <spring:message code="hr.empId" text="사번" />
+                                                    <spring:message code="hr.table.empId" text="사번" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.empName" text="이름" />
+                                                    <spring:message code="hr.table.name" text="이름" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.department" text="부서" />
+                                                    <spring:message code="hr.table.department" text="부서" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.position" text="직급" />
+                                                    <spring:message code="hr.table.position" text="직급" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.jobType" text="근무유형" />
+                                                    <spring:message code="hr.table.jobType" text="근무유형" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.status" text="재직상태" />
+                                                    <spring:message code="hr.table.status" text="재직상태" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.email" text="이메일" />
+                                                    <spring:message code="hr.table.email" text="이메일" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="hr.hireDate" text="입사일" />
+                                                    <spring:message code="hr.table.hireDate" text="입사일" />
                                                 </th>
                                                 <th>
-                                                    <spring:message code="common.action" text="작업" />
+                                                    <spring:message code="hr.table.actions" text="작업" />
                                                 </th>
                                             </tr>
                                         </thead>
@@ -485,13 +504,22 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${emp.status == 'ACTIVE'}">
-                                                                <span class="badge badge-active">재직</span>
+                                                                <span class="badge badge-active">
+                                                                    <spring:message code="hr.filter.status.active"
+                                                                        text="재직" />
+                                                                </span>
                                                             </c:when>
                                                             <c:when test="${emp.status == 'LEAVE'}">
-                                                                <span class="badge badge-leave">휴직</span>
+                                                                <span class="badge badge-leave">
+                                                                    <spring:message code="hr.filter.status.leave"
+                                                                        text="휴직" />
+                                                                </span>
                                                             </c:when>
                                                             <c:when test="${emp.status == 'PROBATION'}">
-                                                                <span class="badge badge-probation">수습</span>
+                                                                <span class="badge badge-probation">
+                                                                    <spring:message code="hr.filter.status.probation"
+                                                                        text="수습" />
+                                                                </span>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <span class="badge badge-retired">${emp.status}</span>
@@ -502,7 +530,7 @@
                                                     <td>${emp.hireDate}</td>
                                                     <td>
                                                         <a href="/hr/employees/${emp.empId}" class="btn-icon"
-                                                            title="편집">✏️</a>
+                                                            title="<spring:message code='common.edit' text='편집' />">✏️</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -513,7 +541,8 @@
                         </div>
 
                         <div class="stats-footer fade-in">
-                            총 <strong>${employees.size()}</strong>명의 사원이 조회되었습니다
+                            <spring:message code="common.total" text="총" /> <strong>${employees.size()}</strong>
+                            <spring:message code="hr.stats.total" text="명의 사원이 조회되었습니다" />
                         </div>
                     </div>
 

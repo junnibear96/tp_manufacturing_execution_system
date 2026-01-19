@@ -469,7 +469,7 @@
                                                         <td>
                                                             <a href="/inventory/${item.inventoryId}"
                                                                 class="btn btn-sm btn-primary">
-                                                                상세보기
+                                                                <spring:message code="common.view_detail" text="상세보기" />
                                                             </a>
                                                         </td>
                                                     </tr>

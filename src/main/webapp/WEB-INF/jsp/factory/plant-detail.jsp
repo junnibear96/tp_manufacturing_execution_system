@@ -25,7 +25,9 @@
                                 <h1>🏢
                                     <c:out value="${plant.plantName}" />
                                 </h1>
-                                <p class="subtitle" style="margin-top: 8px;">사업장 상세 정보 및 수정</p>
+                                <p class="subtitle" style="margin-top: 8px;">
+                                    <spring:message code="factory.plant.detail.subtitle" text="사업장 상세 정보 및 수정" />
+                                </p>
                             </div>
                             <div class="action-buttons" style="margin-bottom: 0;">
                                 <a href="/factory/plants" class="btn btn-secondary"
@@ -42,76 +44,109 @@
                                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
 
                                     <div class="filter-group">
-                                        <label>사업장 ID</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.id" text="사업장 ID" />
+                                        </label>
                                         <input type="text" value="${plant.plantId}" readonly
                                             style="background: #f1f5f9; color: #64748b; cursor: not-allowed;">
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>사업장명</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.name" text="사업장명" />
+                                        </label>
                                         <input type="text" name="plantName" value="${plant.plantName}" required>
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>영문 사업장명</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.nameEn" text="영문 사업장명" />
+                                        </label>
                                         <input type="text" name="plantNameEn" value="${plant.plantNameEn}">
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>전화번호</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.phone" text="전화번호" />
+                                        </label>
                                         <input type="text" name="phone" value="${plant.phone}">
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>유형</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.type" text="유형" />
+                                        </label>
                                         <select name="plantType">
                                             <option value="MAIN_FACTORY" ${plant.plantType=='MAIN_FACTORY' ? 'selected'
-                                                : '' }>본사 공장</option>
+                                                : '' }>
+                                                <spring:message code="factory.plant.type.main" text="본사 공장" />
+                                            </option>
                                             <option value="BRANCH_FACTORY" ${plant.plantType=='BRANCH_FACTORY'
-                                                ? 'selected' : '' }>지사 공장</option>
+                                                ? 'selected' : '' }>
+                                                <spring:message code="factory.plant.type.branch" text="지사 공장" />
+                                            </option>
                                             <option value="WAREHOUSE" ${plant.plantType=='WAREHOUSE' ? 'selected' : ''
-                                                }>물류 창고</option>
+                                                }>
+                                                <spring:message code="factory.plant.type.warehouse" text="물류 창고" />
+                                            </option>
                                             <option value="R&D_CENTER" ${plant.plantType=='R&D_CENTER' ? 'selected' : ''
-                                                }>연구개발센터</option>
+                                                }>
+                                                <spring:message code="factory.plant.type.rnd" text="연구개발센터" />
+                                            </option>
                                         </select>
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>상태</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.status" text="상태" />
+                                        </label>
                                         <select name="status">
-                                            <option value="ACTIVE" ${plant.status=='ACTIVE' ? 'selected' : '' }>정상 가동
+                                            <option value="ACTIVE" ${plant.status=='ACTIVE' ? 'selected' : '' }>
+                                                <spring:message code="factory.plant.status.active" text="정상 가동" />
                                             </option>
                                             <option value="MAINTENANCE" ${plant.status=='MAINTENANCE' ? 'selected' : ''
-                                                }>점검 중</option>
+                                                }>
+                                                <spring:message code="factory.plant.status.maintenance" text="점검 중" />
+                                            </option>
                                             <option value="SUSPENDED" ${plant.status=='SUSPENDED' ? 'selected' : '' }>
-                                                일시중지</option>
-                                            <option value="CLOSED" ${plant.status=='CLOSED' ? 'selected' : '' }>폐쇄
+                                                <spring:message code="factory.plant.status.suspended" text="일시중지" />
+                                            </option>
+                                            <option value="CLOSED" ${plant.status=='CLOSED' ? 'selected' : '' }>
+                                                <spring:message code="factory.plant.status.closed" text="폐쇄" />
                                             </option>
                                         </select>
                                     </div>
 
                                     <div class="filter-group" style="grid-column: 1 / -1;">
-                                        <label>주소</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.address" text="주소" />
+                                        </label>
                                         <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
                                             <input type="text" name="address" value="${plant.address}"
-                                                placeholder="기본 주소">
+                                                placeholder="<spring:message code='factory.plant.label.address.default' text='기본 주소' />">
                                             <input type="text" name="addressDetail" value="${plant.addressDetail}"
-                                                placeholder="상세 주소">
+                                                placeholder="<spring:message code='factory.plant.label.address.detail' text='상세 주소' />">
                                         </div>
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>우편번호</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.postal" text="우편번호" />
+                                        </label>
                                         <input type="text" name="postalCode" value="${plant.postalCode}">
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>총 면적 (m²)</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.area" text="총 면적 (m²)" />
+                                        </label>
                                         <input type="number" step="0.01" name="totalArea" value="${plant.totalArea}">
                                     </div>
 
                                     <div class="filter-group">
-                                        <label>설립일</label>
+                                        <label>
+                                            <spring:message code="factory.plant.label.established" text="설립일" />
+                                        </label>
                                         <input type="date" name="establishedDate" value="${plant.establishedDate}">
                                     </div>
 
@@ -133,7 +168,8 @@
                             <div style="margin-bottom: 20px;">
                                 <h2
                                     style="font-size: 20px; font-weight: 700; color: white; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                    🏭 소속 공장 (
+                                    🏭
+                                    <spring:message code="factory.plant.related.title" text="소속 공장" /> (
                                     <c:out value="${factories.size()}" />)
                                 </h2>
                             </div>
@@ -142,7 +178,10 @@
                                 <c:choose>
                                     <c:when test="${empty factories}">
                                         <div class="empty-state" style="padding: 60px 20px;">
-                                            <p style="margin-bottom: 0;">등록된 공장이 없습니다</p>
+                                            <p style="margin-bottom: 0;">
+                                                <spring:message code="factory.plant.related.empty"
+                                                    text="등록된 공장이 없습니다" />
+                                            </p>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
@@ -150,10 +189,19 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>공장명</th>
-                                                    <th>유형</th>
-                                                    <th>상태</th>
-                                                    <th>제품군</th>
+                                                    <th>
+                                                        <spring:message code="factory.table.plantName" text="공장명" />
+                                                    </th>
+                                                    <th>
+                                                        <spring:message code="factory.plant.label.type" text="유형" />
+                                                    </th>
+                                                    <th>
+                                                        <spring:message code="factory.plant.label.status" text="상태" />
+                                                    </th>
+                                                    <th>
+                                                        <spring:message code="dashboard.card.production.title"
+                                                            text="제품군" />
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>

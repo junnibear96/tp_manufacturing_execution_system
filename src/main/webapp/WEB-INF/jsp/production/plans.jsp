@@ -7,7 +7,9 @@
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>생산 계획 - TP MES</title>
+        <title>
+          <spring:message code="production.plans.title" text="생산 계획 - TP MES" />
+        </title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
         <link href="/assets/factory-modern.css" rel="stylesheet">
@@ -50,7 +52,9 @@
                 <h1>📋
                   <spring:message code="production.plans.header" text="생산 계획" />
                 </h1>
-                <p class="subtitle" style="margin-top: 8px;">일별 생산 계획 관리 및 조회</p>
+                <p class="subtitle" style="margin-top: 8px;">
+                  <spring:message code="production.plans.subtitle" text="일별 생산 계획 관리 및 조회" />
+                </p>
               </div>
               <div class="action-buttons" style="margin-bottom: 0;">
                 <sec:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
@@ -65,7 +69,9 @@
             <!-- Stats Summary (Optional enhancement) -->
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px;">
               <div class="stat-card">
-                <div class="label">총 계획 건수</div>
+                <div class="label">
+                  <spring:message code="production.plans.total" text="총 계획 건수" />
+                </div>
                 <div class="value">${plans.size()}</div>
               </div>
               <!-- Add more stats if available in the future -->
@@ -131,12 +137,13 @@
                             <sec:authorize access="hasRole('ADMIN')">
                               <td style="text-align: center;">
                                 <form method="post" action="${pageContext.request.contextPath}/production/plans/delete"
-                                  style="display: inline;">
-                                  <input type="hidden" name="planId" value="${plan.planId}" />
-                                  <button type="submit" class="btn btn-sm"
-                                    style="background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7;">
-                                    <spring:message code="common.delete" text="삭제" />
-                                  </button>
+                                  style="display: inline;" onsubmit="return confirm('<spring:message code="
+                                  production.plans.delete.confirm" text="이 계획을 삭제하시겠습니까?" />');">
+                                <input type="hidden" name="planId" value="${plan.planId}" />
+                                <button type="submit" class="btn btn-sm"
+                                  style="background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7;">
+                                  <spring:message code="common.delete" text="삭제" />
+                                </button>
                                 </form>
                               </td>
                             </sec:authorize>

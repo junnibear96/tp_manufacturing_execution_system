@@ -19,9 +19,13 @@
 
             <div class="container">
               <div class="page-header">
-                <h1 class="page-title">📢 공지사항</h1>
+                <h1 class="page-title">📢
+                  <spring:message code="notice.list.title" text="공지사항" />
+                </h1>
                 <sec:authorize access="hasRole('ADMIN')">
-                  <a href="/admin/notices/new" class="btn-primary">+ 새 공지 작성</a>
+                  <a href="/admin/notices/new" class="btn-primary">+
+                    <spring:message code="notice.new" text="새 공지 작성" />
+                  </a>
                 </sec:authorize>
               </div>
 
@@ -36,8 +40,12 @@
                     <table class="table-modern">
                       <thead>
                         <tr>
-                          <th>제목</th>
-                          <th style="width: 160px; text-align: center;">작성일</th>
+                          <th>
+                            <spring:message code="notice.title" text="제목" />
+                          </th>
+                          <th style="width: 160px; text-align: center;">
+                            <spring:message code="notice.date" text="작성일" />
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
