@@ -247,7 +247,7 @@
             }
 
             /* Responsive Mobile Navigation */
-            @media (max-width: 960px) {
+            @media (max-width: 1280px) {
                 #header {
                     padding: 0 20px;
                 }
@@ -264,6 +264,12 @@
                     padding: 0;
                     z-index: 1001;
                     margin-left: 15px;
+                }\r
+\r
+                /* Hide desktop navigation tabs */\r
+                .gnb-wrap,\r
+                .gnb {\r
+                    display: none !important;\r
                 }
 
                 .btn_all_menu span {
